@@ -19,25 +19,26 @@
 #include "semphr.h"
 
 
-#include "tablo_parser.h"
-#include "spi_bus.h"
-#include "tablo.h"
-#include "proto.h"
+//#include "tablo_parser.h"
+//#include "spi_bus.h"
+//#include "tablo.h"
+//#include "proto.h"
 #include "keyboard.h"
-#include "buzzer.h"
+//#include "buzzer.h"
 //#include "power.h"
 #include "watchdog.h"
 //#include "relay.h"
 //#include "power_detector.h"
+#include "encoder.h"
 
-extern struct tablo tab;//
+//extern struct tablo tab;//
 static void Init_Task(void *pvParameters);//
 
 static void Init_Task(void *pvParameters)
 {
-	uint8_t i=0;
+	//uint8_t i=0;
 	//Power_Detector_Init();
-	vTaskDelay(200);
+	//vTaskDelay(200);
 
 	//Power_Init();
 
@@ -53,7 +54,7 @@ static void Init_Task(void *pvParameters)
 
 
 //    buzzer_init();
-
+	Encoder_Init();
     vTaskDelete( NULL );
 }
 
