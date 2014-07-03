@@ -1,0 +1,41 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<history>
+   <processor signature="4.7.2 -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=softfp -mthumb -Wall -g -nostartfiles -Map=tablo_proto_test.map -O0 --gc-sections -LC:\CooCox\CoIDE\configuration\ProgramData\pilorama -TC:\CooCox\CoIDE\configuration\ProgramData\pilorama/link.ld -g">
+      <target file="tablo_proto_test.elf" lastModified="146fae234a5">
+         <source file="..\obj\stm32f4xx_syscfg.o" lastModified="146fae215c3"/>
+         <source file="..\obj\tablo_parser.o" lastModified="146fae21853"/>
+         <source file="..\obj\core_cm3.o" lastModified="146fae218b1"/>
+         <source file="..\obj\buzzer.o" lastModified="146fae2196c"/>
+         <source file="..\obj\stm32f4xx_usart.o" lastModified="146fae21a28"/>
+         <source file="..\obj\stm32f4xx_pwr.o" lastModified="146fae21ad4"/>
+         <source file="..\obj\proto.o" lastModified="146fae21d54"/>
+         <source file="..\obj\startup_stm32f4xx.o" lastModified="146fae21db2"/>
+         <source file="..\obj\stm32f4xx_iwdg.o" lastModified="146fae21e2f"/>
+         <source file="..\obj\indicator.o" lastModified="146fae21e9c"/>
+         <source file="..\obj\main.o" lastModified="146fae22052"/>
+         <source file="..\obj\stm32f4xx_rcc.o" lastModified="146fae2212d"/>
+         <source file="..\obj\timers.o" lastModified="146fae2218a"/>
+         <source file="..\obj\relay.o" lastModified="146fae22207"/>
+         <source file="..\obj\tablo.o" lastModified="146fae222a4"/>
+         <source file="..\obj\power.o" lastModified="146fae22330"/>
+         <source file="..\obj\watchdog.o" lastModified="146fae223ad"/>
+         <source file="..\obj\tasks.o" lastModified="146fae2265d"/>
+         <source file="..\obj\keyboard.o" lastModified="146fae22709"/>
+         <source file="..\obj\stm32f4xx_gpio.o" lastModified="146fae227a5"/>
+         <source file="..\obj\list.o" lastModified="146fae22822"/>
+         <source file="..\obj\system_stm32f4xx.o" lastModified="146fae228ae"/>
+         <source file="..\obj\stm32f4xx_dma.o" lastModified="146fae2295a"/>
+         <source file="..\obj\queue.o" lastModified="146fae22a25"/>
+         <source file="..\obj\port.o" lastModified="146fae22aa2"/>
+         <source file="..\obj\croutine.o" lastModified="146fae22b1f"/>
+         <source file="..\obj\stm32f4xx_spi.o" lastModified="146fae22beb"/>
+         <source file="..\obj\channels.o" lastModified="146fae22c68"/>
+         <source file="..\obj\stm32f4xx_exti.o" lastModified="146fae22d04"/>
+         <source file="..\obj\spi_bus.o" lastModified="146fae22dcf"/>
+         <source file="..\obj\misc.o" lastModified="146fae22e6b"/>
+         <source file="..\obj\heap_1.o" lastModified="146fae22ee8"/>
+         <source file="..\obj\stm32f4xx_tim.o" lastModified="146fae23040"/>
+         <source file="..\obj\power_detector.o" lastModified="146fae230ec"/>
+      </target>
+   </processor>
+</history>

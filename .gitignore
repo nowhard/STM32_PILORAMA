@@ -1,0 +1,14 @@
+*.dll
+*.o
+*.map
+*.bak
+*.txt
+*.bin
+*.log
+*.htm*
+*.jpg
+*.bmp
+*.gif
+*.pdf
+
+

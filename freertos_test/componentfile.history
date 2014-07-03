@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<History> 
+  <File usedCount="2" path="stm_lib/inc/stm32f10x_rcc.h"/>  
+  <File usedCount="2" path="cmsis_boot/startup/startup_stm32f10x_md_vl.c"/>  
+  <File usedCount="2" path="cmsis/core_cm3.c"/>  
+  <File usedCount="2" path="cmsis/core_cm3.h"/>  
+  <File usedCount="2" path="cmsis_boot/stm32f10x.h"/>  
+  <File usedCount="2" path="cmsis_boot/stm32f10x_conf.h"/>  
+  <File usedCount="2" path="cmsis_boot/system_stm32f10x.c"/>  
+  <File usedCount="2" path="cmsis_boot/system_stm32f10x.h"/>  
+  <File usedCount="2" path="stm_lib/src/stm32f10x_rcc.c"/>  
+  <File usedCount="2" path="stm_lib/inc/stm32f10x_gpio.h"/>  
+  <File usedCount="2" path="stm_lib/src/stm32f10x_gpio.c"/>  
+  <File usedCount="2" path="stm_lib/inc/stm32f10x_spi.h"/>  
+  <File usedCount="2" path="stm_lib/src/stm32f10x_spi.c"/>  
+  <File usedCount="2" path="stm_lib/inc/stm32f10x_usart.h"/>  
+  <File usedCount="2" path="stm_lib/src/stm32f10x_usart.c"/>  
+  <File usedCount="2" path="stm_lib/inc/misc.h"/>  
+  <File usedCount="2" path="stm_lib/src/misc.c"/>  
+  <File usedCount="2" path="cmsis_lib/include/stm32f4xx_exti.h"/>  
+  <File usedCount="2" path="cmsis_lib/source/stm32f4xx_exti.c"/>
+</History>

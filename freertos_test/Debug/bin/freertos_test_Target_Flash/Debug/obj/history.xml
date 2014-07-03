@@ -1,0 +1,88 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<history>
+   <processor signature="arm-none-eabi-gcc noversion nomachine -mcpu=cortex-m3 -mthumb -Wall -ffunction-sections -g -O0 -c -DSTM32F100RB -DSTM32F10X_MD_VL -DUSE_STDPERIPH_DRIVER -D__ASSEMBLY__ -ID:\PROJECTS\STM32\workspace\TEST_7219_SPEED\freertos_test -ID:\PROJECTS\STM32\workspace\TEST_7219_SPEED\freertos_test\uso -ID:\PROJECTS\STM32\workspace\TEST_7219_SPEED\freertos_test\FreeRTOSV7.1.0\Source\portable -ID:\PROJECTS\STM32\workspace\TEST_7219_SPEED\freertos_test\FreeRTOSV7.1.0\Source\include -ID:\PROJECTS\STM32\workspace\TEST_7219_SPEED -ID:\PROJECTS\STM32\workspace\TEST_7219_SPEED\freertos_test\FreeRTOSV7.1.0\Source\portable\ARM_CM3 -ID:\PROJECTS\STM32\workspace\TEST_7219_SPEED\freertos_test\cmsis -ID:\PROJECTS\STM32\workspace -ID:\PROJECTS\STM32\workspace\TEST_7219_SPEED\freertos_test\lcd_menu -ID:\PROJECTS\STM32\workspace\TEST_7219_SPEED\freertos_test\FreeRTOSV7.1.0 -ID:\PROJECTS\STM32\workspace\TEST_7219_SPEED\freertos_test\stm_lib\inc -ID:\PROJECTS\STM32\workspace\TEST_7219_SPEED\freertos_test\stm_lib -ID:\PROJECTS\STM32\workspace\TEST_7219_SPEED\freertos_test\FreeRTOSV7.1.0\Source -ID:\PROJECTS\STM32\workspace\TEST_7219_SPEED\freertos_test\cmsis_boot">
+      <target file="menu.o" lastModified="13d346679a3">
+         <source file="..\..\..\..\..\lcd_menu\menu.c" lastModified="1394d328645"/>
+      </target>
+      <target file="channels.o" lastModified="13d34667db9">
+         <source file="..\..\..\..\..\uso\channels.c" lastModified="1394d32b767"/>
+      </target>
+      <target file="proto.o" lastModified="13d3466702d">
+         <source file="..\..\..\..\..\uso\proto.c" lastModified="1394d32e146"/>
+      </target>
+      <target file="dol.o" lastModified="13d34667d3c">
+         <source file="..\..\..\..\..\uso\dol.c" lastModified="139682ef3c3"/>
+      </target>
+      <target file="pwm.o" lastModified="13d34667156">
+         <source file="..\..\..\..\..\uso\pwm.c" lastModified="13957647064"/>
+      </target>
+   </processor>
+   <processor signature="arm-none-eabi-gcc noversion nomachine -mcpu=cortex-m3 -mthumb -Wall -ffunction-sections -g -O0 -c -DSTM32F100RB -DSTM32F10X_MD_VL -DUSE_STDPERIPH_DRIVER -D__ASSEMBLY__ -ID:\PROJECTS\STM32\workspace\si4702_test\freertos_test\stm_lib -ID:\PROJECTS\STM32\workspace\si4702_test\freertos_test\FreeRTOSV7.1.0\Source\include -ID:\PROJECTS\STM32\workspace\si4702_test\freertos_test -ID:\PROJECTS\STM32\workspace\si4702_test\freertos_test\FreeRTOSV7.1.0\Source\portable -ID:\PROJECTS\STM32\workspace\si4702_test\freertos_test\stm_lib\inc -ID:\PROJECTS\STM32\workspace\si4702_test\freertos_test\cmsis_boot -ID:\PROJECTS\STM32\workspace -ID:\PROJECTS\STM32\workspace\si4702_test\freertos_test\FreeRTOSV7.1.0\Source\portable\ARM_CM3 -ID:\PROJECTS\STM32\workspace\si4702_test\freertos_test\FreeRTOSV7.1.0 -ID:\PROJECTS\STM32\workspace\si4702_test -ID:\PROJECTS\STM32\workspace\si4702_test\freertos_test\reciever -ID:\PROJECTS\STM32\workspace\si4702_test\freertos_test\cmsis -ID:\PROJECTS\STM32\workspace\si4702_test\freertos_test\FreeRTOSV7.1.0\Source">
+      <target file="stm32f10x_spi.o" lastModified="13e4013d7a7">
+         <source file="..\..\..\..\..\..\..\si4702_test\freertos_test\stm_lib\src\stm32f10x_spi.c" lastModified="13947f0954b"/>
+      </target>
+      <target file="tasks.o" lastModified="13e4013d0c2">
+         <source file="..\..\..\..\..\..\..\si4702_test\freertos_test\FreeRTOSV7.1.0\Source\tasks.c" lastModified="13438131dbe"/>
+      </target>
+      <target file="stm32f10x_rcc.o" lastModified="13e4013cece">
+         <source file="..\..\..\..\..\..\..\si4702_test\freertos_test\stm_lib\src\stm32f10x_rcc.c" lastModified="13e3bbf7a52"/>
+      </target>
+      <target file="core_cm3.o" lastModified="13e4013c6fe">
+         <source file="..\..\..\..\..\..\..\si4702_test\freertos_test\cmsis\core_cm3.c" lastModified="13e3bbf6b1f"/>
+      </target>
+      <target file="croutine.o" lastModified="13e4013d67e">
+         <source file="..\..\..\..\..\..\..\si4702_test\freertos_test\FreeRTOSV7.1.0\Source\croutine.c" lastModified="13438131cf3"/>
+      </target>
+      <target file="printf.o" lastModified="13e4013ce12">
+         <source file="..\..\..\..\..\..\..\si4702_test\freertos_test\stdio\printf.c" lastModified="1369bbf13ee"/>
+      </target>
+      <target file="stm32f10x_i2c.o" lastModified="13e4013d872">
+         <source file="..\..\..\..\..\..\..\si4702_test\freertos_test\stm_lib\src\stm32f10x_i2c.c" lastModified="13e3bbfa7fa"/>
+      </target>
+      <target file="misc.o" lastModified="13e4013d6fb">
+         <source file="..\..\..\..\..\..\..\si4702_test\freertos_test\stm_lib\src\misc.c" lastModified="13e3bbfc8c0"/>
+      </target>
+      <target file="heap_2.o" lastModified="13e4013d90f">
+         <source file="..\..\..\..\..\..\..\si4702_test\freertos_test\FreeRTOSV7.1.0\Source\portable\MemMang\heap_2.c" lastModified="13438131d70"/>
+      </target>
+      <target file="queue.o" lastModified="13e4013d5c3">
+         <source file="..\..\..\..\..\..\..\si4702_test\freertos_test\FreeRTOSV7.1.0\Source\queue.c" lastModified="13438131dae"/>
+      </target>
+      <target file="list.o" lastModified="13e4013d296">
+         <source file="..\..\..\..\..\..\..\si4702_test\freertos_test\FreeRTOSV7.1.0\Source\list.c" lastModified="13438131cf3"/>
+      </target>
+      <target file="port.o" lastModified="13e4013d4c9">
+         <source file="..\..\..\..\..\..\..\si4702_test\freertos_test\FreeRTOSV7.1.0\Source\portable\ARM_CM3\port.c" lastModified="13438131d12"/>
+      </target>
+      <target file="stm32f10x_gpio.o" lastModified="13e4013c94f">
+         <source file="..\..\..\..\..\..\..\si4702_test\freertos_test\stm_lib\src\stm32f10x_gpio.c" lastModified="13e3bbf9116"/>
+      </target>
+      <target file="timers.o" lastModified="13e4013cd37">
+         <source file="..\..\..\..\..\..\..\si4702_test\freertos_test\FreeRTOSV7.1.0\Source\timers.c" lastModified="13438131dce"/>
+      </target>
+      <target file="stm32f10x_exti.o" lastModified="13e4013cf5a">
+         <source file="..\..\..\..\..\..\..\si4702_test\freertos_test\stm_lib\src\stm32f10x_exti.c" lastModified="13967e5422a"/>
+      </target>
+      <target file="system_stm32f10x.o" lastModified="13e4013c817">
+         <source file="..\..\..\..\..\..\..\si4702_test\freertos_test\cmsis_boot\system_stm32f10x.c" lastModified="13e3bbf74c4"/>
+      </target>
+      <target file="syscalls.o" lastModified="13e4013d42d">
+         <source file="..\..\..\..\..\..\..\si4702_test\freertos_test\syscalls\syscalls.c" lastModified="1369bbf146b"/>
+      </target>
+      <target file="stm32f10x_tim.o" lastModified="13e4013c623">
+         <source file="..\..\..\..\..\..\..\si4702_test\freertos_test\stm_lib\src\stm32f10x_tim.c" lastModified="13e3bbfe428"/>
+      </target>
+      <target file="i2c_reciever.o" lastModified="13e4013d20a">
+         <source file="..\..\..\..\..\..\..\si4702_test\freertos_test\reciever\i2c_reciever.c" lastModified="13e40124261"/>
+      </target>
+      <target file="startup_stm32f10x_md_vl.o" lastModified="13e4013c681">
+         <source file="..\..\..\..\..\..\..\si4702_test\freertos_test\cmsis_boot\startup\startup_stm32f10x_md_vl.c" lastModified="13e3bbf74a5"/>
+      </target>
+      <target file="main.o" lastModified="13e40143884">
+         <source file="..\..\..\..\..\..\..\si4702_test\freertos_test\main.c" lastModified="13e401428a6"/>
+      </target>
+      <target file="stm32f10x_usart.o" lastModified="13e4013d17d">
+         <source file="..\..\..\..\..\..\..\si4702_test\freertos_test\stm_lib\src\stm32f10x_usart.c" lastModified="136a0ecda01"/>
+      </target>
+   </processor>
+</history>

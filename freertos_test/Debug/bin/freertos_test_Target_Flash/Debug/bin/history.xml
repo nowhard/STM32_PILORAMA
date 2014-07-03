@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<history>
+   <processor signature="4.7.2 -mcpu=cortex-m3 -mthumb -g -nostartfiles -Map=freertos_test_Target_Flash.map -O0 --gc-sections -LC:\CooCox\CoIDE\configuration\ProgramData\freertos_test_Target -TC:\CooCox\CoIDE\configuration\ProgramData\freertos_test_Target/link.ld -g -LC:\Program Files\CooCox\CoIDE\gcc\Sourcery G++ Lite\arm-none-eabi\lib\thumb2 -lc -LC:\Program Files\CooCox\CoIDE\gcc\Sourcery G++ Lite\arm-none-eabi\lib\thumb2 -lm">
+      <target file="freertos_test_Target_Flash.elf" lastModified="13e40143b14">
+         <source file="C:\Program Files\CooCox\CoIDE\gcc\Sourcery G++ Lite\arm-none-eabi\lib\thumb2\libc.a" lastModified="12c19b36cd0"/>
+         <source file="C:\Program Files\CooCox\CoIDE\gcc\Sourcery G++ Lite\arm-none-eabi\lib\thumb2\libm.a" lastModified="12c19b36500"/>
+         <source file="..\obj\stm32f10x_tim.o" lastModified="13e4013c623"/>
+         <source file="..\obj\startup_stm32f10x_md_vl.o" lastModified="13e4013c681"/>
+         <source file="..\obj\core_cm3.o" lastModified="13e4013c6fe"/>
+         <source file="..\obj\system_stm32f10x.o" lastModified="13e4013c817"/>
+         <source file="..\obj\stm32f10x_gpio.o" lastModified="13e4013c94f"/>
+         <source file="..\obj\main.o" lastModified="13e40143884"/>
+         <source file="..\obj\timers.o" lastModified="13e4013cd37"/>
+         <source file="..\obj\printf.o" lastModified="13e4013ce12"/>
+         <source file="..\obj\stm32f10x_rcc.o" lastModified="13e4013cece"/>
+         <source file="..\obj\stm32f10x_exti.o" lastModified="13e4013cf5a"/>
+         <source file="..\obj\tasks.o" lastModified="13e4013d0c2"/>
+         <source file="..\obj\stm32f10x_usart.o" lastModified="13e4013d17d"/>
+         <source file="..\obj\i2c_reciever.o" lastModified="13e4013d20a"/>
+         <source file="..\obj\list.o" lastModified="13e4013d296"/>
+         <source file="..\obj\syscalls.o" lastModified="13e4013d42d"/>
+         <source file="..\obj\port.o" lastModified="13e4013d4c9"/>
+         <source file="..\obj\queue.o" lastModified="13e4013d5c3"/>
+         <source file="..\obj\croutine.o" lastModified="13e4013d67e"/>
+         <source file="..\obj\misc.o" lastModified="13e4013d6fb"/>
+         <source file="..\obj\stm32f10x_spi.o" lastModified="13e4013d7a7"/>
+         <source file="..\obj\stm32f10x_i2c.o" lastModified="13e4013d872"/>
+         <source file="..\obj\heap_2.o" lastModified="13e4013d90f"/>
+      </target>
+   </processor>
+</history>

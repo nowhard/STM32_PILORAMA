@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Project version="2G - 1.7.2" name="pilorama">
+  <Target name="tablo_proto_test" isCurrent="1">
+    <Device manufacturerId="9" manufacturerName="ST" chipId="342" chipName="STM32F405RG" boardId="" boardName=""/>
+    <BuildOption>
+      <Compile>
+        <Option name="OptimizationLevel" value="0"/>
+        <Option name="UseFPU" value="0"/>
+        <Option name="UserEditCompiler" value=""/>
+        <Option name="FPU" value="1"/>
+        <Includepaths>
+          <Includepath path="."/>
+        </Includepaths>
+        <DefinedSymbols>
+          <Define name="USE_STDPERIPH_DRIVER"/>
+          <Define name="__ASSEMBLY__"/>
+          <Define name="STM32F405RG"/>
+          <Define name="STM32F4XX"/>
+          <Define name="__FPU_USED"/>
+        </DefinedSymbols>
+      </Compile>
+      <Link useDefault="0">
+        <Option name="DiscardUnusedSection" value="0"/>
+        <Option name="UserEditLinkder" value=""/>
+        <Option name="UseMemoryLayout" value="1"/>
+        <Option name="LTO" value="1"/>
+        <Option name="IsNewStartupCode" value="1"/>
+        <Option name="Library" value="Not use C Library"/>
+        <LinkedLibraries/>
+        <MemoryAreas debugInFlashNotRAM="1">
+          <Memory name="IROM1" type="ReadOnly" size="0x00100000" startValue="0x08000000"/>
+          <Memory name="IRAM1" type="ReadWrite" size="0x00020000" startValue="0x20000000"/>
+          <Memory name="IROM2" type="ReadOnly" size="" startValue=""/>
+          <Memory name="IRAM2" type="ReadWrite" size="0x00010000" startValue="0x10000000"/>
+        </MemoryAreas>
+        <LocateLinkFile path="c:/coocox/coide/configuration/programdata/pilorama/link.ld" type="0"/>
+      </Link>
+      <Output>
+        <Option name="OutputFileType" value="0"/>
+        <Option name="Path" value="./"/>
+        <Option name="Name" value="tablo_proto_test"/>
+        <Option name="HEX" value="1"/>
+        <Option name="BIN" value="1"/>
+      </Output>
+      <User>
+        <UserRun name="Run#1" type="Before" checked="0" value=""/>
+        <UserRun name="Run#1" type="After" checked="0" value=""/>
+      </User>
+    </BuildOption>
+    <DebugOption>
+      <Option name="org.coocox.codebugger.gdbjtag.core.adapter" value="ST-Link"/>
+      <Option name="org.coocox.codebugger.gdbjtag.core.debugMode" value="SWD"/>
+      <Option name="org.coocox.codebugger.gdbjtag.core.clockDiv" value="2M"/>
+      <Option name="org.coocox.codebugger.gdbjtag.corerunToMain" value="1"/>
+      <Option name="org.coocox.codebugger.gdbjtag.core.jlinkgdbserver" value=""/>
+      <Option name="org.coocox.codebugger.gdbjtag.core.userDefineGDBScript" value=""/>
+      <Option name="org.coocox.codebugger.gdbjtag.core.targetEndianess" value="0"/>
+      <Option name="org.coocox.codebugger.gdbjtag.core.jlinkResetMode" value="Type 0: Normal"/>
+      <Option name="org.coocox.codebugger.gdbjtag.core.resetMode" value="SYSRESETREQ"/>
+      <Option name="org.coocox.codebugger.gdbjtag.core.ifSemihost" value="0"/>
+      <Option name="org.coocox.codebugger.gdbjtag.core.ifCacheRom" value="1"/>
+      <Option name="org.coocox.codebugger.gdbjtag.core.ipAddress" value="127.0.0.1"/>
+      <Option name="org.coocox.codebugger.gdbjtag.core.portNumber" value="2009"/>
+      <Option name="org.coocox.codebugger.gdbjtag.core.autoDownload" value="1"/>
+      <Option name="org.coocox.codebugger.gdbjtag.core.verify" value="1"/>
+      <Option name="org.coocox.codebugger.gdbjtag.core.downloadFuction" value="Erase Effected"/>
+      <Option name="org.coocox.codebugger.gdbjtag.core.defaultAlgorithm" value="STM32F4xx_1024.elf"/>
+    </DebugOption>
+    <ExcludeFile/>
+  </Target>
+  <Components path="./">
+    <Component id="54" name="M4 CMSIS Core" path="" type="2"/>
+    <Component id="500" name="CMSIS BOOT" path="" type="2"/>
+    <Component id="501" name="RCC" path="" type="2"/>
+    <Component id="502" name="PWR" path="" type="2"/>
+    <Component id="504" name="GPIO" path="" type="2"/>
+    <Component id="505" name="EXTI" path="" type="2"/>
+    <Component id="507" name="IWDG" path="" type="2"/>
+    <Component id="509" name="SPI" path="" type="2"/>
+    <Component id="511" name="DMA" path="" type="2"/>
+    <Component id="513" name="TIM" path="" type="2"/>
+    <Component id="517" name="USART" path="" type="2"/>
+    <Component id="524" name="MISC" path="" type="2"/>
+    <Component id="526" name="SYSCFG" path="" type="2"/>
+    <Component id="637" name="MAX7219 Driver using GPIO interface" path="" type="1"/>
+  </Components>
+  <Files>
+    <File name="FreeRTOSV7.1.0/Source/croutine.c" path="FreeRTOSV7.1.0/Source/croutine.c" type="1"/>
+    <File name="cmsis_lib/source/stm32f4xx_usart.c" path="cmsis_lib/source/stm32f4xx_usart.c" type="1"/>
+    <File name="devices/tablo.c" path="devices/tablo.c" type="1"/>
+    <File name="cmsis_lib/include/stm32f4xx_usart.h" path="cmsis_lib/include/stm32f4xx_usart.h" type="1"/>
+    <File name="FreeRTOSV7.1.0/Source/tasks.c" path="FreeRTOSV7.1.0/Source/tasks.c" type="1"/>
+    <File name="cmsis_boot/stm32f4xx.h" path="cmsis_boot/stm32f4xx.h" type="1"/>
+    <File name="FreeRTOSV7.1.0/Source/include/portable.h" path="FreeRTOSV7.1.0/Source/include/portable.h" type="1"/>
+    <File name="cmsis/core_cm4_simd.h" path="cmsis/core_cm4_simd.h" type="1"/>
+    <File name="cmsis_lib/source/stm32f4xx_spi.c" path="cmsis_lib/source/stm32f4xx_spi.c" type="1"/>
+    <File name="cmsis/core_cmFunc.h" path="cmsis/core_cmFunc.h" type="1"/>
+    <File name="devices/spi_bus.c" path="devices/spi_bus.c" type="1"/>
+    <File name="FreeRTOSV7.1.0/Source/include/task.h" path="FreeRTOSV7.1.0/Source/include/task.h" type="1"/>
+    <File name="FreeRTOSV7.1.0/Source/include/FreeRTOS.h" path="FreeRTOSV7.1.0/Source/include/FreeRTOS.h" type="1"/>
+    <File name="devices/spi_bus.h" path="devices/spi_bus.h" type="1"/>
+    <File name="devices/indicator.c" path="devices/indicator.c" type="1"/>
+    <File name="devices" path="" type="2"/>
+    <File name="cmsis_lib/source/stm32f4xx_iwdg.c" path="cmsis_lib/source/stm32f4xx_iwdg.c" type="1"/>
+    <File name="devices/watchdog.h" path="devices/watchdog.h" type="1"/>
+    <File name="FreeRTOSV7.1.0/Source/include/projdefs.h" path="FreeRTOSV7.1.0/Source/include/projdefs.h" type="1"/>
+    <File name="protocols/proto.c" path="protocols/proto.c" type="1"/>
+    <File name="protocols/preferences.h" path="protocols/preferences.h" type="1"/>
+    <File name="FreeRTOSV7.1.0/Source/include/timers.h" path="FreeRTOSV7.1.0/Source/include/timers.h" type="1"/>
+    <File name="protocols/channels.c" path="protocols/channels.c" type="1"/>
+    <File name="cmsis_lib/include/stm32f4xx_rcc.h" path="cmsis_lib/include/stm32f4xx_rcc.h" type="1"/>
+    <File name="devices/power.h" path="devices/power.h" type="1"/>
+    <File name="cmsis_lib/source/stm32f4xx_syscfg.c" path="cmsis_lib/source/stm32f4xx_syscfg.c" type="1"/>
+    <File name="cmsis_lib/include/stm32f4xx_pwr.h" path="cmsis_lib/include/stm32f4xx_pwr.h" type="1"/>
+    <File name="cmsis_boot/startup/startup_stm32f4xx.c" path="cmsis_boot/startup/startup_stm32f4xx.c" type="1"/>
+    <File name="cmsis_lib/source/stm32f4xx_rcc.c" path="cmsis_lib/source/stm32f4xx_rcc.c" type="1"/>
+    <File name="cmsis/core_cmInstr.h" path="cmsis/core_cmInstr.h" type="1"/>
+    <File name="cmsis_lib/source/stm32f4xx_pwr.c" path="cmsis_lib/source/stm32f4xx_pwr.c" type="1"/>
+    <File name="FreeRTOSV7.1.0/Source/list.c" path="FreeRTOSV7.1.0/Source/list.c" type="1"/>
+    <File name="protocols/tablo_parser.c" path="protocols/tablo_parser.c" type="1"/>
+    <File name="protocols/channels.h" path="protocols/channels.h" type="1"/>
+    <File name="devices/power.c" path="devices/power.c" type="1"/>
+    <File name="devices/tablo.h" path="devices/tablo.h" type="1"/>
+    <File name="cmsis_boot/system_stm32f4xx.c" path="cmsis_boot/system_stm32f4xx.c" type="1"/>
+    <File name="devices/buzzer.c" path="devices/buzzer.c" type="1"/>
+    <File name="cmsis_lib/include/stm32f4xx_spi.h" path="cmsis_lib/include/stm32f4xx_spi.h" type="1"/>
+    <File name="protocols" path="" type="2"/>
+    <File name="cmsis" path="" type="2"/>
+    <File name="cmsis_lib" path="" type="2"/>
+    <File name="FreeRTOSV7.1.0/readme.txt" path="FreeRTOSV7.1.0/readme.txt" type="1"/>
+    <File name="devices/power_detector.h" path="devices/power_detector.h" type="1"/>
+    <File name="cmsis_lib/include/misc.h" path="cmsis_lib/include/misc.h" type="1"/>
+    <File name="FreeRTOSV7.1.0/Source/portable/ARM_CM4F/portmacro.h" path="FreeRTOSV7.1.0/Source/portable/GCC/ARM_CM4F/portmacro.h" type="1"/>
+    <File name="FreeRTOSV7.1.0/Source/include/queue.h" path="FreeRTOSV7.1.0/Source/include/queue.h" type="1"/>
+    <File name="main.c" path="main.c" type="1"/>
+    <File name="cmsis_lib/source/stm32f4xx_gpio.c" path="cmsis_lib/source/stm32f4xx_gpio.c" type="1"/>
+    <File name="cmsis_lib/source/stm32f4xx_dma.c" path="cmsis_lib/source/stm32f4xx_dma.c" type="1"/>
+    <File name="protocols/tablo_parser.h" path="protocols/tablo_parser.h" type="1"/>
+    <File name="devices/relay.c" path="devices/relay.c" type="1"/>
+    <File name="devices/keyboard.c" path="devices/keyboard.c" type="1"/>
+    <File name="FreeRTOSV7.1.0/Source/portable/ARM_CM4F" path="" type="2"/>
+    <File name="cmsis_boot" path="" type="2"/>
+    <File name="FreeRTOSV7.1.0/Source/readme.txt" path="FreeRTOSV7.1.0/Source/readme.txt" type="1"/>
+    <File name="cmsis_lib/include/stm32f4xx_syscfg.h" path="cmsis_lib/include/stm32f4xx_syscfg.h" type="1"/>
+    <File name="devices/buzzer.h" path="devices/buzzer.h" type="1"/>
+    <File name="FreeRTOSV7.1.0/Source/include/croutine.h" path="FreeRTOSV7.1.0/Source/include/croutine.h" type="1"/>
+    <File name="FreeRTOSV7.1.0/License" path="" type="2"/>
+    <File name="cmsis_boot/startup" path="" type="2"/>
+    <File name="cmsis/core_cm4.h" path="cmsis/core_cm4.h" type="1"/>
+    <File name="FreeRTOSV7.1.0/Source/portable/MemMang/heap_1.c" path="FreeRTOSV7.1.0/Source/portable/MemMang/heap_1.c" type="1"/>
+    <File name="cmsis_lib/source/misc.c" path="cmsis_lib/source/misc.c" type="1"/>
+    <File name="cmsis_lib/include/stm32f4xx_tim.h" path="cmsis_lib/include/stm32f4xx_tim.h" type="1"/>
+    <File name="cmsis/core_cm3.c" path="cmsis/core_cm3.c" type="1"/>
+    <File name="cmsis_lib/source" path="" type="2"/>
+    <File name="FreeRTOSV7.1.0/Source/portable/ARM_CM4F/port.c" path="FreeRTOSV7.1.0/Source/portable/GCC/ARM_CM4F/port.c" type="1"/>
+    <File name="devices/relay.h" path="devices/relay.h" type="1"/>
+    <File name="cmsis_boot/stm32f4xx_conf.h" path="cmsis_boot/stm32f4xx_conf.h" type="1"/>
+    <File name="FreeRTOSV7.1.0/Source/portable" path="" type="2"/>
+    <File name="cmsis_boot/system_stm32f4xx.h" path="cmsis_boot/system_stm32f4xx.h" type="1"/>
+    <File name="FreeRTOSV7.1.0/Source/timers.c" path="FreeRTOSV7.1.0/Source/timers.c" type="1"/>
+    <File name="devices/power_detector.c" path="devices/power_detector.c" type="1"/>
+    <File name="FreeRTOSV7.1.0/Source/include/list.h" path="FreeRTOSV7.1.0/Source/include/list.h" type="1"/>
+    <File name="FreeRTOSV7.1.0" path="" type="2"/>
+    <File name="cmsis_lib/include/stm32f4xx_iwdg.h" path="cmsis_lib/include/stm32f4xx_iwdg.h" type="1"/>
+    <File name="cmsis/core_cm3.h" path="cmsis/core_cm3.h" type="1"/>
+    <File name="protocols/proto.h" path="protocols/proto.h" type="1"/>
+    <File name="devices/indicator.h" path="devices/indicator.h" type="1"/>
+    <File name="devices/watchdog.c" path="devices/watchdog.c" type="1"/>
+    <File name="cmsis_lib/include/stm32f4xx_exti.h" path="cmsis_lib/include/stm32f4xx_exti.h" type="1"/>
+    <File name="cmsis_lib/source/stm32f4xx_exti.c" path="cmsis_lib/source/stm32f4xx_exti.c" type="1"/>
+    <File name="FreeRTOSV7.1.0/Source/queue.c" path="FreeRTOSV7.1.0/Source/queue.c" type="1"/>
+    <File name="FreeRTOSV7.1.0/Source/include/mpu_wrappers.h" path="FreeRTOSV7.1.0/Source/include/mpu_wrappers.h" type="1"/>
+    <File name="FreeRTOSV7.1.0/Source/include" path="" type="2"/>
+    <File name="FreeRTOSV7.1.0/License/license.txt" path="FreeRTOSV7.1.0/License/license.txt" type="1"/>
+    <File name="devices/keyboard.h" path="devices/keyboard.h" type="1"/>
+    <File name="cmsis_lib/include/stm32f4xx_dma.h" path="cmsis_lib/include/stm32f4xx_dma.h" type="1"/>
+    <File name="cmsis_lib/source/stm32f4xx_tim.c" path="cmsis_lib/source/stm32f4xx_tim.c" type="1"/>
+    <File name="cmsis_lib/include/stm32f4xx_gpio.h" path="cmsis_lib/include/stm32f4xx_gpio.h" type="1"/>
+    <File name="FreeRTOSV7.1.0/Source/portable/MemMang" path="" type="2"/>
+    <File name="cmsis_lib/include" path="" type="2"/>
+    <File name="FreeRTOSV7.1.0/Source" path="" type="2"/>
+    <File name="FreeRTOSConfig.h" path="FreeRTOSConfig.h" type="1"/>
+    <File name="FreeRTOSV7.1.0/Source/include/StackMacros.h" path="FreeRTOSV7.1.0/Source/include/StackMacros.h" type="1"/>
+    <File name="FreeRTOSV7.1.0/Source/include/semphr.h" path="FreeRTOSV7.1.0/Source/include/semphr.h" type="1"/>
+  </Files>
+</Project>
