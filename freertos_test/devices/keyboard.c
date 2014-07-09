@@ -1,5 +1,3 @@
-#include "keyboard.h"
-
 #include "stm32f4xx.h"
 #include "stm32f4xx_gpio.h"
 #include "stm32f4xx_rcc.h"
@@ -8,184 +6,151 @@
 #include "stm32f4xx_dma.h"
 #include <misc.h>
 
+#include "keyboard.h"
+//»нклуды от FreeRTOS:
+
 #include "FreeRTOS.h"
 #include "task.h"
 #include "queue.h"
 #include "semphr.h"
 
+xQueueHandle xKeyQueue;//очередь клавиатуры
+xSemaphoreHandle xKeySemaphore;
 
+static void vKeyboardTask(void *pvParameters);
 
-void keyboard_init(void)
+void Keyboard_Init(void)
 {
-    RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOB, ENABLE);
-    RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOC, ENABLE);
+	RCC_AHB1PeriphClockCmd(INIT_KEYB_PORT, ENABLE);
+	GPIO_InitTypeDef init_pin;
+	init_pin.GPIO_Pin  = KO_0 | KO_1 | KO_2 | KO_3;
+	init_pin.GPIO_Mode  = GPIO_Mode_OUT;
+	init_pin.GPIO_OType = GPIO_OType_PP;
+	init_pin.GPIO_PuPd = GPIO_PuPd_NOPULL;
+	GPIO_Init (KEYB_PORT, &init_pin);
 
-    GPIO_InitTypeDef GPIO_InitStructure;
+	init_pin.GPIO_Pin  = KI_0 | KI_1 | KI_2;//подт€гиваем вверх, дл€ уменьшени€ помех
+	init_pin.GPIO_Speed = GPIO_Speed_2MHz;
+	init_pin.GPIO_Mode  = GPIO_Mode_IN;
+	init_pin.GPIO_PuPd = GPIO_PuPd_DOWN;
+	GPIO_Init (KEYB_PORT, &init_pin);
 
-    /* Configure port -------------------------------*/
-    GPIO_InitStructure.GPIO_Pin   = KEY_X1|KEY_X2|KEY_X3;
-    GPIO_InitStructure.GPIO_Speed = GPIO_Speed_2MHz;
-    GPIO_InitStructure.GPIO_Mode  = GPIO_Mode_OUT;
-    GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
-    GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;
-    GPIO_Init(PORT_X, &GPIO_InitStructure);
+	KEYB_PORT->BSRRL=(KO_0 | KO_1 | KO_2 | KO_3);
 
-    GPIO_InitStructure.GPIO_Pin   = KEY_Y1|KEY_Y2|KEY_Y3;
-    GPIO_InitStructure.GPIO_Speed = GPIO_Speed_2MHz;
-    GPIO_InitStructure.GPIO_Mode  = GPIO_Mode_IN;
-    GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_DOWN;
-    GPIO_Init(PORT_Y, &GPIO_InitStructure);
-
-    GPIO_WriteBit(PORT_X, KEY_X1,0);
-    GPIO_WriteBit(PORT_X, KEY_X2,0);
-    GPIO_WriteBit(PORT_X, KEY_X3,0);
-
-    GPIO_WriteBit(PORT_Y, KEY_Y1,0);
-    GPIO_WriteBit(PORT_Y, KEY_Y2,0);
-    GPIO_WriteBit(PORT_Y, KEY_Y3,0);
-
-    xTaskCreate(keyboard_task,(signed char*)"KEYBOARD",64,NULL, tskIDLE_PRIORITY + 1, NULL);
+	vSemaphoreCreateBinary( xKeySemaphore );
+	xKeyQueue = xQueueCreate( 2, sizeof( uint16_t ) );
+	xTaskCreate(vKeyboardTask,(signed char*)"Keyboard",64,NULL, tskIDLE_PRIORITY + 1, NULL);
 }
-void keyboard_task(void *pvParameters )
+
+static void vKeyboardTask(void *pvParameters)
 {
-	uint8_t key_read_1=0,key_read_2=0;
-	while(1)
-	{
-		vTaskDelay(50);
+	uint16_t key, last_key, key_port;
 
-		key_read_1=0x0;
+	uint8_t key_counter=0;
+	uint16_t key_mask=0;
 
-		GPIO_WriteBit(PORT_X, KEY_X1,1);
-		GPIO_WriteBit(PORT_X, KEY_X2,0);
-		GPIO_WriteBit(PORT_X, KEY_X3,0);
-
-		if(GPIO_ReadInputDataBit(PORT_Y,KEY_Y1))
-		{
-			key_read_1=KEY_X1|(KEY_Y1<<4);
-		}
-
-		if(GPIO_ReadInputDataBit(PORT_Y,KEY_Y2))
-		{
-			key_read_1=KEY_X1|(KEY_Y2<<4);
-		}
-
-		if(GPIO_ReadInputDataBit(PORT_Y,KEY_Y3))
-		{
-			key_read_1=KEY_X1|(KEY_Y3<<4);
-		}
-
-		GPIO_WriteBit(PORT_X, KEY_X1,0);
-		GPIO_WriteBit(PORT_X, KEY_X2,1);
-		GPIO_WriteBit(PORT_X, KEY_X3,0);
-
-		if(GPIO_ReadInputDataBit(PORT_Y,KEY_Y1))
-		{
-			key_read_1=KEY_X2|(KEY_Y1<<4);
-		}
-
-		if(GPIO_ReadInputDataBit(PORT_Y,KEY_Y2))
-		{
-			key_read_1=KEY_X2|(KEY_Y2<<4);
-		}
-
-		if(GPIO_ReadInputDataBit(PORT_Y,KEY_Y3))
-		{
-			key_read_1=KEY_X2|(KEY_Y3<<4);
-		}
-
-		GPIO_WriteBit(PORT_X, KEY_X1,0);
-		GPIO_WriteBit(PORT_X, KEY_X2,0);
-		GPIO_WriteBit(PORT_X, KEY_X3,1);
-
-		if(GPIO_ReadInputDataBit(PORT_Y,KEY_Y1))
-		{
-			key_read_1=KEY_X3|(KEY_Y1<<4);
-		}
-
-		if(GPIO_ReadInputDataBit(PORT_Y,KEY_Y2))
-		{
-			key_read_1=KEY_X3|(KEY_Y2<<4);
-		}
-
-		if(GPIO_ReadInputDataBit(PORT_Y,KEY_Y3))
-		{
-			key_read_1=KEY_X3|(KEY_Y3<<4);
-		}
-
-		GPIO_WriteBit(PORT_X, KEY_X1,0);
-		GPIO_WriteBit(PORT_X, KEY_X2,0);
-		GPIO_WriteBit(PORT_X, KEY_X3,0);
-
-		vTaskDelay(50);
-
-		key_read_2=0x0;
-
-		GPIO_WriteBit(PORT_X, KEY_X1,1);
-		GPIO_WriteBit(PORT_X, KEY_X2,0);
-		GPIO_WriteBit(PORT_X, KEY_X3,0);
-
-		if(GPIO_ReadInputDataBit(PORT_Y,KEY_Y1))
-		{
-			key_read_2=KEY_X1|(KEY_Y1<<4);
-		}
-
-		if(GPIO_ReadInputDataBit(PORT_Y,KEY_Y2))
-		{
-			key_read_2=KEY_X1|(KEY_Y2<<4);
-		}
-
-		if(GPIO_ReadInputDataBit(PORT_Y,KEY_Y3))
-		{
-			key_read_2=KEY_X1|(KEY_Y3<<4);
-		}
-
-		GPIO_WriteBit(PORT_X, KEY_X1,0);
-		GPIO_WriteBit(PORT_X, KEY_X2,1);
-		GPIO_WriteBit(PORT_X, KEY_X3,0);
-
-		if(GPIO_ReadInputDataBit(PORT_Y,KEY_Y1))
-		{
-			key_read_2=KEY_X2|(KEY_Y1<<4);
-		}
-
-		if(GPIO_ReadInputDataBit(PORT_Y,KEY_Y2))
-		{
-			key_read_2=KEY_X2|(KEY_Y2<<4);
-		}
-
-		if(GPIO_ReadInputDataBit(PORT_Y,KEY_Y3))
-		{
-			key_read_2=KEY_X2|(KEY_Y3<<4);
-		}
-
-		GPIO_WriteBit(PORT_X, KEY_X1,0);
-		GPIO_WriteBit(PORT_X, KEY_X2,0);
-		GPIO_WriteBit(PORT_X, KEY_X3,1);
-
-		if(GPIO_ReadInputDataBit(PORT_Y,KEY_Y1))
-		{
-			key_read_2=KEY_X3|(KEY_Y1<<4);
-		}
-
-		if(GPIO_ReadInputDataBit(PORT_Y,KEY_Y2))
-		{
-			key_read_2=KEY_X3|(KEY_Y2<<4);
-		}
-
-		if(GPIO_ReadInputDataBit(PORT_Y,KEY_Y3))
-		{
-			key_read_2=KEY_X3|(KEY_Y3<<4);
-		}
-
-		GPIO_WriteBit(PORT_X, KEY_X1,0);
-		GPIO_WriteBit(PORT_X, KEY_X2,0);
-		GPIO_WriteBit(PORT_X, KEY_X3,0);
+	key_mask=KI_0 | KI_1 | KI_2;
+    while(1)
+    {
 
 
-		if((key_read_1==key_read_2) && (key_read_1!=0x0))//
-		{
-			key_read_2=0x0;
-		}
+//    	    key_counter++;
+//    	    key_counter&=0x3;
 
-	}
+    for(key_counter=0;key_counter<4;key_counter++)
+    {
+			if(key_counter==0)
+    		{
+				KEYB_PORT->BSRRL=(KO_0 | KO_1 | KO_2 | KO_3);
+				KEYB_PORT->BSRRH=KO_0;
+
+				key_port=GPIO_ReadInputData(KEYB_PORT)&key_mask;
+				if(key_port!=key_mask)
+				{
+					break;
+				}
+			}
+			if(key_counter==1)
+			{
+				KEYB_PORT->BSRRL=(KO_0 | KO_1 | KO_2 | KO_3);
+				KEYB_PORT->BSRRH=KO_1;
+
+				key_port=GPIO_ReadInputData(KEYB_PORT)&key_mask;
+				if(key_port!=key_mask)
+				{
+					break;
+				}
+			}
+
+			if(key_counter==2)
+			{
+				KEYB_PORT->BSRRL=(KO_0 | KO_1 | KO_2 | KO_3);
+				KEYB_PORT->BSRRH=KO_2;
+
+				key_port=GPIO_ReadInputData(KEYB_PORT)&key_mask;
+				if(key_port!=key_mask)
+				{
+					break;
+				}
+			}
+
+			if(key_counter==3)
+			{
+				KEYB_PORT->BSRRL=(KO_0 | KO_1 | KO_2 | KO_3);
+				KEYB_PORT->BSRRH=KO_3;
+
+				key_port=GPIO_ReadInputData(KEYB_PORT)&key_mask;
+				if(key_port!=key_mask)
+				{
+					break;
+				}
+				//key_counter=0;
+			}
+    }
+
+//    //	key_counter&=0x3;
+    	vTaskDelay(10);
+//
+    	key_port=GPIO_ReadInputData(KEYB_PORT)&key_mask;
+
+    	vTaskDelay(10);
+        if(key_port==key_mask)
+        {
+        	last_key=0xFFFF;
+        }
+        else
+        {
+
+			if(key_port==(GPIO_ReadInputData(KEYB_PORT)&key_mask))
+			{
+				if((key_port&KI_0)==0)
+				{
+					key=key_counter;
+				}
+
+	//			if((key&KI_1)==0)
+	//			{
+	//				key=(key_counter|(1<<2));
+	//			}
+
+				if((key_port&KI_2)==0)
+				{
+					key=(key_counter|(2<<2));
+				}
+
+				if(key!=last_key)
+				{
+					 last_key=key;
+
+					 xSemaphoreGive(xKeySemaphore);
+					 if( xKeyQueue != 0 )
+					 {
+						 xQueueSend( xKeyQueue,  &key, ( portTickType ) 0 );
+					 }
+				}
+		 }
+     }
+
+	vTaskDelay(10);
+    }
 }

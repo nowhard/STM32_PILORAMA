@@ -1,110 +1,115 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <history>
    <processor signature="arm-none-eabi-gcc noversion nomachine -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=softfp -mthumb -Wall -ffunction-sections -g -O0 -c -DUSE_STDPERIPH_DRIVER -D__ASSEMBLY__ -DSTM32F405RG -DSTM32F4XX -D__FPU_USED -ID:\PROJECTS\GIT_REPOSITORY\STM32\STM32F2_PILORAMA -ID:\PROJECTS\GIT_REPOSITORY\STM32\STM32F2_PILORAMA\freertos_test\FreeRTOSV7.1.0\Source\portable -ID:\PROJECTS\GIT_REPOSITORY\STM32\STM32F2_PILORAMA\freertos_test\FreeRTOSV7.1.0\Source\include -ID:\PROJECTS\GIT_REPOSITORY\STM32\STM32F2_PILORAMA\freertos_test\cmsis_boot -ID:\PROJECTS\GIT_REPOSITORY\STM32\STM32F2_PILORAMA\freertos_test\cmsis -ID:\PROJECTS\GIT_REPOSITORY\STM32\STM32F2_PILORAMA\freertos_test\cmsis_lib -ID:\PROJECTS\GIT_REPOSITORY\STM32\STM32F2_PILORAMA\freertos_test\FreeRTOSV7.1.0\Source\portable\GCC -ID:\PROJECTS\GIT_REPOSITORY\STM32\STM32F2_PILORAMA\freertos_test\FreeRTOSV7.1.0 -ID:\PROJECTS\GIT_REPOSITORY\STM32 -ID:\PROJECTS\GIT_REPOSITORY\STM32\STM32F2_PILORAMA\freertos_test\protocols -ID:\PROJECTS\GIT_REPOSITORY\STM32\STM32F2_PILORAMA\freertos_test -ID:\PROJECTS\GIT_REPOSITORY\STM32\STM32F2_PILORAMA\freertos_test\FreeRTOSV7.1.0\Source\portable\GCC\ARM_CM4F -ID:\PROJECTS\GIT_REPOSITORY\STM32\STM32F2_PILORAMA\freertos_test\cmsis_lib\include -ID:\PROJECTS\GIT_REPOSITORY\STM32\STM32F2_PILORAMA\freertos_test\devices -ID:\PROJECTS\GIT_REPOSITORY\STM32\STM32F2_PILORAMA\freertos_test\FreeRTOSV7.1.0\Source">
-      <target file="stm32f4xx_exti.o" lastModified="146fb2240e2">
-         <source file="..\..\..\cmsis_lib\source\stm32f4xx_exti.c" lastModified="142a2fcbff3"/>
-      </target>
-      <target file="stm32f4xx_gpio.o" lastModified="146fb223941">
-         <source file="..\..\..\cmsis_lib\source\stm32f4xx_gpio.c" lastModified="14125d809a2"/>
-      </target>
-      <target file="buzzer.o" lastModified="146fb222e83">
-         <source file="..\..\..\devices\buzzer.c" lastModified="14293d6b090"/>
-      </target>
-      <target file="channels.o" lastModified="146fb224046">
-         <source file="..\..\..\protocols\channels.c" lastModified="1428e0f8719"/>
-      </target>
-      <target file="tasks.o" lastModified="146fb2237ea">
-         <source file="..\..\..\FreeRTOSV7.1.0\Source\tasks.c" lastModified="13e3b1eb910"/>
-      </target>
-      <target file="tablo_parser.o" lastModified="146fb222d3b">
-         <source file="..\..\..\protocols\tablo_parser.c" lastModified="1430a5f7a11"/>
-      </target>
-      <target file="core_cm3.o" lastModified="146fb222dc8">
-         <source file="..\..\..\cmsis\core_cm3.c" lastModified="13f614ce4cf"/>
-      </target>
       <target file="power.o" lastModified="146fae22330">
          <source file="..\..\..\devices\power.c" lastModified="1456435c483"/>
-      </target>
-      <target file="stm32f4xx_syscfg.o" lastModified="146fb222b28">
-         <source file="..\..\..\cmsis_lib\source\stm32f4xx_syscfg.c" lastModified="14125d878f6"/>
-      </target>
-      <target file="startup_stm32f4xx.o" lastModified="146fb2232aa">
-         <source file="..\..\..\cmsis_boot\startup\startup_stm32f4xx.c" lastModified="13cedd0ed70"/>
-      </target>
-      <target file="proto.o" lastModified="146fb22324c">
-         <source file="..\..\..\protocols\proto.c" lastModified="1430a6559bb"/>
-      </target>
-      <target file="croutine.o" lastModified="146fb223ecf">
-         <source file="..\..\..\FreeRTOSV7.1.0\Source\croutine.c" lastModified="13438131cf3"/>
-      </target>
-      <target file="stm32f4xx_tim.o" lastModified="146fb22443e">
-         <source file="..\..\..\cmsis_lib\source\stm32f4xx_tim.c" lastModified="14125d83d92"/>
-      </target>
-      <target file="power_detector.o" lastModified="146fb2244ca">
-         <source file="..\..\..\devices\power_detector.c" lastModified="142a337107a"/>
-      </target>
-      <target file="system_stm32f4xx.o" lastModified="146fb223a4b">
-         <source file="..\..\..\cmsis_boot\system_stm32f4xx.c" lastModified="1428e3c1104"/>
-      </target>
-      <target file="misc.o" lastModified="146fb22424a">
-         <source file="..\..\..\cmsis_lib\source\misc.c" lastModified="14125d86b88"/>
-      </target>
-      <target file="stm32f4xx_dma.o" lastModified="146fb223c2f">
-         <source file="..\..\..\cmsis_lib\source\stm32f4xx_dma.c" lastModified="14149976659"/>
-      </target>
-      <target file="stm32f4xx_iwdg.o" lastModified="146fb223327">
-         <source file="..\..\..\cmsis_lib\source\stm32f4xx_iwdg.c" lastModified="1428e61eab6"/>
-      </target>
-      <target file="stm32f4xx_spi.o" lastModified="146fb223faa">
-         <source file="..\..\..\cmsis_lib\source\stm32f4xx_spi.c" lastModified="14125d81f8b"/>
-      </target>
-      <target file="queue.o" lastModified="146fb223dc6">
-         <source file="..\..\..\FreeRTOSV7.1.0\Source\queue.c" lastModified="13e3b1eb900"/>
-      </target>
-      <target file="keyboard.o" lastModified="146fb223895">
-         <source file="..\..\..\devices\keyboard.c" lastModified="142938aa6af"/>
-      </target>
-      <target file="tablo.o" lastModified="146fb223588">
-         <source file="..\..\..\devices\tablo.c" lastModified="142ebc2c6c1"/>
-      </target>
-      <target file="list.o" lastModified="146fb2239be">
-         <source file="..\..\..\FreeRTOSV7.1.0\Source\list.c" lastModified="13e3b1eb900"/>
-      </target>
-      <target file="stm32f4xx_rcc.o" lastModified="146fb22347f">
-         <source file="..\..\..\cmsis_lib\source\stm32f4xx_rcc.c" lastModified="14125d7fd5d"/>
-      </target>
-      <target file="watchdog.o" lastModified="146fb2236e0">
-         <source file="..\..\..\devices\watchdog.c" lastModified="14293dfe62b"/>
-      </target>
-      <target file="indicator.o" lastModified="146fb2233a4">
-         <source file="..\..\..\devices\indicator.c" lastModified="14305a8c0ae"/>
-      </target>
-      <target file="stm32f4xx_pwr.o" lastModified="146fb222ffa">
-         <source file="..\..\..\cmsis_lib\source\stm32f4xx_pwr.c" lastModified="14149991717"/>
-      </target>
-      <target file="port.o" lastModified="146fb223e43">
-         <source file="..\..\..\FreeRTOSV7.1.0\Source\portable\GCC\ARM_CM4F\port.c" lastModified="13e3b1eb900"/>
-      </target>
-      <target file="timers.o" lastModified="146fb2234dc">
-         <source file="..\..\..\FreeRTOSV7.1.0\Source\timers.c" lastModified="13e3b1eb910"/>
       </target>
       <target file="relay.o" lastModified="146fae22207">
          <source file="..\..\..\devices\relay.c" lastModified="142987014fa"/>
       </target>
-      <target file="encoder.o" lastModified="146fc3a2857">
-         <source file="..\..\..\devices\encoder.c" lastModified="146fc3a21a1"/>
+   </processor>
+   <processor signature="arm-none-eabi-gcc noversion nomachine -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=softfp -mthumb -Wall -ffunction-sections -g -O0 -c -DUSE_STDPERIPH_DRIVER -D__ASSEMBLY__ -DSTM32F405RG -DSTM32F4XX -D__FPU_USED -ID:\PROJECTS\GIT_REPOSITORY\STM32\STM32F2_PILORAMA -ID:\PROJECTS\GIT_REPOSITORY\STM32\STM32F2_PILORAMA\freertos_test\menu -ID:\PROJECTS\GIT_REPOSITORY\STM32\STM32F2_PILORAMA\freertos_test\FreeRTOSV7.1.0\Source\portable -ID:\PROJECTS\GIT_REPOSITORY\STM32\STM32F2_PILORAMA\freertos_test\FreeRTOSV7.1.0\Source\include -ID:\PROJECTS\GIT_REPOSITORY\STM32\STM32F2_PILORAMA\freertos_test\cmsis_boot -ID:\PROJECTS\GIT_REPOSITORY\STM32\STM32F2_PILORAMA\freertos_test\cmsis -ID:\PROJECTS\GIT_REPOSITORY\STM32\STM32F2_PILORAMA\freertos_test\cmsis_lib -ID:\PROJECTS\GIT_REPOSITORY\STM32\STM32F2_PILORAMA\freertos_test\FreeRTOSV7.1.0\Source\portable\GCC -ID:\PROJECTS\GIT_REPOSITORY\STM32\STM32F2_PILORAMA\freertos_test\FreeRTOSV7.1.0 -ID:\PROJECTS\GIT_REPOSITORY\STM32 -ID:\PROJECTS\GIT_REPOSITORY\STM32\STM32F2_PILORAMA\freertos_test\protocols -ID:\PROJECTS\GIT_REPOSITORY\STM32\STM32F2_PILORAMA\freertos_test -ID:\PROJECTS\GIT_REPOSITORY\STM32\STM32F2_PILORAMA\freertos_test\FreeRTOSV7.1.0\Source\portable\GCC\ARM_CM4F -ID:\PROJECTS\GIT_REPOSITORY\STM32\STM32F2_PILORAMA\freertos_test\cmsis_lib\include -ID:\PROJECTS\GIT_REPOSITORY\STM32\STM32F2_PILORAMA\freertos_test\devices -ID:\PROJECTS\GIT_REPOSITORY\STM32\STM32F2_PILORAMA\freertos_test\FreeRTOSV7.1.0\Source">
+      <target file="menu.o" lastModified="1471a174cc6">
+         <source file="..\..\..\menu\menu.c" lastModified="1471a0ffe5a"/>
       </target>
-      <target file="spi_bus.o" lastModified="146fb2241bd">
+      <target file="misc.o" lastModified="1471a0f0b5f">
+         <source file="..\..\..\cmsis_lib\source\misc.c" lastModified="14125d86b88"/>
+      </target>
+      <target file="watchdog.o" lastModified="1471a0efe5f">
+         <source file="..\..\..\devices\watchdog.c" lastModified="14293dfe62b"/>
+      </target>
+      <target file="queue.o" lastModified="1471a0f06db">
+         <source file="..\..\..\FreeRTOSV7.1.0\Source\queue.c" lastModified="13e3b1eb900"/>
+      </target>
+      <target file="stm32f4xx_tim.o" lastModified="1471a0f0d72">
+         <source file="..\..\..\cmsis_lib\source\stm32f4xx_tim.c" lastModified="14125d83d92"/>
+      </target>
+      <target file="timers.o" lastModified="1471a0efbcf">
+         <source file="..\..\..\FreeRTOSV7.1.0\Source\timers.c" lastModified="13e3b1eb910"/>
+      </target>
+      <target file="indicator.o" lastModified="1471a0ef798">
+         <source file="..\..\..\devices\indicator.c" lastModified="14305a8c0ae"/>
+      </target>
+      <target file="stm32f4xx_iwdg.o" lastModified="1471a0ef71b">
+         <source file="..\..\..\cmsis_lib\source\stm32f4xx_iwdg.c" lastModified="1428e61eab6"/>
+      </target>
+      <target file="proto.o" lastModified="1471a0ef641">
+         <source file="..\..\..\protocols\proto.c" lastModified="1430a6559bb"/>
+      </target>
+      <target file="tasks.o" lastModified="1471a0effa7">
+         <source file="..\..\..\FreeRTOSV7.1.0\Source\tasks.c" lastModified="13e3b1eb910"/>
+      </target>
+      <target file="stm32f4xx_exti.o" lastModified="1471a0f09f8">
+         <source file="..\..\..\cmsis_lib\source\stm32f4xx_exti.c" lastModified="142a2fcbff3"/>
+      </target>
+      <target file="stm32f4xx_gpio.o" lastModified="1471a0f042b">
+         <source file="..\..\..\cmsis_lib\source\stm32f4xx_gpio.c" lastModified="14125d809a2"/>
+      </target>
+      <target file="stm32f4xx_usart.o" lastModified="1471a0ef2d6">
+         <source file="..\..\..\cmsis_lib\source\stm32f4xx_usart.c" lastModified="14149978ccd"/>
+      </target>
+      <target file="stm32f4xx_rcc.o" lastModified="1471a0ef9ea">
+         <source file="..\..\..\cmsis_lib\source\stm32f4xx_rcc.c" lastModified="14125d7fd5d"/>
+      </target>
+      <target file="stm32f4xx_pwr.o" lastModified="1471a0ef391">
+         <source file="..\..\..\cmsis_lib\source\stm32f4xx_pwr.c" lastModified="14149991717"/>
+      </target>
+      <target file="croutine.o" lastModified="1471a0f07e4">
+         <source file="..\..\..\FreeRTOSV7.1.0\Source\croutine.c" lastModified="13438131cf3"/>
+      </target>
+      <target file="tablo_parser.o" lastModified="1471a0ef0f1">
+         <source file="..\..\..\protocols\tablo_parser.c" lastModified="1430a5f7a11"/>
+      </target>
+      <target file="list.o" lastModified="1471a0f04b8">
+         <source file="..\..\..\FreeRTOSV7.1.0\Source\list.c" lastModified="13e3b1eb900"/>
+      </target>
+      <target file="port.o" lastModified="1471a0f0758">
+         <source file="..\..\..\FreeRTOSV7.1.0\Source\portable\GCC\ARM_CM4F\port.c" lastModified="13e3b1eb900"/>
+      </target>
+      <target file="buzzer.o" lastModified="1471a0ef21a">
+         <source file="..\..\..\devices\buzzer.c" lastModified="14293d6b090"/>
+      </target>
+      <target file="startup_stm32f4xx.o" lastModified="1471a0ef69e">
+         <source file="..\..\..\cmsis_boot\startup\startup_stm32f4xx.c" lastModified="13cedd0ed70"/>
+      </target>
+      <target file="core_cm3.o" lastModified="1471a0ef16e">
+         <source file="..\..\..\cmsis\core_cm3.c" lastModified="13f614ce4cf"/>
+      </target>
+      <target file="power_detector.o" lastModified="1471a0f0e0e">
+         <source file="..\..\..\devices\power_detector.c" lastModified="142a337107a"/>
+      </target>
+      <target file="stm32f4xx_dma.o" lastModified="1471a0f0610">
+         <source file="..\..\..\cmsis_lib\source\stm32f4xx_dma.c" lastModified="14149976659"/>
+      </target>
+      <target file="channels.o" lastModified="1471a0f093c">
+         <source file="..\..\..\protocols\channels.c" lastModified="1428e0f8719"/>
+      </target>
+      <target file="keyboard.o" lastModified="1471a174b40">
+         <source file="..\..\..\devices\keyboard.c" lastModified="1471a173ff5"/>
+      </target>
+      <target file="spi_bus.o" lastModified="1471a0f0ad2">
          <source file="..\..\..\devices\spi_bus.c" lastModified="14300019036"/>
       </target>
-      <target file="heap_1.o" lastModified="146fb2242d6">
-         <source file="..\..\..\FreeRTOSV7.1.0\Source\portable\MemMang\heap_1.c" lastModified="13e3b1eb900"/>
+      <target file="tablo.o" lastModified="1471a0efcf7">
+         <source file="..\..\..\devices\tablo.c" lastModified="142ebc2c6c1"/>
       </target>
-      <target file="main.o" lastModified="146fbf13059">
+      <target file="stm32f4xx_syscfg.o" lastModified="1471a0eee51">
+         <source file="..\..\..\cmsis_lib\source\stm32f4xx_syscfg.c" lastModified="14125d878f6"/>
+      </target>
+      <target file="stm32f4xx_spi.o" lastModified="1471a0f08af">
+         <source file="..\..\..\cmsis_lib\source\stm32f4xx_spi.c" lastModified="14125d81f8b"/>
+      </target>
+      <target file="encoder.o" lastModified="1471a0efdc3">
+         <source file="..\..\..\devices\encoder.c" lastModified="146fc3a21a1"/>
+      </target>
+      <target file="main.o" lastModified="1471a174a65">
          <source file="..\..\..\main.c" lastModified="146fbf1158e"/>
       </target>
-      <target file="stm32f4xx_usart.o" lastModified="146fb222f6e">
-         <source file="..\..\..\cmsis_lib\source\stm32f4xx_usart.c" lastModified="14149978ccd"/>
+      <target file="system_stm32f4xx.o" lastModified="1471a0f0554">
+         <source file="..\..\..\cmsis_boot\system_stm32f4xx.c" lastModified="1428e3c1104"/>
+      </target>
+      <target file="heap_1.o" lastModified="1471a0f0c0b">
+         <source file="..\..\..\FreeRTOSV7.1.0\Source\portable\MemMang\heap_1.c" lastModified="13e3b1eb900"/>
       </target>
    </processor>
 </history>
