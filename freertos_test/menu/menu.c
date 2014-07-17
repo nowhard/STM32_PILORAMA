@@ -72,16 +72,16 @@ MAKE_MENU(m_s2i2,  m_s2i3,    m_s2i1,      m_s1i2,     m_s4i2	 ,   0				 		, "De
 MAKE_MENU(m_s2i3,  m_s2i4,    m_s2i2,      m_s1i2,     m_s4i3	 ,   0						, "Measure time");
 MAKE_MENU(m_s2i4,  NULL_ENTRY,m_s2i3,      m_s1i2,     m_s4i4  	 ,   0						, "ADC convert time");
 //// подменю Измерения
-MAKE_MENU(m_s3i1,  NULL_ENTRY,NULL_ENTRY,  m_s1i1,     NULL_ENTRY,   MENU_MEASURE			, "Measure");
+//MAKE_MENU(m_s3i1,  NULL_ENTRY,NULL_ENTRY,  m_s1i1,     NULL_ENTRY,   MENU_MEASURE			, "Measure");
 
 
-MAKE_MENU(m_s4i1,  NULL_ENTRY,    NULL_ENTRY,      m_s2i1,     NULL_ENTRY,   MENU_PULSE_TIME		, "");
-MAKE_MENU(m_s4i2,  NULL_ENTRY,    NULL_ENTRY,      m_s2i2,     NULL_ENTRY,   MENU_DEAD_TIME 		, "");
-MAKE_MENU(m_s4i3,  NULL_ENTRY,    NULL_ENTRY,      m_s2i3,     NULL_ENTRY,   MENU_MEASURE_TIME		, "");
-MAKE_MENU(m_s4i4,  NULL_ENTRY,    NULL_ENTRY,      m_s2i4,     NULL_ENTRY,   MENU_ADC_CONVERT_TIME	, "");
+MAKE_MENU(m_s4i1,  NULL_ENTRY,    NULL_ENTRY,      m_s2i1,     NULL_ENTRY,   MENU_SET_NULL		, "");
+MAKE_MENU(m_s4i2,  NULL_ENTRY,    NULL_ENTRY,      m_s2i2,     NULL_ENTRY,   MENU_STEP_START_STOP 		, "");
+//MAKE_MENU(m_s4i3,  NULL_ENTRY,    NULL_ENTRY,      m_s2i3,     NULL_ENTRY,   MENU_MEASURE_TIME		, "");
+//MAKE_MENU(m_s4i4,  NULL_ENTRY,    NULL_ENTRY,      m_s2i4,     NULL_ENTRY,   MENU_ADC_CONVERT_TIME	, "");
 
 
-MAKE_MENU(m_s5i1,  NULL_ENTRY,NULL_ENTRY,  m_s1i3,     NULL_ENTRY,   MENU_CALIBRATE			, "Calibrate");
+//MAKE_MENU(m_s5i1,  NULL_ENTRY,NULL_ENTRY,  m_s1i3,     NULL_ENTRY,   MENU_CALIBRATE			, "Calibrate");
 
 
 void menuChange(menuItem* NewMenu)
@@ -194,7 +194,6 @@ void Menu_Handle_Key(menuItem* currentMenuItem,uint16_t current_key)
 	{
 		if((void*)currentMenuItem->Child!=(void*)&NULL_ENTRY)//если есть вложенные меню у потомков
 		{
-
 			switch(current_key)
 			{
 				case KEY_6:
@@ -219,33 +218,15 @@ void Menu_Handle_Key(menuItem* currentMenuItem,uint16_t current_key)
 						switch(currentMenuItem->Select)
 						{
 
-							case MENU_MEASURE:
+							case MENU_SET_NULL:
 							{
 
 							}
 							break;
 
-							case MENU_PULSE_TIME:
+							case MENU_STEP_START_STOP:
 							{
 								//Lcd_Write_Str ("Set Pulse Time:");
-							}
-							break;
-
-							case MENU_DEAD_TIME:
-							{
-								//Lcd_Write_Str ("Set Dead Time:");
-							}
-							break;
-
-							case MENU_MEASURE_TIME:
-							{
-								//Lcd_Write_Str ("Set Measure Time:");
-							}
-							break;
-
-							case MENU_ADC_CONVERT_TIME:
-							{
-								//Lcd_Write_Str ("Set ADC Conv Time:");
 							}
 							break;
 						}
@@ -258,13 +239,7 @@ void Menu_Handle_Key(menuItem* currentMenuItem,uint16_t current_key)
 		{
 			switch(currentMenuItem->Select)
 			{
-				case MENU_MEASURE:
-				{
-
-				}
-				break;
-
-				case MENU_PULSE_TIME:
+				case MENU_SET_NULL:
 				{
 					switch(current_key)
 					{
@@ -288,7 +263,8 @@ void Menu_Handle_Key(menuItem* currentMenuItem,uint16_t current_key)
 					}
 				}
 				break;
-				case MENU_DEAD_TIME:
+
+				case MENU_STEP_START_STOP:
 				{
 					switch(current_key)
 					{
@@ -303,79 +279,6 @@ void Menu_Handle_Key(menuItem* currentMenuItem,uint16_t current_key)
 
 					}
 					break;
-
-						case KEY_0:
-						{
-
-						}
-						break;
-					}
-				}
-				break;
-				case MENU_MEASURE_TIME:
-				{
-					switch(current_key)
-					{
-						case KEY_6:
-						{
-
-						}
-						break;
-
-						case KEY_8:
-						{
-
-						}
-						break;
-
-						case KEY_0:
-						{
-
-						}
-						break;
-					}
-				}
-				break;
-				case MENU_ADC_CONVERT_TIME:
-				{
-					switch(current_key)
-					{
-						case KEY_6:
-						{
-
-						}
-						break;
-
-						case KEY_8:
-						{
-
-						}
-						break;
-
-							case KEY_0:
-							{
-
-							}
-							break;
-					}
-				}
-				break;
-
-				case MENU_CALIBRATE:
-				{
-					switch(current_key)
-					{
-						case KEY_6:
-						{
-
-						}
-						break;
-
-						case KEY_8:
-						{
-
-						}
-						break;
 
 						case KEY_0:
 						{

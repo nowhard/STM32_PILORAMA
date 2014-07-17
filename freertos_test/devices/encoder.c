@@ -24,9 +24,9 @@ void TIM1_UP_TIM10_IRQHandler(void)
     TIM_ClearITPendingBit(TIM1, TIM_IT_Update);
 
     if(TIM1->CR1 & TIM_CR1_DIR)
-    	counter2-=0x10000 ;
+    	counter2-- ;
     else
-    	counter2+=0x10000;
+    	counter2++;
 
     tim1_cnt=TIM1->CNT;
   }
@@ -35,14 +35,13 @@ void TIM1_UP_TIM10_IRQHandler(void)
 void Encoder_Init(void)//инициализаци€ таймера дола
 {
 	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOA, ENABLE);//тактируем портј
-	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOE, ENABLE);//тактируем портE
 	RCC_APB1PeriphClockCmd(RCC_APB1ENR_TIM3EN, ENABLE);//тактируем таймер 3
 	RCC_APB2PeriphClockCmd(RCC_APB2ENR_TIM1EN, ENABLE);//тактируем таймер 1
 
 	 	//настройка таймера дола
 		TIM_TimeBaseInitTypeDef timer_base;
 	    TIM_TimeBaseStructInit(&timer_base);
-	    timer_base.TIM_Period = 4;//65535;
+	    timer_base.TIM_Period = 1;//65535;
 	    timer_base.TIM_Prescaler=0;
 	    timer_base.TIM_ClockDivision=0;
 	    timer_base.TIM_CounterMode = TIM_CounterMode_Down | TIM_CounterMode_Up;
@@ -82,15 +81,14 @@ void Encoder_Init(void)//инициализаци€ таймера дола
 	    GPIO_PinAFConfig(GPIOA, GPIO_PinSource6, GPIO_AF_TIM3);
 	    GPIO_PinAFConfig(GPIOA, GPIO_PinSource7, GPIO_AF_TIM3);
 
-	    GPIO_InitStructure.GPIO_Pin = GPIO_Pin_9|GPIO_Pin_11;
+	    GPIO_InitStructure.GPIO_Pin = GPIO_Pin_8|GPIO_Pin_9;
 	    GPIO_InitStructure.GPIO_Mode  = GPIO_Mode_AF;;
 	    GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;
 	    GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
 	    GPIO_InitStructure.GPIO_Speed = GPIO_Speed_2MHz;
-	    GPIO_Init(GPIOE, &GPIO_InitStructure);
+	    GPIO_Init(GPIOA, &GPIO_InitStructure);
 
-	    GPIO_PinAFConfig(GPIOE,GPIO_PinSource9,GPIO_AF_TIM1);
-	    GPIO_PinAFConfig(GPIOE,GPIO_PinSource11,GPIO_AF_TIM1);
+	    GPIO_PinAFConfig(GPIOA,GPIO_PinSource8,GPIO_AF_TIM1);
+	    GPIO_PinAFConfig(GPIOA,GPIO_PinSource9,GPIO_AF_TIM1);
 	    TIM1->CNT=0;
-
 }

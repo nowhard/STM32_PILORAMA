@@ -44,11 +44,12 @@ static void Init_Task(void *pvParameters)
 
 	//Watchdog_Init();
 
-//	spi1_config();
+	spi1_config();
+	spi_buses_init();
 //	spi2_config();
 //	spi3_config();
 
-//	tablo_devices_init();
+	//tablo_devices_init();
 
 
 

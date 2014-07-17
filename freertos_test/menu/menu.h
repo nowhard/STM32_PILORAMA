@@ -13,12 +13,8 @@ void Menu_Next(void);
 void MenuHandler( void *pvParameters );
 unsigned char startMenu(void);
 enum {
-    MENU_MEASURE=1,
-    MENU_PULSE_TIME,
-    MENU_DEAD_TIME,
-    MENU_MEASURE_TIME,
-    MENU_ADC_CONVERT_TIME,
-    MENU_CALIBRATE
+    MENU_SET_NULL=1,
+    MENU_STEP_START_STOP,
 };
 
 #endif
