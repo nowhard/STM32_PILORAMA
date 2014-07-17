@@ -61,11 +61,6 @@ enum
 /*
 indicator types
   */
-//#define IND_TYPE_NONE       0x0//
-//#define IND_TYPE_SEGMENT    0x1//
-//#define IND_TYPE_LINE       0x2//
-//#define IND_TYPE_ARC        0x3//
-
 enum
 {
 	 IND_TYPE_NONE       =0x0,//
@@ -76,11 +71,11 @@ enum
 
 #define IND_COMMAND_LEN		13//
 
-#define IND_ALL_NUM			20//
+#define IND_ALL_NUM			2//
 
-#define IND_SPI_BUS_1_NUM	6 //
+#define IND_SPI_BUS_1_NUM	2 //
 #define IND_SPI_BUS_2_NUM	6
-#define IND_SPI_BUS_3_NUM	6
+//#define IND_SPI_BUS_3_NUM	6
 
 uint8_t indicators_init(void);//
 void Indicator_Blink_Handler(uint8_t bus);

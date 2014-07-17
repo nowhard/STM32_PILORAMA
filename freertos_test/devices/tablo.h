@@ -9,8 +9,6 @@
 #define TABLO_PROTO_BUF_LEN		0xC0
 
 
-//#define DISCR_OUT_ON	0x1
-//#define DISCR_OUT_OFF	0x0
 
 enum
 {

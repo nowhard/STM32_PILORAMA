@@ -27,14 +27,14 @@
       <target file="timers.o" lastModified="1471a0efbcf">
          <source file="..\..\..\FreeRTOSV7.1.0\Source\timers.c" lastModified="13e3b1eb910"/>
       </target>
-      <target file="indicator.o" lastModified="147436ec609">
+      <target file="indicator.o" lastModified="1474430a812">
          <source file="..\..\..\devices\indicator.c" lastModified="14305a8c0ae"/>
+      </target>
+      <target file="proto.o" lastModified="14744a50d02">
+         <source file="..\..\..\protocols\proto.c" lastModified="14744a4dbef"/>
       </target>
       <target file="stm32f4xx_iwdg.o" lastModified="1471a0ef71b">
          <source file="..\..\..\cmsis_lib\source\stm32f4xx_iwdg.c" lastModified="1428e61eab6"/>
-      </target>
-      <target file="proto.o" lastModified="147436ec56d">
-         <source file="..\..\..\protocols\proto.c" lastModified="1430a6559bb"/>
       </target>
       <target file="tasks.o" lastModified="1471a0effa7">
          <source file="..\..\..\FreeRTOSV7.1.0\Source\tasks.c" lastModified="13e3b1eb910"/>
@@ -57,7 +57,7 @@
       <target file="croutine.o" lastModified="1471a0f07e4">
          <source file="..\..\..\FreeRTOSV7.1.0\Source\croutine.c" lastModified="13438131cf3"/>
       </target>
-      <target file="tablo_parser.o" lastModified="147436ec231">
+      <target file="tablo_parser.o" lastModified="1474430a023">
          <source file="..\..\..\protocols\tablo_parser.c" lastModified="1430a5f7a11"/>
       </target>
       <target file="list.o" lastModified="1471a0f04b8">
@@ -66,7 +66,7 @@
       <target file="port.o" lastModified="1471a0f0758">
          <source file="..\..\..\FreeRTOSV7.1.0\Source\portable\GCC\ARM_CM4F\port.c" lastModified="13e3b1eb900"/>
       </target>
-      <target file="buzzer.o" lastModified="147436ec2be">
+      <target file="buzzer.o" lastModified="1474430a0cf">
          <source file="..\..\..\devices\buzzer.c" lastModified="14293d6b090"/>
       </target>
       <target file="startup_stm32f4xx.o" lastModified="1471a0ef69e">
@@ -87,11 +87,11 @@
       <target file="keyboard.o" lastModified="1471a174b40">
          <source file="..\..\..\devices\keyboard.c" lastModified="1471a173ff5"/>
       </target>
-      <target file="spi_bus.o" lastModified="1474371c4c3">
+      <target file="spi_bus.o" lastModified="1474430a9c7">
          <source file="..\..\..\devices\spi_bus.c" lastModified="1474371bd31"/>
       </target>
-      <target file="tablo.o" lastModified="147436ec6b5">
-         <source file="..\..\..\devices\tablo.c" lastModified="142ebc2c6c1"/>
+      <target file="tablo.o" lastModified="1474430a89f">
+         <source file="..\..\..\devices\tablo.c" lastModified="147440801a3"/>
       </target>
       <target file="stm32f4xx_syscfg.o" lastModified="1471a0eee51">
          <source file="..\..\..\cmsis_lib\source\stm32f4xx_syscfg.c" lastModified="14125d878f6"/>
@@ -99,11 +99,11 @@
       <target file="stm32f4xx_spi.o" lastModified="1471a0f08af">
          <source file="..\..\..\cmsis_lib\source\stm32f4xx_spi.c" lastModified="14125d81f8b"/>
       </target>
-      <target file="encoder.o" lastModified="147439fbad0">
-         <source file="..\..\..\devices\encoder.c" lastModified="147439f3fa5"/>
+      <target file="encoder.o" lastModified="1474408d389">
+         <source file="..\..\..\devices\encoder.c" lastModified="14743ff6f1e"/>
       </target>
-      <target file="main.o" lastModified="1474393f92b">
-         <source file="..\..\..\main.c" lastModified="1474393e594"/>
+      <target file="main.o" lastModified="14744494b91">
+         <source file="..\..\..\main.c" lastModified="147443f89b4"/>
       </target>
       <target file="system_stm32f4xx.o" lastModified="1471a0f0554">
          <source file="..\..\..\cmsis_boot\system_stm32f4xx.c" lastModified="1428e3c1104"/>

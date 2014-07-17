@@ -1,33 +1,31 @@
 #ifndef PROTO_H
 #define PROTO_H
-
 #include "stm32f4xx.h"
-#include "stm32f4xx_gpio.h"
-#include "stm32f4xx_rcc.h"
-#include "stm32f4xx_tim.h"
-#include "stm32f4xx_usart.h"
-#include "misc.h"
-
-// FreeRTOS:
-#include "FreeRTOS.h"
-#include "task.h"
-#include "queue.h"
-#include "semphr.h"
-
 enum
 {
 	PROTO_FIRST_INIT=0,
 	PROTO_REINIT
 };
 void Proto_Init(uint8_t init_type);//
-void ProtoProcess( void *pvParameters );//
 
-//#define USARTx USART6
-//#define GPIO_AF_USARTx GPIO_AF_USART6
-//#define USARTx_IRQn	USART6_IRQn
-//#define RCC_USARTx RCC_APB1Periph_USART6
 
-//#define CHANNEL_NUMBER	1
+#define USART_RS485 USART3
+#define GPIO_AF_USART_RS485 GPIO_AF_USART3
+#define USART_RS485_IRQn	USART3_IRQn
+#define RCC_USART_RS485 RCC_APB1Periph_USART3
+#define USART_RS485_IRQHandler  USART3_IRQHandler
+
+#define RCC_USART_RS485_GPIO 	RCC_AHB1Periph_GPIOB
+
+#define USART_RS485_GPIO 	GPIOB
+
+#define USART_RS485_TXD	GPIO_Pin_10
+#define USART_RS485_RXD	GPIO_Pin_11
+
+#define USART_RS485_DE	GPIO_Pin_1
+#define USART_RS485_RE	GPIO_Pin_2
+
+#define CHANNEL_NUMBER	1
 
 #define DEVICE_NAME_LENGTH_SYM	20//
 #define DEVICE_VER_LENGTH_SYM 0x8
@@ -103,26 +101,26 @@ void ProtoProcess( void *pvParameters );//
 #define PROTO_STANDBY_TIME	10000 //
 //--------------------------------------------------------------------
 
-uint8_t Send_Info(void);     //������� ���������� �� ����������
-uint8_t Node_Full_Init(void);//������ ������������� ����
-uint8_t Channel_List_Init(void);//������������� ������ ������� ���� (��� ������ ������);
-uint8_t Channel_Get_Data(void);//������ ������ �� �������, �������� ���������� ���������;
-uint8_t Channel_Set_Parameters(void);//���������� ��������� �� �������, �������� ���������� ���������;
-uint8_t Channel_Set_Order_Query(void);//������ ������������������ ������;
-uint8_t Channel_Get_Data_Order(void);//������ ������ �� �������, �������� ������������������ ������;
-uint8_t Channel_Set_State(void);//���������� ��������� �� �������, �������� ���������� ���������;
-uint8_t Channel_Get_Data_Order_M2(void);//������ ������ �� �������, �������� ������������������ ������;
-uint8_t Channel_Set_Reset_State_Flags(void);//	���������/����� ������ ���������
-uint8_t Channel_All_Get_Data(void);//������ ���������� �� ���� ������� ���� (����������� �����);
-uint8_t Channel_Set_Address_Desc(void);//���������� ����� ����� ����������, ���, ��������, ������ �������� � �����������
-uint8_t Channel_Set_Calibrate(void);//���������� ������� ��� ������ ����� ����������
-uint8_t Request_Error(uint8_t error_code);//	��������� ������/�����;
-
-
-void ProtoBufHandling(void); //������� ��������� ��������� �������
-void Store_Dev_Address_Desc(void);
-void Restore_Dev_Address_Desc(void);
-
-uint8_t  CRC_Check( uint8_t *Spool,uint8_t Count);//������ CRC
+//uint8_t Send_Info(void);
+//uint8_t Node_Full_Init(void);
+//uint8_t Channel_List_Init(void);
+//uint8_t Channel_Get_Data(void);
+//uint8_t Channel_Set_Parameters(void);
+//uint8_t Channel_Set_Order_Query(void);
+//uint8_t Channel_Get_Data_Order(void);
+//uint8_t Channel_Set_State(void);
+//uint8_t Channel_Get_Data_Order_M2(void);
+//uint8_t Channel_Set_Reset_State_Flags(void);
+//uint8_t Channel_All_Get_Data(void);
+//uint8_t Channel_Set_Address_Desc(void);
+//uint8_t Channel_Set_Calibrate(void);
+//uint8_t Request_Error(uint8_t error_code);//
+//
+//
+//void ProtoBufHandling(void);
+//void Store_Dev_Address_Desc(void);
+//void Restore_Dev_Address_Desc(void);
+//
+//uint8_t  CRC_Check( uint8_t *Spool,uint8_t Count);
  //------------------------------------------------------------------------------
 #endif

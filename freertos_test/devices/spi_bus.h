@@ -13,7 +13,7 @@
 struct bus
 {
 	uint8_t indicators_num;
-	uint16_t bus_buf[IND_COMMAND_LEN][IND_SPI_BUS_1_NUM];
+	uint16_t bus_buf[IND_SPI_BUS_1_NUM][IND_COMMAND_LEN];
 	uint8_t error;
 };
 

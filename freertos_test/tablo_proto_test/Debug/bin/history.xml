@@ -1,22 +1,22 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <history>
    <processor signature="4.7.2 -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=softfp -mthumb -Wall -g -nostartfiles -Map=tablo_proto_test.map -O0 --gc-sections -LC:\CooCox\CoIDE\configuration\ProgramData\pilorama -TC:\CooCox\CoIDE\configuration\ProgramData\pilorama/link.ld -g">
-      <target file="tablo_proto_test.elf" lastModified="147439fbf64">
+      <target file="tablo_proto_test.elf" lastModified="14744a51500">
          <source file="..\obj\stm32f4xx_syscfg.o" lastModified="1471a0eee51"/>
-         <source file="..\obj\tablo_parser.o" lastModified="147436ec231"/>
+         <source file="..\obj\tablo_parser.o" lastModified="1474430a023"/>
          <source file="..\obj\core_cm3.o" lastModified="1471a0ef16e"/>
-         <source file="..\obj\buzzer.o" lastModified="147436ec2be"/>
+         <source file="..\obj\buzzer.o" lastModified="1474430a0cf"/>
          <source file="..\obj\stm32f4xx_usart.o" lastModified="1471a0ef2d6"/>
          <source file="..\obj\stm32f4xx_pwr.o" lastModified="1471a0ef391"/>
-         <source file="..\obj\proto.o" lastModified="147436ec56d"/>
+         <source file="..\obj\proto.o" lastModified="14744a50d02"/>
          <source file="..\obj\startup_stm32f4xx.o" lastModified="1471a0ef69e"/>
          <source file="..\obj\stm32f4xx_iwdg.o" lastModified="1471a0ef71b"/>
-         <source file="..\obj\indicator.o" lastModified="147436ec609"/>
-         <source file="..\obj\main.o" lastModified="1474393f92b"/>
+         <source file="..\obj\indicator.o" lastModified="1474430a812"/>
+         <source file="..\obj\main.o" lastModified="14744494b91"/>
          <source file="..\obj\stm32f4xx_rcc.o" lastModified="1471a0ef9ea"/>
          <source file="..\obj\timers.o" lastModified="1471a0efbcf"/>
-         <source file="..\obj\tablo.o" lastModified="147436ec6b5"/>
-         <source file="..\obj\encoder.o" lastModified="147439fbad0"/>
+         <source file="..\obj\tablo.o" lastModified="1474430a89f"/>
+         <source file="..\obj\encoder.o" lastModified="1474408d389"/>
          <source file="..\obj\watchdog.o" lastModified="1471a0efe5f"/>
          <source file="..\obj\tasks.o" lastModified="1471a0effa7"/>
          <source file="..\obj\keyboard.o" lastModified="1471a174b40"/>
@@ -31,7 +31,7 @@
          <source file="..\obj\stm32f4xx_spi.o" lastModified="1471a0f08af"/>
          <source file="..\obj\channels.o" lastModified="1471a0f093c"/>
          <source file="..\obj\stm32f4xx_exti.o" lastModified="1471a0f09f8"/>
-         <source file="..\obj\spi_bus.o" lastModified="1474371c4c3"/>
+         <source file="..\obj\spi_bus.o" lastModified="1474430a9c7"/>
          <source file="..\obj\misc.o" lastModified="1471a0f0b5f"/>
          <source file="..\obj\heap_1.o" lastModified="1471a0f0c0b"/>
          <source file="..\obj\stm32f4xx_tim.o" lastModified="1471a0f0d72"/>

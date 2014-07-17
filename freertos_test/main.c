@@ -20,9 +20,9 @@
 
 
 //#include "tablo_parser.h"
-//#include "spi_bus.h"
+#include "spi_bus.h"
 //#include "tablo.h"
-//#include "proto.h"
+#include "proto.h"
 #include "keyboard.h"
 //#include "buzzer.h"
 //#include "power.h"
@@ -40,22 +40,20 @@ static void Init_Task(void *pvParameters)
 	//Power_Detector_Init();
 	//vTaskDelay(200);
 
-	//Power_Init();
+
 
 	//Watchdog_Init();
 
 	spi1_config();
-	spi_buses_init();
-//	spi2_config();
-//	spi3_config();
+	tablo_devices_init();
 
-	//tablo_devices_init();
 
 
 
 
 //    buzzer_init();
 	Encoder_Init();
+	Proto_Init(PROTO_FIRST_INIT);
     vTaskDelete( NULL );
 }
 

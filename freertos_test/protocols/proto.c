@@ -5,12 +5,25 @@
 #include "watchdog.h"
 #include "buzzer.h"
 
+
+#include "stm32f4xx_gpio.h"
+#include "stm32f4xx_rcc.h"
+#include "stm32f4xx_tim.h"
+#include "stm32f4xx_usart.h"
+#include "misc.h"
+
+// FreeRTOS:
+#include "FreeRTOS.h"
+#include "task.h"
+#include "queue.h"
+#include "semphr.h"
+
  extern struct Channel  channels[];
  extern struct tablo tab;
 
 //-----------------------------------------------------------------------------------
-uint8_t   DEV_NAME[DEVICE_NAME_LENGTH_SYM] ="<<TABLO>>";
-uint8_t   NOTICE[DEVICE_DESC_MAX_LENGTH_SYM]="<-- GEOSPHERA_2013 -->";
+uint8_t   DEV_NAME[DEVICE_NAME_LENGTH_SYM] ="<<HEY, DUDE!>>";
+uint8_t   NOTICE[DEVICE_DESC_MAX_LENGTH_SYM]="<-- GEOSPHERA_2014 -->";
 uint8_t   VERSION[DEVICE_VER_LENGTH_SYM] ="\x30\x30\x30\x30\x31";
 
 uint8_t   ADRESS_DEV=0xF;
@@ -55,10 +68,34 @@ sym_8_to_float;
 xSemaphoreHandle xProtoSemaphore;
 extern struct task_watch task_watches[];
 
-#define RS_485_RECEIVE  GPIO_WriteBit(GPIOA, GPIO_Pin_8, Bit_RESET); GPIO_WriteBit(GPIOA, GPIO_Pin_11, Bit_RESET);
-#define RS_485_TRANSMIT GPIO_WriteBit(GPIOA, GPIO_Pin_8, Bit_SET); GPIO_WriteBit(GPIOA, GPIO_Pin_11, Bit_SET);
+#define RS_485_RECEIVE  USART_RS485_GPIO->BSRRH|=USART_RS485_DE; USART_RS485_GPIO->BSRRH|=USART_RS485_RE;
+#define RS_485_TRANSMIT USART_RS485_GPIO->BSRRL|=USART_RS485_DE; USART_RS485_GPIO->BSRRL|=USART_RS485_RE;
+//----------------------------------------------------------------------------------
+uint8_t Send_Info(void);
+uint8_t Node_Full_Init(void);
+uint8_t Channel_List_Init(void);
+uint8_t Channel_Get_Data(void);
+uint8_t Channel_Set_Parameters(void);
+uint8_t Channel_Set_Order_Query(void);
+uint8_t Channel_Get_Data_Order(void);
+uint8_t Channel_Set_State(void);
+uint8_t Channel_Get_Data_Order_M2(void);
+uint8_t Channel_Set_Reset_State_Flags(void);
+uint8_t Channel_All_Get_Data(void);
+uint8_t Channel_Set_Address_Desc(void);
+uint8_t Channel_Set_Calibrate(void);
+uint8_t Request_Error(uint8_t error_code);//
 
-void USART1_IRQHandler (void)
+
+void ProtoBufHandling(void);
+void Store_Dev_Address_Desc(void);
+void Restore_Dev_Address_Desc(void);
+
+uint8_t  CRC_Check( uint8_t *Spool,uint8_t Count);
+
+void ProtoProcess( void *pvParameters );//
+//----------------------------------------------------------------------------------
+void /*USART_RS485_IRQHandler*/USART3_IRQHandler(void)
 {
  	static portBASE_TYPE xHigherPriorityTaskWoken;
  	xHigherPriorityTaskWoken = pdFALSE;
@@ -158,7 +195,6 @@ void USART1_IRQHandler (void)
 							recieve_count++;
 							CUT_OUT_NULL=0;
 						}
-
 					}
 				}
 
@@ -239,45 +275,34 @@ void USART1_IRQHandler (void)
 //------------------------------------------------------------------------------
 void Proto_Init(uint8_t init_type) //
 {
-
-	 RCC_APB2PeriphClockCmd(RCC_APB2Periph_USART1 , ENABLE);
-	 RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOA, ENABLE);
-
+	 RCC_APB1PeriphClockCmd(RCC_USART_RS485 , ENABLE);
+	 RCC_AHB1PeriphClockCmd(RCC_USART_RS485_GPIO, ENABLE);
 
 	  GPIO_InitTypeDef GPIO_InitStructure;
 
-	  // Tx on PD5 as alternate function push-pull
-	  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_9;
+	  GPIO_InitStructure.GPIO_Pin = USART_RS485_TXD|USART_RS485_RXD;
 	  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF; //
 	  GPIO_InitStructure.GPIO_OType = GPIO_OType_PP; //
 	  GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL; //
 	  GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
-	  GPIO_Init(GPIOA, &GPIO_InitStructure);
+	  GPIO_Init(USART_RS485_GPIO, &GPIO_InitStructure);
 
-	  /* Rx on PD6 as input floating */
-	  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_10;
-	  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF; //
-	  GPIO_InitStructure.GPIO_OType = GPIO_OType_PP; //
-	  GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL; //
-	  GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
-	  GPIO_Init(GPIOA, &GPIO_InitStructure);
+	  GPIO_PinAFConfig(USART_RS485_GPIO, USART_RS485_TXD, GPIO_AF_USART_RS485);
+	  GPIO_PinAFConfig(USART_RS485_GPIO, USART_RS485_RXD, GPIO_AF_USART_RS485);
 
-	  GPIO_PinAFConfig(GPIOA, GPIO_PinSource9, GPIO_AF_USART1);
-	  GPIO_PinAFConfig(GPIOA, GPIO_PinSource10, GPIO_AF_USART1);
-
-	  GPIO_InitStructure.GPIO_Pin   = GPIO_Pin_8|GPIO_Pin_11;
+	  GPIO_InitStructure.GPIO_Pin   = USART_RS485_DE|USART_RS485_RE;
 	  GPIO_InitStructure.GPIO_Mode  = GPIO_Mode_OUT;
 	  GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
 	  GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;
 	  GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
-	  GPIO_Init(GPIOA, &GPIO_InitStructure);
+	  GPIO_Init(USART_RS485_GPIO, &GPIO_InitStructure);
 
-
+//
 	 RS_485_RECEIVE;
 
 	USART_InitTypeDef USART_InitStructure;
 
-	USART_DeInit(USART1);
+	USART_DeInit(USART_RS485);
 
 	USART_InitStructure.USART_BaudRate = 57600;
 	USART_InitStructure.USART_WordLength = USART_WordLength_8b;
@@ -285,33 +310,33 @@ void Proto_Init(uint8_t init_type) //
 	USART_InitStructure.USART_Parity = USART_Parity_No;
 	USART_InitStructure.USART_HardwareFlowControl = USART_HardwareFlowControl_None;
 	USART_InitStructure.USART_Mode = USART_Mode_Rx | USART_Mode_Tx;
-	USART_Init(USART1, &USART_InitStructure);
+	USART_Init(USART_RS485, &USART_InitStructure);
 
-	USART_ClearFlag(USART1, USART_FLAG_CTS | USART_FLAG_LBD  | USART_FLAG_TC  | USART_FLAG_RXNE );
+	USART_ClearFlag(USART_RS485, USART_FLAG_CTS | USART_FLAG_LBD  | USART_FLAG_TC  | USART_FLAG_RXNE );
 
-	USART_ITConfig(USART1, USART_IT_TC, ENABLE);
-	USART_ITConfig(USART1, USART_IT_RXNE , ENABLE);
-
-	USART_Cmd(USART1, ENABLE);
-
-	  NVIC_PriorityGroupConfig( NVIC_PriorityGroup_4 );
-
-	  NVIC_InitTypeDef NVIC_InitStructure;
-
-
-	   /* Enabling interrupt from USART1 */
-	   NVIC_InitStructure.NVIC_IRQChannel = USART1_IRQn;
-	   NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 14;
-	   NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;
-	   NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
-	   NVIC_Init(&NVIC_InitStructure);
+	USART_ITConfig(USART_RS485, USART_IT_TC, ENABLE);
+	USART_ITConfig(USART_RS485, USART_IT_RXNE , ENABLE);
 
 
 
+	NVIC_PriorityGroupConfig( NVIC_PriorityGroup_4 );
+	NVIC_InitTypeDef NVIC_InitStructure;
 
-	NVIC_EnableIRQ(USART1_IRQn);
+
+	   /* Enabling interrupt from USART */
+    NVIC_InitStructure.NVIC_IRQChannel = USART_RS485_IRQn;
+	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 14;
+	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;
+	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
+	NVIC_Init(&NVIC_InitStructure);
+
+
+
+	NVIC_EnableIRQ(USART_RS485_IRQn);
 
 	//------------------------
+
+	USART_Cmd(USART_RS485, ENABLE);
 
 	crc_n_ERR=0x0;	//
 	COMMAND_ERR=0x0;//
@@ -339,9 +364,8 @@ void Proto_Init(uint8_t init_type) //
 //-----------------------------------------------------------------------------
 uint8_t Send_Info(void) //
 {
-		uint8_t    i=0;
+	   uint8_t    i=0;
 
-	   //
 	   TransferBuf[0]=0x00;
 	   TransferBuf[1]=0xD7;
 	   TransferBuf[2]=0x29;
@@ -352,15 +376,15 @@ uint8_t Send_Info(void) //
 
 	   for(i=0;i<20;i++)
 	   {				  //
-			   if(i<DEVICE_NAME_LENGTH_SYM)
-			   {
-			     	TransferBuf[i+7]=DEV_NAME[i];
-			   }
-			   else
-			   {
-			   		TransferBuf[i+7]=0x00;
-			   }
-		}
+		   if(i<DEVICE_NAME_LENGTH_SYM)
+		   {
+				TransferBuf[i+7]=DEV_NAME[i];
+		   }
+		   else
+		   {
+				TransferBuf[i+7]=0x00;
+		   }
+	   }
 
 	   for(i=0;i<5;i++)                   //
 	   {
@@ -405,7 +429,7 @@ uint8_t Channel_Get_Data(void) //
 //-----------------------------------------------------------------------------
 uint8_t  Channel_Set_Parameters(void) //
 {
-	 uint8_t   index=0, store_data=0;
+	 uint8_t index=0, store_data=0;
 	 uint8_t len=0,i=0;
 
 	   while(index<(RecieveBuf[5]-1))				   //
@@ -458,8 +482,8 @@ uint8_t  Channel_Set_Parameters(void) //
 									{
 //										tab.buz.buzzer_effect=(RecieveBuf[8+index]>>1)&0x7;
 //										tab.buz.buzzer_enable=RecieveBuf[8+index]&0x1;
-										buzzer_set_buzz((RecieveBuf[8+index]>>1)&0x7,RecieveBuf[8+index]&0x1);
-										Relay_Set_State((RecieveBuf[8+index]>>4)&0xF);
+										//buzzer_set_buzz((RecieveBuf[8+index]>>1)&0x7,RecieveBuf[8+index]&0x1);
+										//Relay_Set_State((RecieveBuf[8+index]>>4)&0xF);
 										index+=CHNL_DEV_STATE_SET_LEN;
 									}
 									break;
@@ -526,7 +550,6 @@ uint8_t Channel_Set_Reset_State_Flags(void) //
 uint8_t Channel_All_Get_Data(void) //
 {
 	   uint8_t  index=0,i=0;
-
 
 	   TransferBuf[0]=0x00;TransferBuf[1]=0xD7;TransferBuf[2]=0x29;
 	   TransferBuf[3]=ADRESS_DEV;  //
