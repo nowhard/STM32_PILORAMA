@@ -75,10 +75,12 @@
     <Component id="502" name="PWR" path="" type="2"/>
     <Component id="504" name="GPIO" path="" type="2"/>
     <Component id="505" name="EXTI" path="" type="2"/>
+    <Component id="506" name="RTC" path="" type="2"/>
     <Component id="507" name="IWDG" path="" type="2"/>
     <Component id="509" name="SPI" path="" type="2"/>
     <Component id="511" name="DMA" path="" type="2"/>
     <Component id="513" name="TIM" path="" type="2"/>
+    <Component id="515" name="DAC" path="" type="2"/>
     <Component id="517" name="USART" path="" type="2"/>
     <Component id="524" name="MISC" path="" type="2"/>
     <Component id="526" name="SYSCFG" path="" type="2"/>
@@ -87,18 +89,20 @@
   <Files>
     <File name="FreeRTOSV7.1.0/Source/croutine.c" path="FreeRTOSV7.1.0/Source/croutine.c" type="1"/>
     <File name="cmsis_lib/source/stm32f4xx_usart.c" path="cmsis_lib/source/stm32f4xx_usart.c" type="1"/>
+    <File name="cmsis_lib/include/stm32f4xx_dac.h" path="cmsis_lib/include/stm32f4xx_dac.h" type="1"/>
     <File name="devices/tablo.c" path="devices/tablo.c" type="1"/>
     <File name="cmsis_lib/include/stm32f4xx_usart.h" path="cmsis_lib/include/stm32f4xx_usart.h" type="1"/>
     <File name="menu" path="" type="2"/>
     <File name="FreeRTOSV7.1.0/Source/tasks.c" path="FreeRTOSV7.1.0/Source/tasks.c" type="1"/>
-    <File name="cmsis_boot/stm32f4xx.h" path="cmsis_boot/stm32f4xx.h" type="1"/>
-    <File name="FreeRTOSV7.1.0/Source/include/portable.h" path="FreeRTOSV7.1.0/Source/include/portable.h" type="1"/>
+    <File name="devices/dac.h" path="devices/dac.h" type="1"/>
     <File name="cmsis/core_cm4_simd.h" path="cmsis/core_cm4_simd.h" type="1"/>
+    <File name="FreeRTOSV7.1.0/Source/include/portable.h" path="FreeRTOSV7.1.0/Source/include/portable.h" type="1"/>
+    <File name="cmsis_boot/stm32f4xx.h" path="cmsis_boot/stm32f4xx.h" type="1"/>
     <File name="cmsis_lib/source/stm32f4xx_spi.c" path="cmsis_lib/source/stm32f4xx_spi.c" type="1"/>
     <File name="cmsis/core_cmFunc.h" path="cmsis/core_cmFunc.h" type="1"/>
     <File name="devices/spi_bus.c" path="devices/spi_bus.c" type="1"/>
-    <File name="menu/menu.h" path="menu/menu.h" type="1"/>
     <File name="FreeRTOSV7.1.0/Source/include/task.h" path="FreeRTOSV7.1.0/Source/include/task.h" type="1"/>
+    <File name="menu/menu.h" path="menu/menu.h" type="1"/>
     <File name="FreeRTOSV7.1.0/Source/include/FreeRTOS.h" path="FreeRTOSV7.1.0/Source/include/FreeRTOS.h" type="1"/>
     <File name="devices/spi_bus.h" path="devices/spi_bus.h" type="1"/>
     <File name="devices/indicator.c" path="devices/indicator.c" type="1"/>
@@ -106,11 +110,13 @@
     <File name="cmsis_lib/source/stm32f4xx_iwdg.c" path="cmsis_lib/source/stm32f4xx_iwdg.c" type="1"/>
     <File name="devices/watchdog.h" path="devices/watchdog.h" type="1"/>
     <File name="FreeRTOSV7.1.0/Source/include/projdefs.h" path="FreeRTOSV7.1.0/Source/include/projdefs.h" type="1"/>
-    <File name="protocols/preferences.h" path="protocols/preferences.h" type="1"/>
     <File name="protocols/proto.c" path="protocols/proto.c" type="1"/>
+    <File name="protocols/preferences.h" path="protocols/preferences.h" type="1"/>
     <File name="FreeRTOSV7.1.0/Source/include/timers.h" path="FreeRTOSV7.1.0/Source/include/timers.h" type="1"/>
     <File name="protocols/channels.c" path="protocols/channels.c" type="1"/>
     <File name="menu/menu.c" path="menu/menu.c" type="1"/>
+    <File name="cmsis_lib/source/stm32f4xx_dac.c" path="cmsis_lib/source/stm32f4xx_dac.c" type="1"/>
+    <File name="cmsis_lib/source/stm32f4xx_rtc.c" path="cmsis_lib/source/stm32f4xx_rtc.c" type="1"/>
     <File name="cmsis_lib/include/stm32f4xx_rcc.h" path="cmsis_lib/include/stm32f4xx_rcc.h" type="1"/>
     <File name="cmsis_lib/source/stm32f4xx_syscfg.c" path="cmsis_lib/source/stm32f4xx_syscfg.c" type="1"/>
     <File name="cmsis_lib/include/stm32f4xx_pwr.h" path="cmsis_lib/include/stm32f4xx_pwr.h" type="1"/>
@@ -124,13 +130,17 @@
     <File name="protocols/channels.h" path="protocols/channels.h" type="1"/>
     <File name="devices/tablo.h" path="devices/tablo.h" type="1"/>
     <File name="cmsis_boot/system_stm32f4xx.c" path="cmsis_boot/system_stm32f4xx.c" type="1"/>
+    <File name="devices/rtc.c" path="devices/rtc.c" type="1"/>
     <File name="cmsis_lib/include/stm32f4xx_spi.h" path="cmsis_lib/include/stm32f4xx_spi.h" type="1"/>
     <File name="devices/buzzer.c" path="devices/buzzer.c" type="1"/>
     <File name="protocols" path="" type="2"/>
     <File name="cmsis" path="" type="2"/>
-    <File name="FreeRTOSV7.1.0/readme.txt" path="FreeRTOSV7.1.0/readme.txt" type="1"/>
     <File name="cmsis_lib" path="" type="2"/>
+    <File name="FreeRTOSV7.1.0/readme.txt" path="FreeRTOSV7.1.0/readme.txt" type="1"/>
     <File name="devices/power_detector.h" path="devices/power_detector.h" type="1"/>
+    <File name="devices/dac.c" path="devices/dac.c" type="1"/>
+    <File name="cmsis_lib/include/stm32f4xx_rtc.h" path="cmsis_lib/include/stm32f4xx_rtc.h" type="1"/>
+    <File name="devices/rtc.h" path="devices/rtc.h" type="1"/>
     <File name="cmsis_lib/include/misc.h" path="cmsis_lib/include/misc.h" type="1"/>
     <File name="FreeRTOSV7.1.0/Source/portable/ARM_CM4F/portmacro.h" path="FreeRTOSV7.1.0/Source/portable/GCC/ARM_CM4F/portmacro.h" type="1"/>
     <File name="FreeRTOSV7.1.0/Source/include/queue.h" path="FreeRTOSV7.1.0/Source/include/queue.h" type="1"/>
@@ -166,20 +176,20 @@
     <File name="cmsis/core_cm3.h" path="cmsis/core_cm3.h" type="1"/>
     <File name="protocols/proto.h" path="protocols/proto.h" type="1"/>
     <File name="devices/indicator.h" path="devices/indicator.h" type="1"/>
-    <File name="cmsis_lib/include/stm32f4xx_exti.h" path="cmsis_lib/include/stm32f4xx_exti.h" type="1"/>
     <File name="cmsis_lib/source/stm32f4xx_exti.c" path="cmsis_lib/source/stm32f4xx_exti.c" type="1"/>
+    <File name="cmsis_lib/include/stm32f4xx_exti.h" path="cmsis_lib/include/stm32f4xx_exti.h" type="1"/>
     <File name="devices/watchdog.c" path="devices/watchdog.c" type="1"/>
     <File name="FreeRTOSV7.1.0/Source/queue.c" path="FreeRTOSV7.1.0/Source/queue.c" type="1"/>
-    <File name="FreeRTOSV7.1.0/License/license.txt" path="FreeRTOSV7.1.0/License/license.txt" type="1"/>
-    <File name="FreeRTOSV7.1.0/Source/include" path="" type="2"/>
     <File name="FreeRTOSV7.1.0/Source/include/mpu_wrappers.h" path="FreeRTOSV7.1.0/Source/include/mpu_wrappers.h" type="1"/>
+    <File name="FreeRTOSV7.1.0/Source/include" path="" type="2"/>
+    <File name="FreeRTOSV7.1.0/License/license.txt" path="FreeRTOSV7.1.0/License/license.txt" type="1"/>
     <File name="cmsis_lib/include/stm32f4xx_dma.h" path="cmsis_lib/include/stm32f4xx_dma.h" type="1"/>
     <File name="devices/keyboard.h" path="devices/keyboard.h" type="1"/>
     <File name="cmsis_lib/source/stm32f4xx_tim.c" path="cmsis_lib/source/stm32f4xx_tim.c" type="1"/>
     <File name="cmsis_lib/include/stm32f4xx_gpio.h" path="cmsis_lib/include/stm32f4xx_gpio.h" type="1"/>
     <File name="FreeRTOSV7.1.0/Source/portable/MemMang" path="" type="2"/>
-    <File name="FreeRTOSV7.1.0/Source" path="" type="2"/>
     <File name="cmsis_lib/include" path="" type="2"/>
+    <File name="FreeRTOSV7.1.0/Source" path="" type="2"/>
     <File name="FreeRTOSConfig.h" path="FreeRTOSConfig.h" type="1"/>
     <File name="FreeRTOSV7.1.0/Source/include/StackMacros.h" path="FreeRTOSV7.1.0/Source/include/StackMacros.h" type="1"/>
     <File name="FreeRTOSV7.1.0/Source/include/semphr.h" path="FreeRTOSV7.1.0/Source/include/semphr.h" type="1"/>

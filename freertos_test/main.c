@@ -3,8 +3,8 @@
 #include "stm32f4xx_gpio.h"
 #include "stm32f4xx_rcc.h"
 #include "stm32f4xx_tim.h"
-#include "stm32f4xx_spi.h"
-#include "stm32f4xx_dma.h"
+#include "stm32f4xx_dac.h"
+
 #include <misc.h>
 #include "system_stm32f4xx.h"
 
@@ -30,6 +30,7 @@
 //#include "relay.h"
 //#include "power_detector.h"
 #include "encoder.h"
+#include "dac.h"
 
 
 static void Init_Task(void *pvParameters);//
@@ -44,8 +45,8 @@ static void Init_Task(void *pvParameters)
 
 	//Watchdog_Init();
 //
-//	spi1_config();
-//	tablo_devices_init();
+	spi1_config();
+	tablo_devices_init();
 //
 
 
@@ -54,6 +55,10 @@ static void Init_Task(void *pvParameters)
 //    buzzer_init();
 	//Encoder_Init();
 	Proto_Init(PROTO_FIRST_INIT);
+	DAC_Current_Init();
+
+	DAC_SetChannel2Data(DAC_Align_12b_R, 0x7FF);
+	RTC_config();
     vTaskDelete( NULL );
 }
 
