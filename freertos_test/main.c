@@ -31,28 +31,28 @@
 //#include "power_detector.h"
 #include "encoder.h"
 
-//extern struct tablo tab;//
+
 static void Init_Task(void *pvParameters);//
 
 static void Init_Task(void *pvParameters)
 {
-	//uint8_t i=0;
+
 	//Power_Detector_Init();
 	//vTaskDelay(200);
 
 
 
 	//Watchdog_Init();
-
-	spi1_config();
-	tablo_devices_init();
-
+//
+//	spi1_config();
+//	tablo_devices_init();
+//
 
 
 
 
 //    buzzer_init();
-	Encoder_Init();
+	//Encoder_Init();
 	Proto_Init(PROTO_FIRST_INIT);
     vTaskDelete( NULL );
 }

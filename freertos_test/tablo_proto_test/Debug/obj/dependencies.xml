@@ -60,11 +60,28 @@
          <include file="..\..\..\cmsis_lib\include\stm32f4xx_exti.h"/>
          <include file="..\..\..\cmsis_lib\include\misc.h"/>
       </source>
-      <source file="..\..\..\protocols\proto.h" lastModified="1474433f2d8">
+      <source file="..\..\..\protocols\proto.h" lastModified="1475790b64d">
          <include file="..\..\..\cmsis_boot\stm32f4xx.h"/>
       </source>
       <source file="..\..\..\cmsis_lib\source\misc.c" lastModified="14125d86b88">
          <include file="..\..\..\cmsis_lib\include\misc.h"/>
+      </source>
+      <source file="..\..\..\protocols\proto.c" lastModified="14757ad691a">
+         <include file="..\..\..\protocols\proto.h"/>
+         <include file="..\..\..\protocols\channels.h"/>
+         <include file="..\..\..\devices\tablo.h"/>
+         <include file="..\..\..\protocols\tablo_parser.h"/>
+         <include file="..\..\..\devices\watchdog.h"/>
+         <include file="..\..\..\devices\buzzer.h"/>
+         <include file="..\..\..\cmsis_lib\include\stm32f4xx_gpio.h"/>
+         <include file="..\..\..\cmsis_lib\include\stm32f4xx_rcc.h"/>
+         <include file="..\..\..\cmsis_lib\include\stm32f4xx_tim.h"/>
+         <include file="..\..\..\cmsis_lib\include\stm32f4xx_usart.h"/>
+         <include file="..\..\..\cmsis_lib\include\misc.h"/>
+         <include file="..\..\..\FreeRTOSV7.1.0\Source\include\FreeRTOS.h"/>
+         <include file="..\..\..\FreeRTOSV7.1.0\Source\include\task.h"/>
+         <include file="..\..\..\FreeRTOSV7.1.0\Source\include\queue.h"/>
+         <include file="..\..\..\FreeRTOSV7.1.0\Source\include\semphr.h"/>
       </source>
       <source file="..\..\..\cmsis_boot\stm32f4xx.h" lastModified="1414ea875f5">
          <include file="..\..\..\cmsis\core_cm4.h"/>
@@ -286,7 +303,7 @@
       <source file="..\..\..\protocols\tablo_parser.h" lastModified="142ffe1a698">
          <include file="..\..\..\devices\indicator.h"/>
       </source>
-      <source file="..\..\..\main.c" lastModified="147443f9184">
+      <source file="..\..\..\main.c" lastModified="14757b11ecf">
          <include file="..\..\..\cmsis_boot\stm32f4xx.h"/>
          <include file="..\..\..\cmsis_lib\include\stm32f4xx_gpio.h"/>
          <include file="..\..\..\cmsis_lib\include\stm32f4xx_rcc.h"/>

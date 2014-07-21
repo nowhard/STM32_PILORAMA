@@ -30,8 +30,8 @@
       <target file="indicator.o" lastModified="1474430a812">
          <source file="..\..\..\devices\indicator.c" lastModified="14305a8c0ae"/>
       </target>
-      <target file="proto.o" lastModified="14744a50d02">
-         <source file="..\..\..\protocols\proto.c" lastModified="14744a4dbef"/>
+      <target file="proto.o" lastModified="14757b139ba">
+         <source file="..\..\..\protocols\proto.c" lastModified="14757ad691a"/>
       </target>
       <target file="stm32f4xx_iwdg.o" lastModified="1471a0ef71b">
          <source file="..\..\..\cmsis_lib\source\stm32f4xx_iwdg.c" lastModified="1428e61eab6"/>
@@ -102,8 +102,8 @@
       <target file="encoder.o" lastModified="1474408d389">
          <source file="..\..\..\devices\encoder.c" lastModified="14743ff6f1e"/>
       </target>
-      <target file="main.o" lastModified="14744494b91">
-         <source file="..\..\..\main.c" lastModified="147443f89b4"/>
+      <target file="main.o" lastModified="14757b13d73">
+         <source file="..\..\..\main.c" lastModified="14757b116ff"/>
       </target>
       <target file="system_stm32f4xx.o" lastModified="1471a0f0554">
          <source file="..\..\..\cmsis_boot\system_stm32f4xx.c" lastModified="1428e3c1104"/>

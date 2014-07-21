@@ -9,10 +9,10 @@ enum
 void Proto_Init(uint8_t init_type);//
 
 
-#define USART_RS485 USART3
-#define GPIO_AF_USART_RS485 GPIO_AF_USART3
-#define USART_RS485_IRQn	USART3_IRQn
-#define RCC_USART_RS485 RCC_APB1Periph_USART3
+#define USART_RS485 			USART3
+#define GPIO_AF_USART_RS485 	GPIO_AF_USART3
+#define USART_RS485_IRQn		USART3_IRQn
+#define RCC_USART_RS485 		RCC_APB1Periph_USART3
 #define USART_RS485_IRQHandler  USART3_IRQHandler
 
 #define RCC_USART_RS485_GPIO 	RCC_AHB1Periph_GPIOB
@@ -21,6 +21,9 @@ void Proto_Init(uint8_t init_type);//
 
 #define USART_RS485_TXD	GPIO_Pin_10
 #define USART_RS485_RXD	GPIO_Pin_11
+
+#define USART_RS485_TXD_PIN_SOURCE GPIO_PinSource10
+#define USART_RS485_RXD_PIN_SOURCE GPIO_PinSource11
 
 #define USART_RS485_DE	GPIO_Pin_1
 #define USART_RS485_RE	GPIO_Pin_2

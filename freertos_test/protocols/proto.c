@@ -101,10 +101,10 @@ void /*USART_RS485_IRQHandler*/USART3_IRQHandler(void)
  	xHigherPriorityTaskWoken = pdFALSE;
 
 
- 	if(USART_GetITStatus(USART1, USART_IT_RXNE) != RESET)
+ 	if(USART_GetITStatus(USART_RS485, USART_IT_RXNE) != RESET)
    	{
- 		USART_ClearITPendingBit(USART1, USART_IT_RXNE);
-   		symbol=USART_ReceiveData (USART1);
+ 		USART_ClearITPendingBit(USART_RS485, USART_IT_RXNE);
+   		symbol=(uint16_t)(USART_RS485->DR & (uint16_t)0x01FF);
 
    		if(recieve_count>MAX_LENGTH_REC_BUF)
    		{
@@ -128,7 +128,7 @@ void /*USART_RS485_IRQHandler*/USART3_IRQHandler(void)
 				{
 					if(tab.tablo_proto_buf[1]==(recieve_count-2))//
 					{
-						 USART_ITConfig(USART1, USART_IT_RXNE , DISABLE);
+						 USART_ITConfig(USART_RS485, USART_IT_RXNE , DISABLE);
 						xSemaphoreGiveFromISR( xProtoSemaphore, &xHigherPriorityTaskWoken );
 
 						 if( xHigherPriorityTaskWoken != pdFALSE )
@@ -202,7 +202,7 @@ void /*USART_RS485_IRQHandler*/USART3_IRQHandler(void)
 			   {
 					  if(recieve_count==6+frame_len)	  // принимаем указанное в frame_len число байт
 					  {
-							 USART_ITConfig(USART1, USART_IT_RXNE , DISABLE);
+							 USART_ITConfig(USART_RS485, USART_IT_RXNE , DISABLE);
 
 							 xSemaphoreGiveFromISR( xProtoSemaphore, &xHigherPriorityTaskWoken );
 
@@ -226,17 +226,17 @@ void /*USART_RS485_IRQHandler*/USART3_IRQHandler(void)
 
    	}
    //-----------------------------------------------------------------------------------------------------------------
-   	if(USART_GetITStatus(USART1, USART_IT_TC) != RESET)
+   	if(USART_GetITStatus(USART_RS485, USART_IT_TC) != RESET)
    	{
 
-   		USART_ClearITPendingBit(USART1, USART_IT_TC);
+   		USART_ClearITPendingBit(USART_RS485, USART_IT_TC);
 
    		if(transf_count<buf_len)
    		{
    			if(transf_count<3)
    			{
-   				//USART_SendData(USART1,TransferBuf[transf_count]);
-   				USART1->DR =TransferBuf[transf_count];
+   				//USART_SendData(USART_RS485,TransferBuf[transf_count]);
+   				USART_RS485->DR =TransferBuf[transf_count];
    				transf_count++;
    			}
    			else
@@ -247,14 +247,14 @@ void /*USART_RS485_IRQHandler*/USART3_IRQHandler(void)
    						{
    							CUT_OUT_NULL=0x1;
    						}
-   						//USART_SendData(USART1,TransferBuf[transf_count]);
-   						USART1->DR =TransferBuf[transf_count];
+   						//USART_SendData(USART_RS485,TransferBuf[transf_count]);
+   						USART_RS485->DR =TransferBuf[transf_count];
    						transf_count++;
    					}
    					else
    					{
-   						//USART_SendData(USART1,(uint8_t)0x0);
-   						USART1->DR =(uint8_t)0x0 ;
+   						//USART_SendData(USART_RS485,(uint8_t)0x0);
+   						USART_RS485->DR =(uint8_t)0x0 ;
    						CUT_OUT_NULL=0;
    					}
    			}
@@ -265,7 +265,7 @@ void /*USART_RS485_IRQHandler*/USART3_IRQHandler(void)
    			recieve_count=0;
 
    			CUT_OUT_NULL=0;
-   			USART_ITConfig(USART1, USART_IT_RXNE , ENABLE);
+   			USART_ITConfig(USART_RS485, USART_IT_RXNE , ENABLE);
    			RS_485_RECEIVE;
    		}
 
@@ -275,68 +275,63 @@ void /*USART_RS485_IRQHandler*/USART3_IRQHandler(void)
 //------------------------------------------------------------------------------
 void Proto_Init(uint8_t init_type) //
 {
-	 RCC_APB1PeriphClockCmd(RCC_USART_RS485 , ENABLE);
-	 RCC_AHB1PeriphClockCmd(RCC_USART_RS485_GPIO, ENABLE);
+		GPIO_InitTypeDef GPIO_InitStruct; // this is for the GPIO pins used as TX and RX
+		USART_InitTypeDef USART_InitStruct; // this is for the USART_RS485 initilization
+		NVIC_InitTypeDef NVIC_InitStructure; // this is used to configure the NVIC (nested vector interrupt controller)
 
-	  GPIO_InitTypeDef GPIO_InitStructure;
+		RCC_APB1PeriphClockCmd(RCC_USART_RS485, ENABLE);
+		RCC_AHB1PeriphClockCmd(RCC_USART_RS485_GPIO, ENABLE);
 
-	  GPIO_InitStructure.GPIO_Pin = USART_RS485_TXD|USART_RS485_RXD;
-	  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF; //
-	  GPIO_InitStructure.GPIO_OType = GPIO_OType_PP; //
-	  GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL; //
-	  GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
-	  GPIO_Init(USART_RS485_GPIO, &GPIO_InitStructure);
+		GPIO_InitStruct.GPIO_Pin = USART_RS485_TXD | USART_RS485_RXD; // Pins  (TX) and (RX) are used
+		GPIO_InitStruct.GPIO_Mode = GPIO_Mode_AF; 			// the pins are configured as alternate function so the USART peripheral has access to them
+		GPIO_InitStruct.GPIO_Speed = GPIO_Speed_50MHz;		// this defines the IO speed and has nothing to do with the baudrate!
+		GPIO_InitStruct.GPIO_OType = GPIO_OType_PP;			// this defines the output type as push pull mode (as opposed to open drain)
+		GPIO_InitStruct.GPIO_PuPd = GPIO_PuPd_UP;			// this activates the pullup resistors on the IO pins
+		GPIO_Init(USART_RS485_GPIO, &GPIO_InitStruct);					// now all the values are passed to the GPIO_Init() function which sets the GPIO registers
 
-	  GPIO_PinAFConfig(USART_RS485_GPIO, USART_RS485_TXD, GPIO_AF_USART_RS485);
-	  GPIO_PinAFConfig(USART_RS485_GPIO, USART_RS485_RXD, GPIO_AF_USART_RS485);
+		GPIO_PinAFConfig(USART_RS485_GPIO, USART_RS485_TXD_PIN_SOURCE, GPIO_AF_USART_RS485); //
+		GPIO_PinAFConfig(USART_RS485_GPIO, USART_RS485_RXD_PIN_SOURCE, GPIO_AF_USART_RS485);
 
-	  GPIO_InitStructure.GPIO_Pin   = USART_RS485_DE|USART_RS485_RE;
-	  GPIO_InitStructure.GPIO_Mode  = GPIO_Mode_OUT;
-	  GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
-	  GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;
-	  GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
-	  GPIO_Init(USART_RS485_GPIO, &GPIO_InitStructure);
+		USART_InitStruct.USART_BaudRate = 57600;				// the baudrate is set to the value we passed into this init function
+		USART_InitStruct.USART_WordLength = USART_WordLength_8b;// we want the data frame size to be 8 bits (standard)
+		USART_InitStruct.USART_StopBits = USART_StopBits_1;		// we want 1 stop bit (standard)
+		USART_InitStruct.USART_Parity = USART_Parity_No;		// we don't want a parity bit (standard)
+		USART_InitStruct.USART_HardwareFlowControl = USART_HardwareFlowControl_None; // we don't want flow control (standard)
+		USART_InitStruct.USART_Mode = USART_Mode_Tx | USART_Mode_Rx; // we want to enable the transmitter and the receiver
+		USART_Init(USART_RS485, &USART_InitStruct);					// again all the properties are passed to the USART_Init function which takes care of all the bit setting
 
-//
-	 RS_485_RECEIVE;
+	    GPIO_InitStruct.GPIO_Pin   = USART_RS485_DE|USART_RS485_RE;
+	    GPIO_InitStruct.GPIO_Mode  = GPIO_Mode_OUT;
+	    GPIO_InitStruct.GPIO_OType = GPIO_OType_PP;
+	    GPIO_InitStruct.GPIO_PuPd =  GPIO_PuPd_NOPULL;
+	    GPIO_InitStruct.GPIO_Speed = GPIO_Speed_50MHz;
+	    GPIO_Init(USART_RS485_GPIO, &GPIO_InitStruct);
 
-	USART_InitTypeDef USART_InitStructure;
-
-	USART_DeInit(USART_RS485);
-
-	USART_InitStructure.USART_BaudRate = 57600;
-	USART_InitStructure.USART_WordLength = USART_WordLength_8b;
-	USART_InitStructure.USART_StopBits = USART_StopBits_1;
-	USART_InitStructure.USART_Parity = USART_Parity_No;
-	USART_InitStructure.USART_HardwareFlowControl = USART_HardwareFlowControl_None;
-	USART_InitStructure.USART_Mode = USART_Mode_Rx | USART_Mode_Tx;
-	USART_Init(USART_RS485, &USART_InitStructure);
-
-	USART_ClearFlag(USART_RS485, USART_FLAG_CTS | USART_FLAG_LBD  | USART_FLAG_TC  | USART_FLAG_RXNE );
-
-	USART_ITConfig(USART_RS485, USART_IT_TC, ENABLE);
-	USART_ITConfig(USART_RS485, USART_IT_RXNE , ENABLE);
+		USART_ClearFlag(USART_RS485, USART_FLAG_CTS | USART_FLAG_LBD  | USART_FLAG_TC  | USART_FLAG_RXNE );
 
 
+		USART_ITConfig(USART_RS485, USART_IT_TC, ENABLE);
+		USART_ITConfig(USART_RS485, USART_IT_RXNE , ENABLE);
 
-	NVIC_PriorityGroupConfig( NVIC_PriorityGroup_4 );
-	NVIC_InitTypeDef NVIC_InitStructure;
+		USART_Cmd(USART_RS485, ENABLE);
 
+		NVIC_PriorityGroupConfig( NVIC_PriorityGroup_4 );
 
-	   /* Enabling interrupt from USART */
-    NVIC_InitStructure.NVIC_IRQChannel = USART_RS485_IRQn;
-	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 14;
-	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;
-	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
-	NVIC_Init(&NVIC_InitStructure);
+		   /* Enabling interrupt from USART */
+		NVIC_InitStructure.NVIC_IRQChannel = USART_RS485_IRQn;
+		NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 14;
+		NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;
+		NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
+		NVIC_Init(&NVIC_InitStructure);
 
 
 
-	NVIC_EnableIRQ(USART_RS485_IRQn);
+		NVIC_EnableIRQ(USART_RS485_IRQn);						 // the properties are passed to the NVIC_Init function which takes care of the low level stuff
 
-	//------------------------
 
-	USART_Cmd(USART_RS485, ENABLE);
+
+	RS_485_RECEIVE;
+
 
 	crc_n_ERR=0x0;	//
 	COMMAND_ERR=0x0;//
@@ -824,7 +819,7 @@ void ProtoProcess( void *pvParameters )
 					{
 						tablo_proto_parser(&tab.tablo_proto_buf);
 						recieve_count=0x0;
-						USART_ITConfig(USART1, USART_IT_RXNE , ENABLE);
+						USART_ITConfig(USART_RS485, USART_IT_RXNE , ENABLE);
 					}
 					break;
 
@@ -841,15 +836,15 @@ void ProtoProcess( void *pvParameters )
 							recieve_count=0;
 							CUT_OUT_NULL=0;
 
-							//USART_SendData(USART1,/*TransferBuf[transf_count]*/tab.uart_buf[transf_count]);
+							//USART_SendData(USART_RS485,/*TransferBuf[transf_count]*/tab.uart_buf[transf_count]);
 							RS_485_TRANSMIT;
-							USART1->DR =TransferBuf[transf_count];
+							USART_RS485->DR =TransferBuf[transf_count];
 							transf_count++;//
 						}
 						else
 						{
 							crc_n_ERR=0x1;//
-							USART_ITConfig(USART1, USART_IT_RXNE , ENABLE);
+							USART_ITConfig(USART_RS485, USART_IT_RXNE , ENABLE);
 						}
 					}
 					break;
