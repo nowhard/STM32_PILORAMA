@@ -326,7 +326,7 @@
       </source>
       <source file="..\..\..\FreeRTOSV7.1.0\Source\include\projdefs.h" lastModified="13e3b1eb8f0">
       </source>
-      <source file="..\..\..\main.c" lastModified="1475900a1ec">
+      <source file="..\..\..\main.c" lastModified="1475ce20da8">
          <include file="..\..\..\cmsis_boot\stm32f4xx.h"/>
          <include file="..\..\..\cmsis_lib\include\stm32f4xx_gpio.h"/>
          <include file="..\..\..\cmsis_lib\include\stm32f4xx_rcc.h"/>
@@ -344,6 +344,7 @@
          <include file="..\..\..\devices\watchdog.h"/>
          <include file="..\..\..\devices\encoder.h"/>
          <include file="..\..\..\devices\dac.h"/>
+         <include file="..\..\..\devices\rtc.h"/>
       </source>
       <source file="..\..\..\protocols\tablo_parser.c" lastModified="1430a5f81e1">
          <include file="..\..\..\protocols\tablo_parser.h"/>
@@ -392,6 +393,8 @@
       </source>
       <source file="..\..\..\protocols\channels.c" lastModified="1428e0f8719">
          <include file="..\..\..\protocols\channels.h"/>
+      </source>
+      <source file="..\..\..\devices\rtc.h" lastModified="1475ce20740">
       </source>
       <source file="..\..\..\devices\tablo.h" lastModified="147440898e2">
          <include file="..\..\..\cmsis_boot\stm32f4xx.h"/>

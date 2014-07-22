@@ -31,6 +31,7 @@
 //#include "power_detector.h"
 #include "encoder.h"
 #include "dac.h"
+#include "rtc.h"
 
 
 static void Init_Task(void *pvParameters);//
@@ -58,7 +59,7 @@ static void Init_Task(void *pvParameters)
 	DAC_Current_Init();
 
 	DAC_SetChannel2Data(DAC_Align_12b_R, 0x7FF);
-	RTC_config();
+	RTC_Clock_Init();
     vTaskDelete( NULL );
 }
 

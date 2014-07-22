@@ -2,6 +2,6 @@
 #define RTC_H
 
 #define FIRST_DATA          0x32F2
-void RTC_config(void);
+void RTC_Clock_Init(void);
 
 #endif
