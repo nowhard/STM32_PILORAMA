@@ -66,6 +66,9 @@
       <target file="tablo_parser.o" lastModified="1475900b9d9">
          <source file="..\..\..\protocols\tablo_parser.c" lastModified="1430a5f7a11"/>
       </target>
+      <target file="stm32f4xx_adc.o" lastModified="1475d390ac3">
+         <source file="..\..\..\cmsis_lib\source\stm32f4xx_adc.c" lastModified="1475d262e07"/>
+      </target>
       <target file="list.o" lastModified="1471a0f04b8">
          <source file="..\..\..\FreeRTOSV7.1.0\Source\list.c" lastModified="13e3b1eb900"/>
       </target>
@@ -96,8 +99,8 @@
       <target file="spi_bus.o" lastModified="1475900e05d">
          <source file="..\..\..\devices\spi_bus.c" lastModified="1474371bd31"/>
       </target>
-      <target file="rtc.o" lastModified="1475cf391f9">
-         <source file="..\..\..\devices\rtc.c" lastModified="1475cf35175"/>
+      <target file="rtc.o" lastModified="1475d1cb95f">
+         <source file="..\..\..\devices\rtc.c" lastModified="1475d1c8d1f"/>
       </target>
       <target file="dac.o" lastModified="1475900d89c">
          <source file="..\..\..\devices\dac.c" lastModified="14758bf8c6d"/>
@@ -108,14 +111,17 @@
       <target file="stm32f4xx_syscfg.o" lastModified="1475900b65f">
          <source file="..\..\..\cmsis_lib\source\stm32f4xx_syscfg.c" lastModified="14125d878f6"/>
       </target>
+      <target file="adc.o" lastModified="1475dd0717d">
+         <source file="..\..\..\devices\adc.c" lastModified="1475dd03446"/>
+      </target>
       <target file="stm32f4xx_spi.o" lastModified="1475900de0b">
          <source file="..\..\..\cmsis_lib\source\stm32f4xx_spi.c" lastModified="14125d81f8b"/>
       </target>
       <target file="encoder.o" lastModified="1475900d764">
          <source file="..\..\..\devices\encoder.c" lastModified="14743ff6f1e"/>
       </target>
-      <target file="main.o" lastModified="1475ce21634">
-         <source file="..\..\..\main.c" lastModified="1475ce205d8"/>
+      <target file="main.o" lastModified="1475d39e63f">
+         <source file="..\..\..\main.c" lastModified="1475d39d900"/>
       </target>
       <target file="system_stm32f4xx.o" lastModified="1475900dc84">
          <source file="..\..\..\cmsis_boot\system_stm32f4xx.c" lastModified="1428e3c1104"/>

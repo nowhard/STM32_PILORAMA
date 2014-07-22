@@ -32,6 +32,7 @@
 #include "encoder.h"
 #include "dac.h"
 #include "rtc.h"
+#include "adc.h"
 
 
 static void Init_Task(void *pvParameters);//
@@ -60,6 +61,7 @@ static void Init_Task(void *pvParameters)
 
 	DAC_SetChannel2Data(DAC_Align_12b_R, 0x7FF);
 	RTC_Clock_Init();
+	ADC_Channel_Init();
     vTaskDelete( NULL );
 }
 
