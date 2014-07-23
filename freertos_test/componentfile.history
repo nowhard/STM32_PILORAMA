@@ -19,5 +19,6 @@
   <File usedCount="2" path="stm_lib/inc/misc.h"/>  
   <File usedCount="2" path="stm_lib/src/misc.c"/>  
   <File usedCount="2" path="cmsis_lib/include/stm32f4xx_exti.h"/>  
-  <File usedCount="2" path="cmsis_lib/source/stm32f4xx_exti.c"/>
+  <File usedCount="2" path="cmsis_lib/source/stm32f4xx_exti.c"/>  
+  <File usedCount="2" path="syscalls/syscalls.c"/>
 </History>

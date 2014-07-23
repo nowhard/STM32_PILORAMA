@@ -8,6 +8,11 @@
 #include "queue.h"
 #include "semphr.h"
 
+#include "tablo.h"
+#include "tablo_parser.h"
+
+extern struct tablo tab;//
+
 static void RTC_Task(void *pvParameters);
 
 uint32_t AsynchPrediv = 0, SynchPrediv = 0;
@@ -64,10 +69,20 @@ void RTC_Clock_Init(void)
 static void RTC_Task(void *pvParameters)
 {
     RTC_TimeTypeDef RTC_TimeStructure;
-    RTC_DateTypeDef RTC_DateStructure;
+//    RTC_DateTypeDef RTC_DateStructure;
+    uint8_t str_buf[8];
 	while(1)
 	{
-        RTC_GetTime(RTC_Format_BIN, &RTC_TimeStructure);
-        RTC_GetDate(RTC_Format_BIN, &RTC_DateStructure);
+        RTC_GetTime(RTC_Format_BCD, &RTC_TimeStructure);
+        //RTC_GetDate(RTC_Format_BIN, &RTC_DateStructure);
+        str_buf[0]=0x30+((RTC_TimeStructure.RTC_Minutes>>4)&0xF);
+        str_buf[1]=0x30+(RTC_TimeStructure.RTC_Minutes&0xF);
+        str_buf[2]='.';
+        str_buf[3]=0x30+((RTC_TimeStructure.RTC_Seconds>>4)&0xF);
+        str_buf[4]=0x30+(RTC_TimeStructure.RTC_Seconds&0xF);
+        str_buf[5]=NULL;
+
+     //   str_to_ind(&tab.indicators[0],str_buf);
+        vTaskDelay(200);
 	}
 }

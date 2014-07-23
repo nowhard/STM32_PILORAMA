@@ -499,7 +499,7 @@ uint8_t  Channel_Set_Parameters(void) //
 									tab.tablo_proto_buf[i]=RecieveBuf[8+index+i+1];
 								}
 
-								tablo_proto_parser(&tab.tablo_proto_buf);
+								//tablo_proto_parser(&tab.tablo_proto_buf);
 								index+=RecieveBuf[6+2+index]+3;
 							}
 					}
@@ -817,7 +817,7 @@ void ProtoProcess( void *pvParameters )
 				{
 					case PROTO_TYPE_OLD:
 					{
-						tablo_proto_parser(&tab.tablo_proto_buf);
+						//tablo_proto_parser(&tab.tablo_proto_buf);
 						recieve_count=0x0;
 						USART_ITConfig(USART_RS485, USART_IT_RXNE , ENABLE);
 					}
@@ -854,9 +854,9 @@ void ProtoProcess( void *pvParameters )
 			else
 			{
 				//task_watches[PROTO_TASK].task_status=TASK_IDLE;
-				tablo_proto_parser(&standby_frame_2);//
+			//	tablo_proto_parser(&standby_frame_2);//
 				vTaskDelay(200);
-				tablo_proto_parser(&standby_frame);//
+				//tablo_proto_parser(&standby_frame);//
 				//PROTO_HAS_START=0;
 				 Proto_Init(PROTO_REINIT);
 			}

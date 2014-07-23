@@ -3,11 +3,17 @@
 #include <stm32f4xx_rcc.h>
 #include <stm32f4xx_gpio.h>
 #include <stm32f4xx_adc.h>
+#include <stdio.h>
 
 #include "FreeRTOS.h"
 #include "task.h"
 #include "queue.h"
 #include "semphr.h"
+
+#include "tablo.h"
+#include "tablo_parser.h"
+
+extern struct tablo tab;//
 
 static void ADC_Task(void *pvParameters);
 
@@ -61,19 +67,22 @@ static void ADC_Task(void *pvParameters)
 {
 		uint32_t ADC_result=0;
 		uint8_t i=0;
+		uint8_t str_buf[8];
 		while(1)
 		{
 			  ADC_result=0;
 			  for(i=0;i<NUM_CONV;i++)
 			  {
-				   ADC_SoftwareStartConv(ADC1);
+				  ADC1->CR2 |= (uint32_t)ADC_CR2_SWSTART;//ADC_SoftwareStartConv(ADC1);
 				   while(ADC_GetFlagStatus(ADC1, ADC_FLAG_EOC) == RESET)
 				   {
 					   taskYIELD ();
 				   }
-				   ADC_result+=ADC_GetConversionValue(ADC1);
+				   ADC_result+=ADC1->DR;/*ADC_GetConversionValue(ADC1)*/;
 			  }
 			  ADC_result=ADC_result/NUM_CONV;
-			  vTaskDelay(200);
+			  sprintf(str_buf,"%4u",ADC_result);
+			  str_to_ind(&tab.indicators[0],str_buf);
+			  vTaskDelay(400);
 		}
 }
