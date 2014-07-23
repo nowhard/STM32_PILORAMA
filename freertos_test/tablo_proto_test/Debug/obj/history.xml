@@ -117,8 +117,8 @@
       <target file="stm32f4xx_syscfg.o" lastModified="1475900b65f">
          <source file="..\..\..\cmsis_lib\source\stm32f4xx_syscfg.c" lastModified="14125d878f6"/>
       </target>
-      <target file="adc.o" lastModified="14762a624cf">
-         <source file="..\..\..\devices\adc.c" lastModified="14762a5f8cd"/>
+      <target file="adc.o" lastModified="1476343c1bf">
+         <source file="..\..\..\devices\adc.c" lastModified="14763437247"/>
       </target>
       <target file="stm32f4xx_spi.o" lastModified="1475900de0b">
          <source file="..\..\..\cmsis_lib\source\stm32f4xx_spi.c" lastModified="14125d81f8b"/>

@@ -310,19 +310,6 @@
          <include file="..\..\..\cmsis_lib\include\stm32f4xx_syscfg.h"/>
          <include file="..\..\..\cmsis_lib\include\stm32f4xx_rcc.h"/>
       </source>
-      <source file="..\..\..\devices\adc.c" lastModified="14762a5fcb5">
-         <include file="..\..\..\devices\adc.h"/>
-         <include file="..\..\..\cmsis_boot\stm32f4xx.h"/>
-         <include file="..\..\..\cmsis_lib\include\stm32f4xx_rcc.h"/>
-         <include file="..\..\..\cmsis_lib\include\stm32f4xx_gpio.h"/>
-         <include file="..\..\..\cmsis_lib\include\stm32f4xx_adc.h"/>
-         <include file="..\..\..\FreeRTOSV7.1.0\Source\include\FreeRTOS.h"/>
-         <include file="..\..\..\FreeRTOSV7.1.0\Source\include\task.h"/>
-         <include file="..\..\..\FreeRTOSV7.1.0\Source\include\queue.h"/>
-         <include file="..\..\..\FreeRTOSV7.1.0\Source\include\semphr.h"/>
-         <include file="..\..\..\devices\tablo.h"/>
-         <include file="..\..\..\protocols\tablo_parser.h"/>
-      </source>
       <source file="..\..\..\FreeRTOSV7.1.0\Source\include\portable.h" lastModified="13e3b1f8410">
          <include file="..\..\..\FreeRTOSV7.1.0\Source\portable\GCC\ARM_CM4F\portmacro.h"/>
          <include file="..\..\..\FreeRTOSV7.1.0\Source\portable\GCC\ARM_CM4F\portmacro.h"/>
@@ -381,6 +368,15 @@
          <include file="..\..\..\devices\dac.h"/>
          <include file="..\..\..\devices\rtc.h"/>
          <include file="..\..\..\devices\adc.h"/>
+      </source>
+      <source file="..\..\..\protocols\tablo_parser.c" lastModified="14762b509eb">
+         <include file="..\..\..\protocols\tablo_parser.h"/>
+         <include file="..\..\..\devices\tablo.h"/>
+         <include file="..\..\..\FreeRTOSV7.1.0\Source\include\FreeRTOS.h"/>
+         <include file="..\..\..\FreeRTOSV7.1.0\Source\include\task.h"/>
+         <include file="..\..\..\FreeRTOSV7.1.0\Source\include\queue.h"/>
+         <include file="..\..\..\FreeRTOSV7.1.0\Source\include\semphr.h"/>
+         <include file="..\..\..\devices\spi_bus.h"/>
       </source>
       <source file="..\..\..\devices\buzzer.h" lastModified="14293ce3ba6">
          <include file="..\..\..\cmsis_boot\stm32f4xx.h"/>

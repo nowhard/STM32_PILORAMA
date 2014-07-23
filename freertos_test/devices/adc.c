@@ -30,7 +30,7 @@ void ADC_Channel_Init(void)
 	   GPIO_InitTypeDef gpio;
 	   GPIO_StructInit(&gpio);
 	   gpio.GPIO_Mode = GPIO_Mode_AN;
-	   gpio.GPIO_Pin = GPIO_Pin_0;
+	   gpio.GPIO_Pin = GPIO_Pin_0|GPIO_Pin_2;
 	   GPIO_Init(GPIOA, &gpio);
 
 	   /* разрешаем тактирование AЦП1 */
@@ -53,7 +53,7 @@ void ADC_Channel_Init(void)
 	   ADC_InitStructure.ADC_NbrOfConversion=1;
 	   ADC_Init(ADC1, &ADC_InitStructure);
 
-	   ADC_RegularChannelConfig(ADC1, ADC_Channel_0, 1, ADC_SampleTime_84Cycles);
+	   ADC_RegularChannelConfig(ADC1, ADC_Channel_0, 1, ADC_SampleTime_3Cycles);
 
 
 	   /* Включаем АЦП1 */
@@ -62,12 +62,29 @@ void ADC_Channel_Init(void)
 	   xTaskCreate(ADC_Task,(signed char*)"ADC",128,NULL, tskIDLE_PRIORITY + 1, NULL);
 }
 
-#define NUM_CONV	8
+#define SWAP(A, B) { uint16_t t = A; A = B; B = t; }
+
+void bubblesort(uint16_t *a, uint16_t n)
+{
+  uint16_t i, j;
+
+  for (i = n - 1; i > 0; i--)
+  {
+    for (j = 0; j < i; j++)
+    {
+      if (a[j] > a[j + 1])
+        SWAP( a[j], a[j + 1] );
+    }
+  }
+}
+
+#define NUM_CONV	16
 static void ADC_Task(void *pvParameters)
 {
 		uint32_t ADC_result=0;
 		uint8_t i=0;
 		uint8_t str_buf[8];
+		uint16_t adc_buf[NUM_CONV];
 		while(1)
 		{
 			  ADC_result=0;
@@ -78,9 +95,11 @@ static void ADC_Task(void *pvParameters)
 				   {
 					   taskYIELD ();
 				   }
-				   ADC_result+=ADC1->DR;/*ADC_GetConversionValue(ADC1)*/;
+
+				   adc_buf[i]=ADC1->DR;/*ADC_GetConversionValue(ADC1)*/;
 			  }
-			  ADC_result=ADC_result/NUM_CONV;
+			  bubblesort(adc_buf,NUM_CONV);
+			  ADC_result=((adc_buf[(NUM_CONV>>1)-1]+adc_buf[NUM_CONV>>1])>>1);
 			  sprintf(str_buf,"%4u",ADC_result);
 			  str_to_ind(&tab.indicators[0],str_buf);
 			  vTaskDelay(400);
