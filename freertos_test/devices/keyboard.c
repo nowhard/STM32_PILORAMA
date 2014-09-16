@@ -50,6 +50,8 @@ enum
 };
 #define LONG_PRESS_KEY	100
 
+static uint8_t Keyboard_Scan_Matrix(void);
+
 static void vKeyboardTask(void *pvParameters)
 {
 	uint16_t key, last_key, key_port,key_port2;
@@ -138,6 +140,8 @@ static void vKeyboardTask(void *pvParameters)
 			}
 		}
 
+
+
     	if(key_port!=key_mask)
     	{
 			if(key_port==key_port2)//нет дребезга
@@ -148,10 +152,17 @@ static void vKeyboardTask(void *pvParameters)
 				}
 				else
 				{
-					if(tick_counter==LONG_PRESS_KEY)
+					if(tick_counter==LONG_PRESS_KEY)//долгое нажатие
 					{
 						tick_counter++;
-						//отправим в очередь код
+		    			//преобразуем key
+
+		    			//отправим в очередь код
+						 if( xKeyQueue != 0 )
+						 {
+							 xQueueSend( xKeyQueue,  &key, ( portTickType ) 0 );
+						 }
+						 xSemaphoreGive(xKeySemaphore);
 					}
 					else
 					{
@@ -161,11 +172,18 @@ static void vKeyboardTask(void *pvParameters)
 
 			}
     	}
-    	else
+    	else//отпускание
     	{
     		if((tick_counter>0)&&(tick_counter<LONG_PRESS_KEY))
     		{
+    			//преобразуем key
+
     			//отправим в очередь код
+				 if( xKeyQueue != 0 )
+				 {
+					 xQueueSend( xKeyQueue,  &key, ( portTickType ) 0 );
+				 }
+				 xSemaphoreGive(xKeySemaphore);
     		}
     		else
     		{
@@ -179,45 +197,163 @@ static void vKeyboardTask(void *pvParameters)
     	}
 
 
-
-			vTaskDelay(10);
-			if(key_port==key_mask)
-			{
-				last_key=0xFFFF;
-			}
-			else
-			{
-
-				if(key_port==(GPIO_ReadInputData(KEYB_PORT_IN)&key_mask))
-				{
-					if((key_port&KI_0)==0)
-					{
-						key=key_counter;
-					}
-
-		//			if((key&KI_1)==0)
-		//			{
-		//				key=(key_counter|(1<<2));
-		//			}
-
-					if((key_port&KI_2)==0)
-					{
-						key=(key_counter|(2<<2));
-					}
-
-					if(key!=last_key)
-					{
-						 last_key=key;
-
-						 xSemaphoreGive(xKeySemaphore);
-						 if( xKeyQueue != 0 )
-						 {
-							 xQueueSend( xKeyQueue,  &key, ( portTickType ) 0 );
-						 }
-					}
-			 }
-		 }
-
 	vTaskDelay(10);
     }
+}
+
+static uint8_t Keyboard_Scan_Matrix(void)
+{
+	uint16_t   key_port;
+	uint8_t key_counter=0;
+	uint16_t key_mask=0;
+
+	key_mask=KI_0 | KI_1 | KI_2 | KI_3;
+
+	for(key_counter=0;key_counter<KEYB_ROW_NUM;key_counter++)
+	{
+			KEYB_PORT_IN->BSRRL=(KO_0 | KO_1 | KO_2 | KO_3);
+			switch(key_counter)
+			{
+				case ROW_0:
+				{
+					KEYB_PORT_IN->BSRRH=KO_0;
+					key_port=GPIO_ReadInputData(KEYB_PORT_IN)&key_mask;
+
+					switch(key_port&key_mask)
+					{
+						case KI_0:
+						{
+							return KEY_0;
+						}
+						break;
+
+						case KI_1:
+						{
+							return KEY_0;
+						}
+						break;
+
+						case KI_2:
+						{
+							return KEY_0;
+						}
+						break;
+
+						case KI_3:
+						{
+							return KEY_0;
+						}
+						break;
+					}
+				}
+				break;
+
+				case ROW_1:
+				{
+					KEYB_PORT_IN->BSRRH=KO_1;
+
+					key_port=GPIO_ReadInputData(KEYB_PORT_IN)&key_mask;
+
+					switch(key_port&key_mask)
+					{
+						case KI_0:
+						{
+							return KEY_0;
+						}
+						break;
+
+						case KI_1:
+						{
+							return KEY_0;
+						}
+						break;
+
+						case KI_2:
+						{
+							return KEY_0;
+						}
+						break;
+
+						case KI_3:
+						{
+							return KEY_0;
+						}
+						break;
+					}
+				}
+				break;
+
+				case ROW_2:
+				{
+					KEYB_PORT_IN->BSRRH=KO_2;
+
+					key_port=GPIO_ReadInputData(KEYB_PORT_IN)&key_mask;
+
+					switch(key_port&key_mask)
+					{
+						case KI_0:
+						{
+							return KEY_0;
+						}
+						break;
+
+						case KI_1:
+						{
+							return KEY_0;
+						}
+						break;
+
+						case KI_2:
+						{
+							return KEY_0;
+						}
+						break;
+
+						case KI_3:
+						{
+							return KEY_0;
+						}
+						break;
+					}
+				}
+				break;
+
+				case ROW_3:
+				{
+					KEYB_PORT_IN->BSRRH=KO_3;
+
+					key_port=GPIO_ReadInputData(KEYB_PORT_IN)&key_mask;
+
+					switch(key_port&key_mask)
+					{
+						case KI_0:
+						{
+							return KEY_0;
+						}
+						break;
+
+						case KI_1:
+						{
+							return KEY_0;
+						}
+						break;
+
+						case KI_2:
+						{
+							return KEY_0;
+						}
+						break;
+
+						case KI_3:
+						{
+							return KEY_0;
+						}
+						break;
+					}
+				}
+				break;
+			}
+	}
+
+	return 0xFF;
 }
