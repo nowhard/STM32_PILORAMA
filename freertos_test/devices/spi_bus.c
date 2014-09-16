@@ -5,7 +5,6 @@
 #include "stm32f4xx_rcc.h"
 #include "stm32f4xx_tim.h"
 #include "stm32f4xx_spi.h"
-#include "stm32f4xx_dma.h"
 #include <misc.h>
 
 #include "FreeRTOS.h"
@@ -19,33 +18,31 @@
 #include "watchdog.h"
 #include "indicator.h"
 
-extern struct tablo tab;//
+extern struct tablo tab;
 extern struct task_watch task_watches[];
 
 static void spi1_task(void *pvParameters);//
 static void spi2_task(void *pvParameters);
-static void spi3_task(void *pvParameters);
+static void	spi1_config(void);
+static void	spi2_config(void);
 
-xSemaphoreHandle xSPI_Buf_Mutex;
+xSemaphoreHandle xSPI1_Buf_Mutex;
+xSemaphoreHandle xSPI2_Buf_Mutex;
 
 
 uint8_t spi_buses_init(void)//
 {
-	uint8_t error=0;
+	spi1_config();
+	spi2_config();
+	xTaskCreate(spi1_task,(signed char*)"SPI_1_TASK",128,NULL, tskIDLE_PRIORITY + 1, NULL);
+	xTaskCreate(spi2_task,(signed char*)"SPI_2_TASK",128,NULL, tskIDLE_PRIORITY + 1, NULL);
+	task_watches[SPI_TASK_1].task_status=TASK_ACTIVE;
+	task_watches[SPI_TASK_2].task_status=TASK_ACTIVE;
 
-	if(tab.buses[BUS_SPI_1].error==BUS_ERROR_NONE)
-	{
-		xTaskCreate(spi1_task,(signed char*)"SPI_1_TASK",128,NULL, tskIDLE_PRIORITY + 1, NULL);
-		task_watches[SPI_TASK_1].task_status=TASK_ACTIVE;
-	}
+	 xSPI1_Buf_Mutex=xSemaphoreCreateMutex();
+	 xSPI2_Buf_Mutex=xSemaphoreCreateMutex();
 
-	 xSPI_Buf_Mutex=xSemaphoreCreateMutex();
-
-	 if( xSPI_Buf_Mutex != NULL )
-	 {		//
-	 }
-
-	return error;
+	return 0;
 }
 
 
@@ -90,10 +87,7 @@ void	spi1_config(void)//
 
 	    /* Enable SPI1 */
 	    SPI_CalculateCRC(SPI1, DISABLE);
-	   // SPI_SSOutputCmd(SPI1, ENABLE);
 	    SPI_Cmd(SPI1, ENABLE);
-
-	    //GPIO_WriteBit(GPIOA, GPIO_Pin_4, Bit_RESET);
 	    SPI1_GPIO->BSRRH|=SPI1_CS1;//reset pin SPI1_CS1
 }
 
@@ -106,14 +100,13 @@ static void spi1_task(void *pvParameters)//
 	while(1)
 	{
 //		Indicator_Blink_Handler(BUS_SPI_1);
+		str_to_ind(&tab.indicators[0],"F-06");
 
-//		str_to_ind(&tab.indicators[0],"1.23");
-		if( xSemaphoreTake( xSPI_Buf_Mutex, portMAX_DELAY ) == pdTRUE )
+		if( xSemaphoreTake( xSPI1_Buf_Mutex, portMAX_DELAY ) == pdTRUE )
 		{
 			for(i=0;i<IND_COMMAND_LEN;i++)
 			{
 				 SPI1_GPIO->BSRRH|=SPI1_CS1;//reset pin SPI1_CS1
-
 
 					 SPI_I2S_SendData(SPI1, tab.buses[BUS_SPI_1].bus_buf[0][i]);
 					 while(SPI1->SR & SPI_SR_BSY)
@@ -121,13 +114,12 @@ static void spi1_task(void *pvParameters)//
 						 taskYIELD();
 					 }
 
-
 				taskYIELD();
 				SPI1_GPIO->BSRRL|=SPI1_CS1;//set pin SPI1_CS1
 				taskYIELD();
 				SPI1_GPIO->BSRRH|=SPI1_CS1;//reset pin SPI1_CS1
 			}
-		xSemaphoreGive( xSPI_Buf_Mutex );
+			xSemaphoreGive( xSPI1_Buf_Mutex );
 	    }
 
 		task_watches[SPI_TASK_1].counter++;
@@ -135,4 +127,90 @@ static void spi1_task(void *pvParameters)//
 	}
 }
 
+//-------------------------------------------------
+void	spi2_config(void)//
+{
+	RCC_AHB1PeriphClockCmd(SPI2_GPIO_BUS|SPI2_CS_GPIO_BUS, ENABLE);
+    RCC_APB1PeriphClockCmd(RCC_APB1Periph_SPI2, ENABLE);
+
+    GPIO_InitTypeDef GPIO_InitStructure;
+    SPI_InitTypeDef SPI_InitStructure;
+
+    /* Configure SPI1 pins: SCK, MISO and MOSI -------------------------------*/
+    GPIO_InitStructure.GPIO_Pin   = GPIO_Pin_13|GPIO_Pin_15;
+    GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+    GPIO_InitStructure.GPIO_Mode  = GPIO_Mode_AF;
+    GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
+    GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;
+    GPIO_Init(SPI2_GPIO, &GPIO_InitStructure);
+
+    GPIO_InitStructure.GPIO_Pin   = GPIO_Pin_14;
+    GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+    GPIO_InitStructure.GPIO_Mode  = GPIO_Mode_AF;
+    GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
+    GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;
+    GPIO_Init(SPI2_GPIO, &GPIO_InitStructure);
+
+
+    GPIO_InitStructure.GPIO_Pin   = SPI2_CS1;
+    GPIO_InitStructure.GPIO_Mode  = GPIO_Mode_OUT;
+    GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
+    GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;
+    GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+    GPIO_Init(SPI2_GPIO_CS, &GPIO_InitStructure);
+
+	GPIO_PinAFConfig(SPI2_GPIO, GPIO_PinSource13, GPIO_AF_SPI2);
+	GPIO_PinAFConfig(SPI2_GPIO, GPIO_PinSource14, GPIO_AF_SPI2);
+	GPIO_PinAFConfig(SPI2_GPIO, GPIO_PinSource15, GPIO_AF_SPI2);
+
+    SPI_InitStructure.SPI_Direction = SPI_Direction_2Lines_FullDuplex;
+    SPI_InitStructure.SPI_Mode = SPI_Mode_Master;
+    SPI_InitStructure.SPI_DataSize = SPI_DataSize_16b;
+    SPI_InitStructure.SPI_CPOL = SPI_CPOL_Low;
+    SPI_InitStructure.SPI_CPHA = SPI_CPHA_1Edge;
+    SPI_InitStructure.SPI_NSS = SPI_NSS_Soft;
+    SPI_InitStructure.SPI_BaudRatePrescaler = SPI_BaudRatePrescaler_16;
+    SPI_InitStructure.SPI_FirstBit = SPI_FirstBit_MSB;
+    //SPI_InitStructure.SPI_CRCPolynomial = 7;
+    SPI_Init(SPI2, &SPI_InitStructure);
+
+    SPI_CalculateCRC(SPI2, DISABLE);
+    SPI_Cmd(SPI2, ENABLE);
+
+    //GPIO_WriteBit(GPIOB, GPIO_Pin_12, Bit_RESET);
+    SPI2_GPIO_CS->BSRRH|=SPI2_CS1;
+}
+
+static void spi2_task(void *pvParameters)
+{
+	uint8_t i=0;
+
+	while(1)
+	{
+//		Indicator_Blink_Handler(BUS_SPI_2);
+		str_to_ind(&tab.indicators[1],"11111");
+
+		if( xSemaphoreTake( xSPI2_Buf_Mutex, portMAX_DELAY ) == pdTRUE )
+		{
+			for(i=0;i<IND_COMMAND_LEN;i++)
+			{
+				SPI2_GPIO_CS->BSRRH|=SPI2_CS1;//reset pin SPI2_CS1
+			     SPI_I2S_SendData(SPI2, tab.buses[BUS_SPI_2].bus_buf[0][i]);
+				 while(SPI2->SR & SPI_SR_BSY)
+				 {
+					 taskYIELD();
+				 }
+
+				taskYIELD();
+				SPI2_GPIO_CS->BSRRL|=SPI2_CS1;//set pin SPI1_CS1
+				taskYIELD();
+				SPI2_GPIO_CS->BSRRH|=SPI2_CS1;//reset pin SPI2_CS1
+			}
+			xSemaphoreGive( xSPI2_Buf_Mutex );
+	    }
+
+		task_watches[SPI_TASK_2].counter++;
+		vTaskDelay(50);
+	}
+}
 

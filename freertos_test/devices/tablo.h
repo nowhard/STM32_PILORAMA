@@ -5,11 +5,6 @@
 #include "spi_bus.h"
 #include "buzzer.h"
 
-#define UART_BUF_LEN			0xC0
-#define TABLO_PROTO_BUF_LEN		0xC0
-
-
-
 enum
 {
 	DISCR_OUT_OFF=0x0,
@@ -21,8 +16,8 @@ struct tablo{
 	struct indicator indicators[IND_ALL_NUM];//
 	struct buzzer buz;//
 	uint8_t discr_outputs[4];//
-	uint8_t uart_buf[UART_BUF_LEN];//
-	uint8_t tablo_proto_buf[TABLO_PROTO_BUF_LEN];//
+//	uint8_t uart_buf[UART_BUF_LEN];//
+//	uint8_t tablo_proto_buf[TABLO_PROTO_BUF_LEN];//
 };
 
 void tablo_indicator_struct_init(void);//

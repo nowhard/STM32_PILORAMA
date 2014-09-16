@@ -3,9 +3,6 @@
 #include "stm32f4xx.h"
 #include "stm32f4xx_gpio.h"
 #include "stm32f4xx_rcc.h"
-#include "stm32f4xx_tim.h"
-#include "stm32f4xx_spi.h"
-#include "stm32f4xx_dma.h"
 #include <misc.h>
 
 #include "FreeRTOS.h"
@@ -16,7 +13,7 @@
 #include "tablo.h"
 #include "watchdog.h"
 
-extern struct tablo tab;//
+extern struct tablo tab;
 extern struct task_watch task_watches[];
 xTaskHandle xBuzzer_Handle;
 
@@ -40,6 +37,7 @@ void buzzer_init(void)
 
     xTaskCreate(buzzer_task,(signed char*)"BUZZER",64,NULL, tskIDLE_PRIORITY + 1, &xBuzzer_Handle);
     vTaskSuspend (xBuzzer_Handle);
+
     task_watches[BUZZER_TASK].task_status=TASK_IDLE;
 }
 void buzzer_task(void *pvParameters )

@@ -9,7 +9,8 @@
 #include "semphr.h"
 #include "spi_bus.h"
 
-extern xSemaphoreHandle xSPI_Buf_Mutex;
+extern xSemaphoreHandle xSPI1_Buf_Mutex;
+extern xSemaphoreHandle xSPI2_Buf_Mutex;
 
 const uint8_t Sym_table[2][SYM_TAB_LEN]={{'0','1','2','3','4','5','6','7','8','9','A','b','C','d','E','F','h','I','i','J','L','O','P','r','t','U','u','.','-','_',' '},
                                          {0x7E/*0*/,0x30/*1*/,0x6D/*2*/,0x79/*3*/,0x33/*4*/,0x5B/*5*/,0x5F/*6*/,0x70/*7*/,0x7F/*8*/,0x7B/*9*/,0x77/*A*/,
@@ -24,10 +25,28 @@ uint8_t str_to_ind(struct indicator *ind,uint8_t *str)
     uint8_t buf_count=0;//
     int8_t str_len=0;
 
+    xSemaphoreHandle *xSPI_Buf_Mutex;
+
     if(ind->number_in_bus>IND_ALL_NUM)//такого индикатора на шине нет
     {
     	return 0;
     }
+
+    switch(ind->bus)
+    {
+    	case BUS_SPI_1:
+    	{
+    		xSPI_Buf_Mutex=xSPI1_Buf_Mutex;
+    	}
+    	break;
+
+    	case BUS_SPI_2:
+    	{
+    		xSPI_Buf_Mutex=xSPI2_Buf_Mutex;
+    	}
+    	break;
+    }
+
 
     str_len=strlen(str);//!!!
 		if( xSemaphoreTake( xSPI_Buf_Mutex, portMAX_DELAY ) == pdTRUE )
@@ -53,7 +72,7 @@ uint8_t str_to_ind(struct indicator *ind,uint8_t *str)
 				str_len=10;
 			}
 
-			for(i=(str_len-1);i>=0;i--)//
+			for(i=0;i<str_len;i++)//
 			{
 				if((str[i]>=0x30)&&(str[i]<=0x39))//
 				{
@@ -71,17 +90,18 @@ uint8_t str_to_ind(struct indicator *ind,uint8_t *str)
 					{
 						if(str[i+1]=='.')
 						{
-							tab.buses[ind->bus].bus_buf[ind->number_in_bus][buf_count+1]|=0x80;
+							tab.buses[ind->bus].bus_buf[ind->number_in_bus][buf_count]|=0x80;
+							tab.buses[ind->bus].bus_buf[ind->number_in_bus][buf_count-1]|=0x80;
 							buf_count++;
 						}
 						else
 						{
-							tab.buses[ind->bus].bus_buf[ind->number_in_bus][buf_count]|=0x80;
+							tab.buses[ind->bus].bus_buf[ind->number_in_bus][buf_count-1]|=0x80;
 						}
 					}
 					else
 					{
-						tab.buses[ind->bus].bus_buf[ind->number_in_bus][buf_count]|=0x80;
+						tab.buses[ind->bus].bus_buf[ind->number_in_bus][buf_count-1]|=0x80;
 					}
 					continue;
 				}

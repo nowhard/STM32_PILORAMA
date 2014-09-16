@@ -3,8 +3,6 @@
 
 #include "stm32f4xx.h"
 
-//#define BUZZER_ON	0x1
-//#define BUZZER_OFF	0x0
 
 enum
 {
@@ -12,16 +10,6 @@ enum
 	BUZZER_ON=1
 };
 
-//#define BUZZER_EFFECT_0	0x0
-//#define BUZZER_EFFECT_1	0x1
-//#define BUZZER_EFFECT_2	0x2
-//#define BUZZER_EFFECT_3	0x3
-//#define BUZZER_EFFECT_4	0x4
-//#define BUZZER_EFFECT_5	0x5
-//#define BUZZER_EFFECT_6	0x6
-//#define BUZZER_EFFECT_7	0x7
-
-//#define BUZZER_EFFECT_NONE	0xF
 
 enum
 {
@@ -36,8 +24,8 @@ enum
 	BUZZER_EFFECT_NONE
 };
 
-#define BUZZER_PIN	GPIO_Pin_6
-#define BUZZER_PORT GPIOC
+#define BUZZER_PIN	GPIO_Pin_2
+#define BUZZER_PORT GPIOB
 
 struct buzzer{
 	uint8_t buzzer_enable;//
