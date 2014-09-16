@@ -19,8 +19,8 @@ static void vKeyboardTask(void *pvParameters);
 
 void Keyboard_Init(void)
 {
-	RCC_AHB1PeriphClockCmd(INIT_KEYB_PORT_IN, ENABLE);
-	RCC_AHB1PeriphClockCmd(INIT_KEYB_PORT_OUT, ENABLE);
+	RCC_AHB1PeriphClockCmd(INIT_KEYB_PORT_IN|INIT_KEYB_PORT_OUT, ENABLE);
+
 	GPIO_InitTypeDef init_pin;
 	init_pin.GPIO_Pin  = KO_0 | KO_1 | KO_2 | KO_3;
 	init_pin.GPIO_Mode  = GPIO_Mode_OUT;
@@ -41,71 +41,144 @@ void Keyboard_Init(void)
 	xTaskCreate(vKeyboardTask,(signed char*)"Keyboard",64,NULL, tskIDLE_PRIORITY + 1, NULL);
 }
 
+enum
+{
+	ROW_0=0,
+	ROW_1,
+	ROW_2,
+	ROW_3,
+};
+#define LONG_PRESS_KEY	100
+
 static void vKeyboardTask(void *pvParameters)
 {
-	uint16_t key, last_key, key_port;
+	uint16_t key, last_key, key_port,key_port2;
 
 	uint8_t key_counter=0;
+	uint8_t read_cycle_counter=0;
+	uint8_t tick_counter=0;
 	uint16_t key_mask=0;
 
 	key_mask=KI_0 | KI_1 | KI_2 | KI_3;
     while(1)
     {
-		for(key_counter=0;key_counter<4;key_counter++)
+
+    	for(key_counter=0;key_counter<KEYB_ROW_NUM;key_counter++)
 		{
-				if(key_counter==0)
+			KEYB_PORT_IN->BSRRL=(KO_0 | KO_1 | KO_2 | KO_3);
+			switch(key_counter)
+			{
+				case ROW_0:
 				{
-					KEYB_PORT_IN->BSRRL=(KO_0 | KO_1 | KO_2 | KO_3);
 					KEYB_PORT_IN->BSRRH=KO_0;
-
-					key_port=GPIO_ReadInputData(KEYB_PORT_IN)&key_mask;
-					if(key_port!=key_mask)
-					{
-						break;
-					}
 				}
-				if(key_counter==1)
+				break;
+
+				case ROW_1:
 				{
-					KEYB_PORT_OUT->BSRRL=(KO_0 | KO_1 | KO_2 | KO_3);
-					KEYB_PORT_OUT->BSRRH=KO_1;
-
-					key_port=GPIO_ReadInputData(KEYB_PORT_IN)&key_mask;
-					if(key_port!=key_mask)
-					{
-						break;
-					}
+					KEYB_PORT_IN->BSRRH=KO_1;
 				}
+				break;
 
-				if(key_counter==2)
+				case ROW_2:
 				{
-					KEYB_PORT_OUT->BSRRL=(KO_0 | KO_1 | KO_2 | KO_3);
-					KEYB_PORT_OUT->BSRRH=KO_2;
-
-					key_port=GPIO_ReadInputData(KEYB_PORT_IN)&key_mask;
-					if(key_port!=key_mask)
-					{
-						break;
-					}
+					KEYB_PORT_IN->BSRRH=KO_2;
 				}
+				break;
 
-				if(key_counter==3)
+				case ROW_3:
 				{
-					KEYB_PORT_OUT->BSRRL=(KO_0 | KO_1 | KO_2 | KO_3);
-					KEYB_PORT_OUT->BSRRH=KO_3;
-
-					key_port=GPIO_ReadInputData(KEYB_PORT_IN)&key_mask;
-					if(key_port!=key_mask)
-					{
-						break;
-					}
-					//key_counter=0;
+					KEYB_PORT_IN->BSRRH=KO_3;
 				}
+				break;
+
+			}
+			key_port=GPIO_ReadInputData(KEYB_PORT_IN)&key_mask;
+			if(key_port!=key_mask)
+			{
+				break;
+			}
+		}
+		vTaskDelay(10);
+
+    	for(key_counter=0;key_counter<KEYB_ROW_NUM;key_counter++)
+		{
+			KEYB_PORT_IN->BSRRL=(KO_0 | KO_1 | KO_2 | KO_3);
+			switch(key_counter)
+			{
+				case ROW_0:
+				{
+					KEYB_PORT_IN->BSRRH=KO_0;
+				}
+				break;
+
+				case ROW_1:
+				{
+					KEYB_PORT_IN->BSRRH=KO_1;
+				}
+				break;
+
+				case ROW_2:
+				{
+					KEYB_PORT_IN->BSRRH=KO_2;
+				}
+				break;
+
+				case ROW_3:
+				{
+					KEYB_PORT_IN->BSRRH=KO_3;
+				}
+				break;
+
+			}
+			key_port2=GPIO_ReadInputData(KEYB_PORT_IN)&key_mask;
+			if(key_port2!=key_mask)
+			{
+				break;
+			}
 		}
 
-	//    //	key_counter&=0x3;
-			vTaskDelay(10);
-	//
-			key_port=GPIO_ReadInputData(KEYB_PORT_IN)&key_mask;
+    	if(key_port!=key_mask)
+    	{
+			if(key_port==key_port2)//нет дребезга
+			{
+				if(tick_counter<LONG_PRESS_KEY)
+				{
+					tick_counter++;
+				}
+				else
+				{
+					if(tick_counter==LONG_PRESS_KEY)
+					{
+						tick_counter++;
+						//отправим в очередь код
+					}
+					else
+					{
+
+					}
+				}
+
+			}
+    	}
+    	else
+    	{
+    		if((tick_counter>0)&&(tick_counter<LONG_PRESS_KEY))
+    		{
+    			//отправим в очередь код
+    		}
+    		else
+    		{
+    			if(tick_counter==(LONG_PRESS_KEY+1))
+    			{
+    				//ничего не делаем
+    			}
+    		}
+    		last_key=0xFF;
+    		tick_counter=0;
+    	}
+
+
 
 			vTaskDelay(10);
 			if(key_port==key_mask)

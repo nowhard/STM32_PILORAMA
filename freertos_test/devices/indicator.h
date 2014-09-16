@@ -73,8 +73,8 @@ enum
 
 #define IND_ALL_NUM			2//
 
-#define IND_SPI_BUS_1_NUM	2 //
-#define IND_SPI_BUS_2_NUM	6
+#define IND_SPI_BUS_1_NUM	1 //
+#define IND_SPI_BUS_2_NUM	1
 //#define IND_SPI_BUS_3_NUM	6
 
 uint8_t indicators_init(void);//

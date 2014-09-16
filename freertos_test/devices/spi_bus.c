@@ -188,7 +188,7 @@ static void spi2_task(void *pvParameters)
 	while(1)
 	{
 //		Indicator_Blink_Handler(BUS_SPI_2);
-		str_to_ind(&tab.indicators[1],"11111");
+		str_to_ind(&tab.indicators[1],"-123");
 
 		if( xSemaphoreTake( xSPI2_Buf_Mutex, portMAX_DELAY ) == pdTRUE )
 		{
