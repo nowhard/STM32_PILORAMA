@@ -1,0 +1,31 @@
+                Bytes      Cards  Artifacts     Deltas
+Sent:              53          1          0          0
+waiting for server...
+processed: 2%         
+processed: 8%         
+processed: 10%         
+processed: 35%         
+processed: 37%         
+processed: 39%         
+processed: 41%         
+processed: 81%         
+processed: 83%         
+processed: 94%         
+processed: 95%         
+processed: 98%         
+Received:        2483         13          5          0
+Sent:              58          2          0          0
+waiting for server...
+processed: 3%         
+Received:         634          2          0          0
+Total network traffic: 645 bytes sent, 3323 bytes received
+Rebuilding repository meta-data...
+  0.0% complete...
+  20.0% complete...
+  40.0% complete...
+  60.0% complete...
+  80.0% complete...
+  100.0% complete...
+project-id: 9d9e84c144b21e0805592e078f3b59f56d5e9706
+server-id:  130a798d261b97ad048c5c676de7484060c59aa7
+admin-user: admin (password is "f10685")

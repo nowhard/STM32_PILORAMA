@@ -2,7 +2,6 @@
 *.o
 *.map
 *.bak
-*.txt
 *.bin
 *.log
 *.htm*

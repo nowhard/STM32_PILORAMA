@@ -1,0 +1,2 @@
+C:\CooCox\CoIDE\bin\fossil.exe: *** time skew *** server is slow by 65.0 minutes
+C:\CooCox\CoIDE\bin\fossil.exe: *** time skew *** server is slow by 64.9 minutes
