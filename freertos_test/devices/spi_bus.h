@@ -6,6 +6,7 @@
 
 #define SPI1_GPIO_BUS 	RCC_AHB1Periph_GPIOB
 #define SPI1_GPIO		GPIOB
+#define SPI1_GPIO_CS	GPIOB
 
 #define SPI1_CS1	GPIO_Pin_6
 #define SPI1_CS2	GPIO_Pin_7

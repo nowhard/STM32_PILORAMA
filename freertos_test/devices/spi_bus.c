@@ -21,26 +21,25 @@
 extern struct tablo tab;
 extern struct task_watch task_watches[];
 
-static void spi1_task(void *pvParameters);//
-static void spi2_task(void *pvParameters);
+static void spi_task(void *pvParameters);//
+//static void spi2_task(void *pvParameters);
 static void	spi1_config(void);
 static void	spi2_config(void);
 
-xSemaphoreHandle xSPI1_Buf_Mutex;
-xSemaphoreHandle xSPI2_Buf_Mutex;
+xSemaphoreHandle xSPI_Buf_Mutex;
 
 
 uint8_t spi_buses_init(void)//
 {
 	spi1_config();
 	spi2_config();
-	xTaskCreate(spi1_task,(signed char*)"SPI_1_TASK",128,NULL, tskIDLE_PRIORITY + 1, NULL);
-	xTaskCreate(spi2_task,(signed char*)"SPI_2_TASK",128,NULL, tskIDLE_PRIORITY + 1, NULL);
+	xTaskCreate(spi_task,(signed char*)"SPI_TASK",128,NULL, tskIDLE_PRIORITY + 1, NULL);
+//	xTaskCreate(spi2_task,(signed char*)"SPI_2_TASK",128,NULL, tskIDLE_PRIORITY + 1, NULL);
 	task_watches[SPI_TASK_1].task_status=TASK_ACTIVE;
-	task_watches[SPI_TASK_2].task_status=TASK_ACTIVE;
+//	task_watches[SPI_TASK_2].task_status=TASK_ACTIVE;
 
-	 xSPI1_Buf_Mutex=xSemaphoreCreateMutex();
-	 xSPI2_Buf_Mutex=xSemaphoreCreateMutex();
+	 xSPI_Buf_Mutex=xSemaphoreCreateMutex();
+//	 xSPI2_Buf_Mutex=xSemaphoreCreateMutex();
 
 	return 0;
 }
@@ -88,46 +87,9 @@ void	spi1_config(void)//
 	    /* Enable SPI1 */
 	    SPI_CalculateCRC(SPI1, DISABLE);
 	    SPI_Cmd(SPI1, ENABLE);
-	    SPI1_GPIO->BSRRH|=SPI1_CS1;//reset pin SPI1_CS1
+	    SPI1_GPIO_CS->BSRRH|=SPI1_CS1;//reset pin SPI1_CS1
 }
 
-
-
-static void spi1_task(void *pvParameters)//
-{
-	uint8_t i=0;
-
-	while(1)
-	{
-//		Indicator_Blink_Handler(BUS_SPI_1);
-		str_to_ind(&tab.indicators[0],"F-06");
-
-		if( xSemaphoreTake( xSPI1_Buf_Mutex, portMAX_DELAY ) == pdTRUE )
-		{
-			for(i=0;i<IND_COMMAND_LEN;i++)
-			{
-				 SPI1_GPIO->BSRRH|=SPI1_CS1;//reset pin SPI1_CS1
-
-					 SPI_I2S_SendData(SPI1, tab.buses[BUS_SPI_1].bus_buf[0][i]);
-					 while(SPI1->SR & SPI_SR_BSY)
-					 {
-						 taskYIELD();
-					 }
-
-				taskYIELD();
-				SPI1_GPIO->BSRRL|=SPI1_CS1;//set pin SPI1_CS1
-				taskYIELD();
-				SPI1_GPIO->BSRRH|=SPI1_CS1;//reset pin SPI1_CS1
-			}
-			xSemaphoreGive( xSPI1_Buf_Mutex );
-	    }
-
-		task_watches[SPI_TASK_1].counter++;
-		vTaskDelay(50);
-	}
-}
-
-//-------------------------------------------------
 void	spi2_config(void)//
 {
 	RCC_AHB1PeriphClockCmd(SPI2_GPIO_BUS|SPI2_CS_GPIO_BUS, ENABLE);
@@ -169,7 +131,7 @@ void	spi2_config(void)//
     SPI_InitStructure.SPI_CPOL = SPI_CPOL_Low;
     SPI_InitStructure.SPI_CPHA = SPI_CPHA_1Edge;
     SPI_InitStructure.SPI_NSS = SPI_NSS_Soft;
-    SPI_InitStructure.SPI_BaudRatePrescaler = SPI_BaudRatePrescaler_16;
+    SPI_InitStructure.SPI_BaudRatePrescaler = SPI_BaudRatePrescaler_32;
     SPI_InitStructure.SPI_FirstBit = SPI_FirstBit_MSB;
     //SPI_InitStructure.SPI_CRCPolynomial = 7;
     SPI_Init(SPI2, &SPI_InitStructure);
@@ -181,36 +143,84 @@ void	spi2_config(void)//
     SPI2_GPIO_CS->BSRRH|=SPI2_CS1;
 }
 
-static void spi2_task(void *pvParameters)
+//----------------------------------------------------------------
+static void spi_task(void *pvParameters)//
 {
 	uint8_t i=0;
-
+	Indicator_Blink_Set(IND_1,0xAA,0xFF);
 	while(1)
 	{
-//		Indicator_Blink_Handler(BUS_SPI_2);
-		str_to_ind(&tab.indicators[1],"-123");
+//		Indicator_Blink_Handler(BUS_SPI_1);
 
-		if( xSemaphoreTake( xSPI2_Buf_Mutex, portMAX_DELAY ) == pdTRUE )
+		str_to_ind(IND_1,"F-01");
+		str_to_ind(IND_2,"A-54");
+		Indicator_Blink_Handler();
+
+		if( xSemaphoreTake( xSPI_Buf_Mutex, portMAX_DELAY ) == pdTRUE )
 		{
 			for(i=0;i<IND_COMMAND_LEN;i++)
 			{
-				SPI2_GPIO_CS->BSRRH|=SPI2_CS1;//reset pin SPI2_CS1
-			     SPI_I2S_SendData(SPI2, tab.buses[BUS_SPI_2].bus_buf[0][i]);
-				 while(SPI2->SR & SPI_SR_BSY)
+				 //-------------------------------------------
+				 SPI1_GPIO_CS->BSRRH|=SPI1_CS1;//reset pin SPI1_CS1
+				 SPI2_GPIO_CS->BSRRH|=SPI2_CS1;//reset pin SPI2_CS1
+
+				 SPI_I2S_SendData(SPI1, tab.buses[BUS_SPI_1].bus_buf[0][i]);
+				 SPI_I2S_SendData(SPI2, tab.buses[BUS_SPI_2].bus_buf[0][i]);
+
+				 while((SPI1->SR & SPI_SR_BSY)||(SPI2->SR & SPI_SR_BSY))
 				 {
-					 taskYIELD();
+					taskYIELD();
 				 }
 
-				taskYIELD();
-				SPI2_GPIO_CS->BSRRL|=SPI2_CS1;//set pin SPI1_CS1
-				taskYIELD();
-				SPI2_GPIO_CS->BSRRH|=SPI2_CS1;//reset pin SPI2_CS1
+				 taskYIELD();
+				 SPI1_GPIO_CS->BSRRL|=SPI1_CS1;//set pin SPI1_CS1
+				 SPI2_GPIO_CS->BSRRL|=SPI2_CS1;//set pin SPI1_CS1
+				 taskYIELD();
+				 SPI1_GPIO_CS->BSRRH|=SPI1_CS1;//reset pin SPI1_CS1
+				 SPI2_GPIO_CS->BSRRH|=SPI2_CS1;//reset pin SPI2_CS1
 			}
-			xSemaphoreGive( xSPI2_Buf_Mutex );
+			xSemaphoreGive( xSPI_Buf_Mutex );
 	    }
 
-		task_watches[SPI_TASK_2].counter++;
-		vTaskDelay(50);
+		task_watches[SPI_TASK_1].counter++;
+		vTaskDelay(100);
 	}
 }
+
+//-------------------------------------------------
+
+
+//static void spi2_task(void *pvParameters)
+//{
+//	uint8_t i=0;
+//
+//	while(1)
+//	{
+////		Indicator_Blink_Handler(BUS_SPI_2);
+////		str_to_ind(&tab.indicators[1],"-123");
+//	//	str_to_ind(IND_2,"A-54");
+//
+//		if( xSemaphoreTake( xSPI2_Buf_Mutex, portMAX_DELAY ) == pdTRUE )
+//		{
+//			for(i=0;i<IND_COMMAND_LEN;i++)
+//			{
+//				 SPI2_GPIO_CS->BSRRH|=SPI2_CS1;//reset pin SPI2_CS1
+//			     SPI_I2S_SendData(SPI2, tab.buses[BUS_SPI_2].bus_buf[0][i]);
+//				 while(SPI2->SR & SPI_SR_BSY)
+//				 {
+//					 taskYIELD();
+//				 }
+//
+//				taskYIELD();
+//				SPI2_GPIO_CS->BSRRL|=SPI2_CS1;//set pin SPI1_CS1
+//				taskYIELD();
+//				SPI2_GPIO_CS->BSRRH|=SPI2_CS1;//reset pin SPI2_CS1
+//			}
+//			xSemaphoreGive( xSPI2_Buf_Mutex );
+//	    }
+//
+//		task_watches[SPI_TASK_2].counter++;
+//		vTaskDelay(100);
+//	}
+//}
 

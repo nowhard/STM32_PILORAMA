@@ -15,7 +15,8 @@ void tablo_indicator_struct_init(void)//
 	tab.indicators[0].scan_limit=IND_SCAN_LIMIT|(tab.indicators[0].character_num-1);
 	tab.indicators[0].shutdown=IND_SHUTDOWN|IND_SHUTDOWN_OFF;
 	tab.indicators[0].display_test=IND_DISPLAY_TEST|IND_DISPLAY_TEST_OFF;
-	tab.indicators[0].blink=BLINK_FALSE;
+	tab.indicators[0].blink_mask=BLINK_FALSE;
+	tab.indicators[0].blink_num=0;
 
 	tab.indicators[1].bus=BUS_SPI_2;
 	tab.indicators[1].number_in_bus=0;
@@ -26,7 +27,8 @@ void tablo_indicator_struct_init(void)//
 	tab.indicators[1].scan_limit=IND_SCAN_LIMIT|(tab.indicators[1].character_num-1);
 	tab.indicators[1].shutdown=IND_SHUTDOWN|IND_SHUTDOWN_OFF;
 	tab.indicators[1].display_test=IND_DISPLAY_TEST|IND_DISPLAY_TEST_OFF;
-	tab.indicators[1].blink=BLINK_FALSE;
+	tab.indicators[1].blink_mask=BLINK_FALSE;
+	tab.indicators[1].blink_num=0;
 }
 
 uint8_t tablo_devices_init(void)//

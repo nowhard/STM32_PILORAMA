@@ -16,12 +16,9 @@ struct indicator{
     uint16_t display_test;//
 
     uint8_t renew_data;//содержимое дисплея обновлено по протоколу
-    uint8_t blink;
+    uint8_t blink_mask;
+    uint8_t blink_num;
 
-    uint8_t inverse;//инвертированные цвета
-	uint8_t	value;//значение для линейного индикатора
-	uint8_t ust1;//первая уставка для линейного индикатора
-	uint8_t	ust2;//вторая уставка для линейного индикатора
 };
 
 #define IND_BRIGHTNESS      0xA00 //0-15
@@ -48,8 +45,8 @@ enum
 
 enum
 {
-	BLINK_FALSE=0,
-	BLINK_TRUE=1
+	BLINK_FALSE	=0x00,
+	BLINK_ALL	=0xFF
 };
 
 enum
@@ -77,8 +74,9 @@ enum
 #define IND_SPI_BUS_2_NUM	1
 //#define IND_SPI_BUS_3_NUM	6
 
-uint8_t indicators_init(void);//
-void Indicator_Blink_Handler(uint8_t bus);
+
+void Indicator_Blink_Handler(void);
+void Indicator_Blink_Set(uint8_t indicator, uint8_t mask, uint8_t blink_num);
 
 
 #endif
