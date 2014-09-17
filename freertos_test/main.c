@@ -56,7 +56,8 @@
 int main(void)
 {
 	SystemInit();
-	tablo_devices_init();
+//	tablo_devices_init();
+	Keyboard_Init();
 
     vTaskStartScheduler();
 

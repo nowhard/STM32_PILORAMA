@@ -12,8 +12,8 @@
       <target file="syscalls.o" lastModified="1476293dfbf">
          <source file="..\..\..\syscalls\syscalls.c" lastModified="1476293bc68"/>
       </target>
-      <target file="menu.o" lastModified="1487db4f99c">
-         <source file="..\..\..\menu\menu.c" lastModified="14743665610"/>
+      <target file="menu.o" lastModified="14882c3664b">
+         <source file="..\..\..\menu\menu.c" lastModified="148826ce3ee"/>
       </target>
       <target file="misc.o" lastModified="1475900e109">
          <source file="..\..\..\cmsis_lib\source\misc.c" lastModified="14125d86b88"/>
@@ -27,11 +27,11 @@
       <target file="stm32f4xx_tim.o" lastModified="1475900e37a">
          <source file="..\..\..\cmsis_lib\source\stm32f4xx_tim.c" lastModified="14125d83d92"/>
       </target>
-      <target file="indicator.o" lastModified="1487e2788e2">
-         <source file="..\..\..\devices\indicator.c" lastModified="14305a8c0ae"/>
-      </target>
       <target file="timers.o" lastModified="1471a0efbcf">
          <source file="..\..\..\FreeRTOSV7.1.0\Source\timers.c" lastModified="13e3b1eb910"/>
+      </target>
+      <target file="indicator.o" lastModified="1487e2788e2">
+         <source file="..\..\..\devices\indicator.c" lastModified="14305a8c0ae"/>
       </target>
       <target file="stm32f4xx_iwdg.o" lastModified="1475900d1d6">
          <source file="..\..\..\cmsis_lib\source\stm32f4xx_iwdg.c" lastModified="1428e61eab6"/>
@@ -96,8 +96,8 @@
       <target file="channels.o" lastModified="1475900dea7">
          <source file="..\..\..\protocols\channels.c" lastModified="1428e0f8719"/>
       </target>
-      <target file="keyboard.o" lastModified="1487db6f637">
-         <source file="..\..\..\devices\keyboard.c" lastModified="1487db6eba8"/>
+      <target file="keyboard.o" lastModified="14882ee5ded">
+         <source file="..\..\..\devices\keyboard.c" lastModified="14882ee5002"/>
       </target>
       <target file="spi_bus.o" lastModified="1487e278b81">
          <source file="..\..\..\devices\spi_bus.c" lastModified="1487e25d381"/>
@@ -126,8 +126,8 @@
       <target file="encoder.o" lastModified="1487dc658e0">
          <source file="..\..\..\devices\encoder.c" lastModified="1487dc64a5a"/>
       </target>
-      <target file="main.o" lastModified="1487e2789cc">
-         <source file="..\..\..\main.c" lastModified="1487dc1f77a"/>
+      <target file="main.o" lastModified="14882c3631e">
+         <source file="..\..\..\main.c" lastModified="14882b8288b"/>
       </target>
       <target file="system_stm32f4xx.o" lastModified="1475900dc84">
          <source file="..\..\..\cmsis_boot\system_stm32f4xx.c" lastModified="1428e3c1104"/>
