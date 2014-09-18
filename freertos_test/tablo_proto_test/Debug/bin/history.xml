@@ -1,19 +1,19 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <history>
    <processor signature="4.7.2 -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=softfp -mthumb -Wall -g -nostartfiles -Map=tablo_proto_test.map -O0 --gc-sections -LC:\CooCox\CoIDE\configuration\ProgramData\pilorama -TC:\CooCox\CoIDE\configuration\ProgramData\pilorama/link.ld -g">
-      <target file="tablo_proto_test.elf" lastModified="14883cf3c07">
+      <target file="tablo_proto_test.elf" lastModified="14887d458e8">
          <source file="..\obj\stm32f4xx_syscfg.o" lastModified="1475900b65f"/>
-         <source file="..\obj\tablo_parser.o" lastModified="14883c2309c"/>
+         <source file="..\obj\tablo_parser.o" lastModified="148879d8bbb"/>
          <source file="..\obj\core_cm3.o" lastModified="1471a0ef16e"/>
-         <source file="..\obj\buzzer.o" lastModified="14883c231f4"/>
+         <source file="..\obj\buzzer.o" lastModified="148879d8cc5"/>
          <source file="..\obj\stm32f4xx_pwr.o" lastModified="1475900cb7d"/>
          <source file="..\obj\startup_stm32f4xx.o" lastModified="1471a0ef69e"/>
          <source file="..\obj\stm32f4xx_iwdg.o" lastModified="1475900d1d6"/>
-         <source file="..\obj\indicator.o" lastModified="14883cf3948"/>
-         <source file="..\obj\main.o" lastModified="14883c233a9"/>
+         <source file="..\obj\indicator.o" lastModified="14887d4560a"/>
+         <source file="..\obj\main.o" lastModified="148879d8f65"/>
          <source file="..\obj\stm32f4xx_rcc.o" lastModified="1475900d61c"/>
          <source file="..\obj\timers.o" lastModified="1471a0efbcf"/>
-         <source file="..\obj\tablo.o" lastModified="14883c23474"/>
+         <source file="..\obj\tablo.o" lastModified="148879d9020"/>
          <source file="..\obj\encoder.o" lastModified="1487dc658e0"/>
          <source file="..\obj\watchdog.o" lastModified="1475900d800"/>
          <source file="..\obj\tasks.o" lastModified="1471a0effa7"/>
@@ -28,7 +28,7 @@
          <source file="..\obj\croutine.o" lastModified="1471a0f07e4"/>
          <source file="..\obj\stm32f4xx_spi.o" lastModified="1475900de0b"/>
          <source file="..\obj\stm32f4xx_exti.o" lastModified="1475900df34"/>
-         <source file="..\obj\spi_bus.o" lastModified="14883c8ee9f"/>
+         <source file="..\obj\spi_bus.o" lastModified="14887d35ddf"/>
          <source file="..\obj\misc.o" lastModified="1475900e109"/>
          <source file="..\obj\heap_1.o" lastModified="1471a0f0c0b"/>
          <source file="..\obj\stm32f4xx_tim.o" lastModified="1475900e37a"/>

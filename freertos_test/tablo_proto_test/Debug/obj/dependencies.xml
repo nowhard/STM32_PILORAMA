@@ -13,10 +13,10 @@
          <include file="..\..\..\devices\tablo.h"/>
          <include file="..\..\..\protocols\tablo_parser.h"/>
       </source>
-      <source file="..\..\..\devices\tablo.c" lastModified="1488394a9d3">
+      <source file="..\..\..\devices\tablo.c" lastModified="1488793d73c">
          <include file="..\..\..\devices\tablo.h"/>
       </source>
-      <source file="..\..\..\devices\indicator.h" lastModified="14883c1779d">
+      <source file="..\..\..\devices\indicator.h" lastModified="1488791eee5">
          <include file="..\..\..\cmsis_boot\stm32f4xx.h"/>
       </source>
       <source file="..\..\..\FreeRTOSV7.1.0\Source\portable\GCC\ARM_CM4F\port.c" lastModified="13e3b1eb900">
@@ -160,10 +160,7 @@
       <source file="..\..\..\FreeRTOSV7.1.0\Source\include\croutine.h" lastModified="13e3b1eb8f0">
          <include file="..\..\..\FreeRTOSV7.1.0\Source\include\list.h"/>
       </source>
-      <source file="..\..\..\cmsis_boot\system_stm32f4xx.c" lastModified="1428e3c1104">
-         <include file="..\..\..\cmsis_boot\stm32f4xx.h"/>
-      </source>
-      <source file="..\..\..\devices\spi_bus.c" lastModified="14883c8e652">
+      <source file="..\..\..\devices\spi_bus.c" lastModified="14887d354b7">
          <include file="..\..\..\devices\spi_bus.h"/>
          <include file="..\..\..\cmsis_boot\stm32f4xx.h"/>
          <include file="..\..\..\cmsis_lib\include\stm32f4xx_gpio.h"/>
@@ -179,6 +176,9 @@
          <include file="..\..\..\protocols\tablo_parser.h"/>
          <include file="..\..\..\devices\watchdog.h"/>
          <include file="..\..\..\devices\indicator.h"/>
+      </source>
+      <source file="..\..\..\cmsis_boot\system_stm32f4xx.c" lastModified="1428e3c1104">
+         <include file="..\..\..\cmsis_boot\stm32f4xx.h"/>
       </source>
       <source file="..\..\..\FreeRTOSV7.1.0\Source\include\timers.h" lastModified="13e3b1eb900">
          <include file="..\..\..\FreeRTOSV7.1.0\Source\include\portable.h"/>

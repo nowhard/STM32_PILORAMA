@@ -17,6 +17,7 @@ struct indicator{
 
     uint8_t renew_data;//содержимое дисплея обновлено по протоколу
     uint8_t blink_mask;
+    uint8_t blink_mask_flags;
     uint8_t blink_num;
 
 };

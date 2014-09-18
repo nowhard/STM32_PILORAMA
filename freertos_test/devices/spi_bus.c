@@ -147,7 +147,8 @@ void	spi2_config(void)//
 static void spi_task(void *pvParameters)//
 {
 	uint8_t i=0;
-	Indicator_Blink_Set(IND_1,0xAA,0xFF);
+	Indicator_Blink_Set(IND_1,0xFF,5);
+	Indicator_Blink_Set(IND_2,0xFF,2);
 	while(1)
 	{
 //		Indicator_Blink_Handler(BUS_SPI_1);
@@ -164,8 +165,34 @@ static void spi_task(void *pvParameters)//
 				 SPI1_GPIO_CS->BSRRH|=SPI1_CS1;//reset pin SPI1_CS1
 				 SPI2_GPIO_CS->BSRRH|=SPI2_CS1;//reset pin SPI2_CS1
 
-				 SPI_I2S_SendData(SPI1, tab.buses[BUS_SPI_1].bus_buf[0][i]);
-				 SPI_I2S_SendData(SPI2, tab.buses[BUS_SPI_2].bus_buf[0][i]);
+				 if(i>=5)//алгоритм мигания
+				 {
+					 if((tab.indicators[0].blink_mask_flags>>(i-5))&0x1)
+					 {
+						 SPI1->DR=(tab.buses[BUS_SPI_1].bus_buf[0][i]&0xFF00);
+					 }
+					 else
+					 {
+						 SPI1->DR=tab.buses[BUS_SPI_1].bus_buf[0][i];
+					 }
+
+					 if((tab.indicators[1].blink_mask_flags>>(i-5))&0x1)
+					 {
+						 SPI2->DR=(tab.buses[BUS_SPI_2].bus_buf[0][i]&0xFF00);
+					 }
+					 else
+					 {
+						 SPI2->DR=tab.buses[BUS_SPI_2].bus_buf[0][i];
+					 }
+				 }
+				 else
+				 {
+					 //SPI_I2S_SendData(SPI1, tab.buses[BUS_SPI_1].bus_buf[0][i]);
+					 SPI1->DR=tab.buses[BUS_SPI_1].bus_buf[0][i];
+					 //SPI_I2S_SendData(SPI2, tab.buses[BUS_SPI_2].bus_buf[0][i]);
+					 SPI2->DR=tab.buses[BUS_SPI_2].bus_buf[0][i];
+				 }
+
 
 				 while((SPI1->SR & SPI_SR_BSY)||(SPI2->SR & SPI_SR_BSY))
 				 {

@@ -16,6 +16,7 @@ void tablo_indicator_struct_init(void)//
 	tab.indicators[0].shutdown=IND_SHUTDOWN|IND_SHUTDOWN_OFF;
 	tab.indicators[0].display_test=IND_DISPLAY_TEST|IND_DISPLAY_TEST_OFF;
 	tab.indicators[0].blink_mask=BLINK_FALSE;
+	tab.indicators[0].blink_mask_flags=tab.indicators[0].blink_mask;
 	tab.indicators[0].blink_num=0;
 
 	tab.indicators[1].bus=BUS_SPI_2;
@@ -28,6 +29,7 @@ void tablo_indicator_struct_init(void)//
 	tab.indicators[1].shutdown=IND_SHUTDOWN|IND_SHUTDOWN_OFF;
 	tab.indicators[1].display_test=IND_DISPLAY_TEST|IND_DISPLAY_TEST_OFF;
 	tab.indicators[1].blink_mask=BLINK_FALSE;
+	tab.indicators[1].blink_mask_flags=tab.indicators[1].blink_mask;
 	tab.indicators[1].blink_num=0;
 }
 
