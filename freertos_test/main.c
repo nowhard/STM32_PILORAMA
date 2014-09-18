@@ -22,7 +22,7 @@
 //#include "tablo.h"
 
 #include "keyboard.h"
-//#include "buzzer.h"
+#include "buzzer.h"
 //#include "power.h"
 #include "watchdog.h"
 //#include "relay.h"
@@ -58,6 +58,7 @@ int main(void)
 	SystemInit();
 	tablo_devices_init();
 	Keyboard_Init();
+	buzzer_init();
 
     vTaskStartScheduler();
 

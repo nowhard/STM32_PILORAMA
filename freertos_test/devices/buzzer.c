@@ -19,8 +19,7 @@ xTaskHandle xBuzzer_Handle;
 
 void buzzer_init(void)
 {
-    RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOB, ENABLE);
-    RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOC, ENABLE);
+    RCC_AHB1PeriphClockCmd(BUZZER_BUS, ENABLE);
 
     GPIO_InitTypeDef GPIO_InitStructure;
 
@@ -33,7 +32,8 @@ void buzzer_init(void)
     GPIO_Init(BUZZER_PORT, &GPIO_InitStructure);
 
 
-    GPIO_WriteBit(BUZZER_PORT, BUZZER_PIN,0);
+    //GPIO_WriteBit(BUZZER_PORT, BUZZER_PIN,0);
+    BUZZER_PORT->BSRRH=BUZZER_PIN;
 
     xTaskCreate(buzzer_task,(signed char*)"BUZZER",64,NULL, tskIDLE_PRIORITY + 1, &xBuzzer_Handle);
     vTaskSuspend (xBuzzer_Handle);
@@ -48,75 +48,61 @@ void buzzer_task(void *pvParameters )
 		{
 			switch(tab.buz.buzzer_effect)
 			{
-				case BUZZER_EFFECT_0:
+				case BUZZER_EFFECT_1_BEEP:
 				{
-					GPIO_WriteBit(BUZZER_PORT, BUZZER_PIN,1);
-					vTaskDelay(500);
-					GPIO_WriteBit(BUZZER_PORT, BUZZER_PIN,0);
-					vTaskDelay(500);
+					BUZZER_PORT->BSRRL=BUZZER_PIN;
+					vTaskDelay(200);
+					BUZZER_PORT->BSRRH=BUZZER_PIN;
+					//vTaskDelay(200);
+					tab.buz.buzzer_enable=BUZZER_OFF;
 				}
 				break;
 
-				case BUZZER_EFFECT_1:
+				case BUZZER_EFFECT_2_BEEP:
 				{
-					GPIO_WriteBit(BUZZER_PORT, BUZZER_PIN,1);
-					vTaskDelay(100);
-					GPIO_WriteBit(BUZZER_PORT, BUZZER_PIN,0);
+					BUZZER_PORT->BSRRL=BUZZER_PIN;
 					vTaskDelay(200);
+					BUZZER_PORT->BSRRH=BUZZER_PIN;
+					vTaskDelay(200);
+					BUZZER_PORT->BSRRL=BUZZER_PIN;
+					vTaskDelay(200);
+					BUZZER_PORT->BSRRH=BUZZER_PIN;
+					//vTaskDelay(200);
+					tab.buz.buzzer_enable=BUZZER_OFF;
 				}
 				break;
 
-				case BUZZER_EFFECT_2:
+				case BUZZER_EFFECT_3_BEEP:
 				{
-					GPIO_WriteBit(BUZZER_PORT, BUZZER_PIN,1);
-					vTaskDelay(100);
-					GPIO_WriteBit(BUZZER_PORT, BUZZER_PIN,0);
+					BUZZER_PORT->BSRRL=BUZZER_PIN;
 					vTaskDelay(200);
+					BUZZER_PORT->BSRRH=BUZZER_PIN;
+					vTaskDelay(200);
+					BUZZER_PORT->BSRRL=BUZZER_PIN;
+					vTaskDelay(200);
+					BUZZER_PORT->BSRRH=BUZZER_PIN;
+					vTaskDelay(200);
+					BUZZER_PORT->BSRRL=BUZZER_PIN;
+					vTaskDelay(200);
+					BUZZER_PORT->BSRRH=BUZZER_PIN;
+					//vTaskDelay(200);
+					tab.buz.buzzer_enable=BUZZER_OFF;
 				}
 				break;
 
-				case BUZZER_EFFECT_3:
+				case BUZZER_EFFECT_INFINITE_BEEP:
 				{
-					GPIO_WriteBit(BUZZER_PORT, BUZZER_PIN,1);
-					vTaskDelay(100);
-					GPIO_WriteBit(BUZZER_PORT, BUZZER_PIN,0);
-					vTaskDelay(200);
+					BUZZER_PORT->BSRRL=BUZZER_PIN;
 				}
 				break;
 
-				case BUZZER_EFFECT_4:
+				case BUZZER_EFFECT_LONG_BEEP:
 				{
-					GPIO_WriteBit(BUZZER_PORT, BUZZER_PIN,1);
-					vTaskDelay(100);
-					GPIO_WriteBit(BUZZER_PORT, BUZZER_PIN,0);
-					vTaskDelay(200);
-				}
-				break;
-
-				case BUZZER_EFFECT_5:
-				{
-					GPIO_WriteBit(BUZZER_PORT, BUZZER_PIN,1);
-					vTaskDelay(100);
-					GPIO_WriteBit(BUZZER_PORT, BUZZER_PIN,0);
-					vTaskDelay(200);
-				}
-				break;
-
-				case BUZZER_EFFECT_6:
-				{
-					GPIO_WriteBit(BUZZER_PORT, BUZZER_PIN,1);
-					vTaskDelay(100);
-					GPIO_WriteBit(BUZZER_PORT, BUZZER_PIN,0);
-					vTaskDelay(200);
-				}
-				break;
-
-				case BUZZER_EFFECT_7:
-				{
-					GPIO_WriteBit(BUZZER_PORT, BUZZER_PIN,1);
-					vTaskDelay(100);
-					GPIO_WriteBit(BUZZER_PORT, BUZZER_PIN,0);
-					vTaskDelay(200);
+					BUZZER_PORT->BSRRL=BUZZER_PIN;
+					vTaskDelay(1000);
+					BUZZER_PORT->BSRRH=BUZZER_PIN;
+					//vTaskDelay(200);
+					tab.buz.buzzer_enable=BUZZER_OFF;
 				}
 				break;
 
@@ -127,6 +113,8 @@ void buzzer_task(void *pvParameters )
 			}
 		}
 		task_watches[BUZZER_TASK].counter++;
+		vTaskSuspend (xBuzzer_Handle);
+		task_watches[BUZZER_TASK].task_status=TASK_IDLE;
 	}
 }
 
@@ -150,7 +138,8 @@ void buzzer_set_buzz(uint8_t effect, uint8_t enable)
 			tab.buz.buzzer_enable=BUZZER_OFF;
 		}
 		task_watches[BUZZER_TASK].task_status=TASK_IDLE;
-		GPIO_WriteBit(BUZZER_PORT, BUZZER_PIN,0);
+		//GPIO_WriteBit(BUZZER_PORT, BUZZER_PIN,0);
+		BUZZER_PORT->BSRRH=BUZZER_PIN;
 	}
 	tab.buz.buzzer_effect=effect&0x7;
 }

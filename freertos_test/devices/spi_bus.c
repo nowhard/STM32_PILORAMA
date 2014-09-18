@@ -17,6 +17,7 @@
 
 #include "watchdog.h"
 #include "indicator.h"
+#include "buzzer.h"
 
 extern struct tablo tab;
 extern struct task_watch task_watches[];
@@ -149,6 +150,7 @@ static void spi_task(void *pvParameters)//
 	uint8_t i=0;
 	Indicator_Blink_Set(IND_1,0xFF,5);
 	Indicator_Blink_Set(IND_2,0xFF,2);
+	//buzzer_set_buzz(BUZZER_EFFECT_3_BEEP,BUZZER_ON);
 	while(1)
 	{
 //		Indicator_Blink_Handler(BUS_SPI_1);

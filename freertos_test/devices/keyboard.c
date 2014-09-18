@@ -12,6 +12,8 @@
 #include "queue.h"
 #include "semphr.h"
 
+#include "buzzer.h"
+
 xQueueHandle xKeyQueue;//очередь клавиатуры
 //xSemaphoreHandle xKeySemaphore;
 
@@ -95,6 +97,7 @@ static void vKeyboardTask(void *pvParameters)
 						 tick_counter++;
 		    			//отправим в очередь код
 						 key+=16;//дополнение кода при нажатии LONG
+						 buzzer_set_buzz(BUZZER_EFFECT_LONG_BEEP,BUZZER_ON);//beep
 						 if( xKeyQueue != 0 )
 						 {
 							 xQueueSend( xKeyQueue,  &key, ( portTickType ) 0 );
@@ -113,6 +116,7 @@ static void vKeyboardTask(void *pvParameters)
     		if((tick_counter>0)&&(tick_counter<LONG_PRESS_KEY))
     		{
     			//отправим в очередь код
+    			  buzzer_set_buzz(BUZZER_EFFECT_1_BEEP,BUZZER_ON);//beep
 				 if( xKeyQueue != 0 )
 				 {
 					 xQueueSend( xKeyQueue,  &key_temp, ( portTickType ) 0 );
