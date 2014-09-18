@@ -148,15 +148,15 @@ void	spi2_config(void)//
 static void spi_task(void *pvParameters)//
 {
 	uint8_t i=0;
-	Indicator_Blink_Set(IND_1,0xFF,5);
-	Indicator_Blink_Set(IND_2,0xFF,2);
+	//Indicator_Blink_Set(IND_1,0xFF,5);
+	//Indicator_Blink_Set(IND_2,0xFF,2);
 	//buzzer_set_buzz(BUZZER_EFFECT_3_BEEP,BUZZER_ON);
 	while(1)
 	{
 //		Indicator_Blink_Handler(BUS_SPI_1);
 
-		str_to_ind(IND_1,"Err0r");
-		str_to_ind(IND_2,"A-54");
+		//str_to_ind(IND_1,"Err0r");
+		//str_to_ind(IND_2,"A-54");
 		Indicator_Blink_Handler();
 
 		if( xSemaphoreTake( xSPI_Buf_Mutex, portMAX_DELAY ) == pdTRUE )

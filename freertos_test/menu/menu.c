@@ -6,7 +6,8 @@
 #include <stdio.h>
 #include "keyboard.h"
 #include "menu.h"
-//#include "display.h"
+#include "tablo_parser.h"
+
 
 
 //Инклуды от FreeRTOS:
@@ -31,14 +32,10 @@ menuItem* menuStack[10];
 uint8_t display_buf[20];
 volatile unsigned char menuStackTop;
 void MenuHandler( void *pvParameters );
-//void vMeasureOutput( void *pvParameters );
-void Menu_Handle_Key(menuItem* currentMenuItem,uint16_t current_key);
+void Menu_Handle_Key(menuItem* currentMenuItem,uint8_t current_key);
+void Menu_Input_Field(uint8_t current_key);
 
 extern xQueueHandle xKeyQueue;//очередь клавиатуры
-//extern xSemaphoreHandle xKeySemaphore;
-
-//uint32_t delay=0;
-//uint8_t flag_measure_out=0;
 
 #define MAKE_MENU(Name, Next, Previous, Parent, Child, Select, Text) \
     extern menuItem Next;     \
@@ -59,31 +56,30 @@ char strNULL[]  = "";
 menuItem        Null_Menu = {(void*)0, (void*)0, (void*)0, (void*)0, 0, {0x00}};
 
 //                 NEXT,      PREVIOUS     PARENT,     CHILD
-MAKE_MENU(m_s1i1,  m_s1i2,    NULL_ENTRY,  NULL_ENTRY, NULL_ENTRY,  MENU_F_01,	"F-01");
-MAKE_MENU(m_s1i2,  m_s1i3,	  m_s1i1,      NULL_ENTRY, NULL_ENTRY,  MENU_F_02,	"F-02");
-MAKE_MENU(m_s1i3,  m_s1i4,	  m_s1i2,      NULL_ENTRY, NULL_ENTRY,  MENU_F_03,  "F-03");
-MAKE_MENU(m_s1i4,  m_s1i5,    m_s1i3,      NULL_ENTRY, NULL_ENTRY,  MENU_F_04,  "F-04");
-MAKE_MENU(m_s1i5,  m_s1i6,    m_s1i4,      NULL_ENTRY, NULL_ENTRY,  MENU_F_05,  "F-05");
-MAKE_MENU(m_s1i6,  NULL_ENTRY,m_s1i5,      NULL_ENTRY, NULL_ENTRY,  MENU_F_06,  "F-06");
+MAKE_MENU(m_s0i1,  NULL_ENTRY,NULL_ENTRY,  NULL_ENTRY, m_s1i1	 ,  MENU_ROOT,	""    );
+
+MAKE_MENU(m_s1i1,  m_s1i2,    NULL_ENTRY,  m_s0i1, 	   NULL_ENTRY,  MENU_F_01,	"F-01");
+MAKE_MENU(m_s1i2,  m_s1i3,	  m_s1i1,      m_s0i1, 	   NULL_ENTRY,  MENU_F_02,	"F-02");
+MAKE_MENU(m_s1i3,  m_s1i4,	  m_s1i2,      m_s0i1, 	   NULL_ENTRY,  MENU_F_03,  "F-03");
+MAKE_MENU(m_s1i4,  m_s1i5,    m_s1i3,      m_s0i1, 	   NULL_ENTRY,  MENU_F_04,  "F-04");
+MAKE_MENU(m_s1i5,  m_s1i6,    m_s1i4,      m_s0i1, 	   NULL_ENTRY,  MENU_F_05,  "F-05");
+MAKE_MENU(m_s1i6,  NULL_ENTRY,m_s1i5,      m_s0i1, 	   NULL_ENTRY,  MENU_F_06,  "F-06");
 
 
 void menuChange(menuItem* NewMenu)
 {
 	if ((void*)NewMenu == (void*)&NULL_ENTRY)
+	{
 	  return;
+	}
 
 	selectedMenuItem = NewMenu;
 }
 
-unsigned char dispMenu(void) {
-	menuItem* tempMenu,*tempMenu2;
-
-
-
+unsigned char dispMenu(void)
+{
+	menuItem* tempMenu;
 	tempMenu=selectedMenuItem->Parent;
-
-
-
 
 	if ((void*)tempMenu == (void*)&NULL_ENTRY)
 	{ // мы на верхнем уровне
@@ -91,8 +87,7 @@ unsigned char dispMenu(void) {
 	}
 	else
 	{
-		 //Lcd_Write_Str ((char *)tempMenu->Text);
-		//Lcd_Write_Str ("MENU CHILD:");
+		str_to_ind(IND_1,(char *)selectedMenuItem->Text);
 	}
 
 	return (0);
@@ -101,7 +96,7 @@ unsigned char dispMenu(void) {
 
 
 unsigned char startMenu(void) {
-	//selectedMenuItem = (menuItem*)&m_s1i1;
+	selectedMenuItem = (menuItem*)&m_s0i1;
 
 	dispMenu();
 
@@ -140,124 +135,112 @@ void Menu_Next(void)
 	dispMenu();
 }
 
-void Menu_Handle_Key(menuItem* currentMenuItem,uint16_t current_key)
+void Menu_Handle_Key(menuItem* currentMenuItem,uint8_t current_key)
 {
 
-//	menuItem* currentMenuItemChild;
-	uint8_t i=0;
-//	currentMenuItemChild=currentMenuItem->Child;
+		switch(current_key)
+		{
+			case KEY_A:
+			{
+				Menu_Next();
+				return;
+			}
+			break;
 
-//	if(current_key==KEY_7)
-//	{
-//		Menu_Parent();
-//	}
-//	else
-//	{
-//		if((void*)currentMenuItem->Child!=(void*)&NULL_ENTRY)//если есть вложенные меню у потомков
-//		{
-//			switch(current_key)
-//			{
-//				case KEY_6:
-//				{
-//					Menu_Previous();
-//				}
-//				break;
-//
-//				case KEY_8:
-//				{
-//					Menu_Next();
-//				}
-//				break;
-//
-//				case KEY_0:
-//				{
-//					Menu_Child();
-//					if((void*)currentMenuItem->Child==(void*)&NULL_ENTRY)
-//					{
-//						//Lcd_Write_Cmd(LCD_CMD_CLEAR);
-//						//Lcd_Goto (0,0);
-//						switch(currentMenuItem->Select)
-//						{
-//
-//							case MENU_SET_NULL:
-//							{
-//
-//							}
-//							break;
-//
-//							case MENU_STEP_START_STOP:
-//							{
-//								//Lcd_Write_Str ("Set Pulse Time:");
-//							}
-//							break;
-//						}
-//					}
-//				}
-//				break;
-//			}
-//		}
-//		else
-//		{
-//			switch(currentMenuItem->Select)
-//			{
-//				case MENU_SET_NULL:
-//				{
-//					switch(current_key)
-//					{
-//						case KEY_6:
-//						{
-//
-//						}
-//						break;
-//
-//						case KEY_8:
-//						{
-//
-//						}
-//						break;
-//
-//						case KEY_0:
-//						{
-//
-//						}
-//						break;
-//					}
-//				}
-//				break;
-//
-//				case MENU_STEP_START_STOP:
-//				{
-//					switch(current_key)
-//					{
-//					case KEY_6:
-//					{
-//
-//					}
-//					break;
-//
-//					case KEY_8:
-//					{
-//
-//					}
-//					break;
-//
-//						case KEY_0:
-//						{
-//
-//						}
-//						break;
-//					}
-//				}
-//				break;
-//			}
-//		}
-//	}
+			case KEY_A_LONG:
+			{
+				Menu_Child();
+				return;
+			}
+			break;
+		}
+
+		switch(currentMenuItem->Select)
+		{
+			case MENU_F_01:
+			{
+				switch(current_key)
+				{
+					default:
+					{
+						Menu_Input_Field(current_key);
+					}
+					break;
+				}
+			}
+			break;
+
+			case MENU_F_02:
+			{
+				switch(current_key)
+				{
+					default:
+					{
+						Menu_Input_Field(current_key);
+					}
+					break;
+				}
+			}
+			break;
+
+			case MENU_F_03:
+			{
+				switch(current_key)
+				{
+					default:
+					{
+						Menu_Input_Field(current_key);
+					}
+					break;
+				}
+			}
+			break;
+
+			case MENU_F_04:
+			{
+				switch(current_key)
+				{
+					default:
+					{
+						Menu_Input_Field(current_key);
+					}
+					break;
+				}
+			}
+			break;
+
+			case MENU_F_05:
+			{
+				switch(current_key)
+				{
+					default:
+					{
+						Menu_Input_Field(current_key);
+					}
+					break;
+				}
+			}
+			break;
+
+			case MENU_F_06:
+			{
+				switch(current_key)
+				{
+					default:
+					{
+						Menu_Input_Field(current_key);
+					}
+					break;
+				}
+			}
+			break;
+
+		}
 }
 
 void MenuHandler( void *pvParameters )
 {
 	uint16_t key;
-	uint8_t str[20]="";
     startMenu();
     while(1)
     {
@@ -272,11 +255,87 @@ void MenuHandler( void *pvParameters )
     }
 }
 
-//
-//void vMeasureOutput( void *pvParameters )
-//{
-//	while(1)
-//	{
-//			vTaskDelay(300);
-//	}
-//}
+#define INPUT_BUF_LEN	8
+static	uint8_t input_buf[INPUT_BUF_LEN]="";
+
+void Menu_Input_Field(uint8_t current_key)
+{
+	uint8_t current_buf_len=0;
+	current_buf_len=strlen(input_buf);
+
+	if(current_buf_len>INPUT_BUF_LEN)
+	{
+		return;
+	}
+
+	switch(current_key)
+	{
+		case KEY_0:
+		{
+			input_buf[current_buf_len-1]='0';
+		}
+		break;
+
+		case KEY_1:
+		{
+			input_buf[current_buf_len-1]='1';
+		}
+		break;
+
+		case KEY_2:
+		{
+			input_buf[current_buf_len-1]='2';
+		}
+		break;
+
+		case KEY_3:
+		{
+			input_buf[current_buf_len-1]='3';
+		}
+		break;
+
+		case KEY_4:
+		{
+			input_buf[current_buf_len-1]='4';
+		}
+		break;
+
+		case KEY_5:
+		{
+			input_buf[current_buf_len-1]='5';
+		}
+		break;
+
+		case KEY_6:
+		{
+			input_buf[current_buf_len-1]='6';
+		}
+		break;
+
+		case KEY_7:
+		{
+			input_buf[current_buf_len-1]='7';
+		}
+		break;
+
+		case KEY_8:
+		{
+			input_buf[current_buf_len-1]='8';
+		}
+		break;
+
+		case KEY_9:
+		{
+			input_buf[current_buf_len-1]='9';
+		}
+		break;
+
+		default:
+		{
+
+		}
+		break;
+	}
+	input_buf[current_buf_len]=0x0;
+	str_to_ind(IND_2,input_buf);
+}

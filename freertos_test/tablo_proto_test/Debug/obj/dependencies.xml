@@ -56,19 +56,7 @@
          <include file="..\..\..\cmsis_lib\include\stm32f4xx_tim.h"/>
          <include file="..\..\..\cmsis_lib\include\stm32f4xx_rcc.h"/>
       </source>
-      <source file="..\..\..\menu\menu.h" lastModified="14888450a36">
-      </source>
-      <source file="..\..\..\menu\menu.c" lastModified="148885f23ca">
-         <include file="..\..\..\cmsis_boot\stm32f4xx.h"/>
-         <include file="..\..\..\cmsis_lib\include\stm32f4xx_gpio.h"/>
-         <include file="..\..\..\cmsis_lib\include\stm32f4xx_rcc.h"/>
-         <include file="..\..\..\cmsis_lib\include\stm32f4xx_tim.h"/>
-         <include file="..\..\..\devices\keyboard.h"/>
-         <include file="..\..\..\menu\menu.h"/>
-         <include file="..\..\..\FreeRTOSV7.1.0\Source\include\FreeRTOS.h"/>
-         <include file="..\..\..\FreeRTOSV7.1.0\Source\include\task.h"/>
-         <include file="..\..\..\FreeRTOSV7.1.0\Source\include\queue.h"/>
-         <include file="..\..\..\FreeRTOSV7.1.0\Source\include\semphr.h"/>
+      <source file="..\..\..\menu\menu.h" lastModified="14888ba3ad2">
       </source>
       <source file="..\..\..\devices\power_detector.h" lastModified="142a2da7b4e">
       </source>
@@ -168,7 +156,7 @@
       <source file="..\..\..\cmsis_boot\system_stm32f4xx.c" lastModified="1428e3c1104">
          <include file="..\..\..\cmsis_boot\stm32f4xx.h"/>
       </source>
-      <source file="..\..\..\devices\spi_bus.c" lastModified="1488834dff7">
+      <source file="..\..\..\devices\spi_bus.c" lastModified="14888ec099d">
          <include file="..\..\..\devices\spi_bus.h"/>
          <include file="..\..\..\cmsis_boot\stm32f4xx.h"/>
          <include file="..\..\..\cmsis_lib\include\stm32f4xx_gpio.h"/>

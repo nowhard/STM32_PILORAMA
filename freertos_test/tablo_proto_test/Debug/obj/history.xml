@@ -12,8 +12,8 @@
       <target file="syscalls.o" lastModified="1476293dfbf">
          <source file="..\..\..\syscalls\syscalls.c" lastModified="1476293bc68"/>
       </target>
-      <target file="menu.o" lastModified="148885f718d">
-         <source file="..\..\..\menu\menu.c" lastModified="148885f1fe2"/>
+      <target file="menu.o" lastModified="14888f17a41">
+         <source file="..\..\..\menu\menu.c" lastModified="14888f16cc4"/>
       </target>
       <target file="misc.o" lastModified="1475900e109">
          <source file="..\..\..\cmsis_lib\source\misc.c" lastModified="14125d86b88"/>
@@ -99,8 +99,8 @@
       <target file="keyboard.o" lastModified="14888003ef2">
          <source file="..\..\..\devices\keyboard.c" lastModified="148880030a9"/>
       </target>
-      <target file="spi_bus.o" lastModified="1488834e8e1">
-         <source file="..\..\..\devices\spi_bus.c" lastModified="1488834dff7"/>
+      <target file="spi_bus.o" lastModified="14888ec1248">
+         <source file="..\..\..\devices\spi_bus.c" lastModified="14888ec099d"/>
       </target>
       <target file="printf.o" lastModified="1476293df13">
          <source file="..\..\..\stdio\printf.c" lastModified="1476293a824"/>
@@ -126,7 +126,7 @@
       <target file="encoder.o" lastModified="1487dc658e0">
          <source file="..\..\..\devices\encoder.c" lastModified="1487dc64a5a"/>
       </target>
-      <target file="main.o" lastModified="1488860300a">
+      <target file="main.o" lastModified="14888bca75e">
          <source file="..\..\..\main.c" lastModified="1488860206a"/>
       </target>
       <target file="system_stm32f4xx.o" lastModified="1475900dc84">

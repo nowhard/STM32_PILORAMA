@@ -13,7 +13,8 @@ void Menu_Next(void);
 void MenuHandler( void *pvParameters );
 unsigned char startMenu(void);
 enum {
-    MENU_F_01=1,
+    MENU_ROOT=1,
+	MENU_F_01,
     MENU_F_02,
     MENU_F_03,
     MENU_F_04,
