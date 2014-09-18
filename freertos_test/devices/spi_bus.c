@@ -155,7 +155,7 @@ static void spi_task(void *pvParameters)//
 	{
 //		Indicator_Blink_Handler(BUS_SPI_1);
 
-		str_to_ind(IND_1,"F-01");
+		str_to_ind(IND_1,"Err0r");
 		str_to_ind(IND_2,"A-54");
 		Indicator_Blink_Handler();
 

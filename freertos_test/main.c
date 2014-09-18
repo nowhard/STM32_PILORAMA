@@ -17,7 +17,7 @@
 #include "semphr.h"
 
 
-//#include "tablo_parser.h"
+#include "menu.h"
 #include "spi_bus.h"
 //#include "tablo.h"
 
@@ -59,6 +59,7 @@ int main(void)
 	tablo_devices_init();
 	Keyboard_Init();
 	buzzer_init();
+	Menu_Init();
 
     vTaskStartScheduler();
 
