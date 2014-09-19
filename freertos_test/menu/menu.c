@@ -137,30 +137,55 @@ void Menu_Next(void)
 
 void Menu_Handle_Key(menuItem* currentMenuItem,uint8_t current_key)
 {
-
-		switch(current_key)
-		{
-			case KEY_A:
-			{
-				Menu_Next();
-				return;
-			}
-			break;
-
-			case KEY_A_LONG:
-			{
-				Menu_Child();
-				return;
-			}
-			break;
-		}
-
 		switch(currentMenuItem->Select)
 		{
+			case MENU_ROOT:
+			{
+				switch(current_key)
+				{
+					case KEY_A_LONG:
+					{
+						Menu_Child();
+					}
+					break;
+
+					case KEY_POINT://ввод значения
+					{
+
+					}
+					break;
+
+					case KEY_B://функция BACK
+					{
+
+					}
+					break;
+
+					default:
+					{
+						Menu_Input_Field(current_key);
+					}
+					break;
+				}
+			}
+			break;
+
 			case MENU_F_01:
 			{
 				switch(current_key)
 				{
+					case KEY_C_LONG:
+					{
+						Menu_Parent();
+					}
+					break;
+
+					case KEY_A:
+					{
+						Menu_Next();
+					}
+					break;
+
 					default:
 					{
 						Menu_Input_Field(current_key);
@@ -174,6 +199,18 @@ void Menu_Handle_Key(menuItem* currentMenuItem,uint8_t current_key)
 			{
 				switch(current_key)
 				{
+					case KEY_C_LONG:
+					{
+						Menu_Parent();
+					}
+					break;
+
+					case KEY_A:
+					{
+						Menu_Next();
+					}
+					break;
+
 					default:
 					{
 						Menu_Input_Field(current_key);
@@ -187,6 +224,17 @@ void Menu_Handle_Key(menuItem* currentMenuItem,uint8_t current_key)
 			{
 				switch(current_key)
 				{
+					case KEY_C_LONG:
+					{
+						Menu_Parent();
+					}
+					break;
+
+					case KEY_A:
+					{
+						Menu_Next();
+					}
+					break;
 					default:
 					{
 						Menu_Input_Field(current_key);
@@ -200,6 +248,18 @@ void Menu_Handle_Key(menuItem* currentMenuItem,uint8_t current_key)
 			{
 				switch(current_key)
 				{
+					case KEY_C_LONG:
+					{
+						Menu_Parent();
+					}
+					break;
+
+					case KEY_A:
+					{
+						Menu_Next();
+					}
+					break;
+
 					default:
 					{
 						Menu_Input_Field(current_key);
@@ -213,6 +273,19 @@ void Menu_Handle_Key(menuItem* currentMenuItem,uint8_t current_key)
 			{
 				switch(current_key)
 				{
+					case KEY_C_LONG:
+					{
+						Menu_Parent();
+					}
+					break;
+
+					case KEY_A:
+					{
+						Menu_Next();
+						//return;
+					}
+					break;
+
 					default:
 					{
 						Menu_Input_Field(current_key);
@@ -226,6 +299,21 @@ void Menu_Handle_Key(menuItem* currentMenuItem,uint8_t current_key)
 			{
 				switch(current_key)
 				{
+					case KEY_C_LONG:
+					{
+						Menu_Parent();
+					}
+					break;
+
+					case KEY_A:
+					{
+						//Menu_Next();
+						selectedMenuItem = (menuItem*)&m_s1i1;
+						dispMenu();
+						//return;
+					}
+					break;
+
 					default:
 					{
 						Menu_Input_Field(current_key);
@@ -263,7 +351,7 @@ void Menu_Input_Field(uint8_t current_key)
 	uint8_t current_buf_len=0;
 	current_buf_len=strlen(input_buf);
 
-	if(current_buf_len>INPUT_BUF_LEN)
+	if(current_buf_len>(INPUT_BUF_LEN-1))
 	{
 		return;
 	}
@@ -272,61 +360,79 @@ void Menu_Input_Field(uint8_t current_key)
 	{
 		case KEY_0:
 		{
-			input_buf[current_buf_len-1]='0';
+			input_buf[current_buf_len]='0';
 		}
 		break;
 
 		case KEY_1:
 		{
-			input_buf[current_buf_len-1]='1';
+			input_buf[current_buf_len]='1';
 		}
 		break;
 
 		case KEY_2:
 		{
-			input_buf[current_buf_len-1]='2';
+			input_buf[current_buf_len]='2';
 		}
 		break;
 
 		case KEY_3:
 		{
-			input_buf[current_buf_len-1]='3';
+			input_buf[current_buf_len]='3';
 		}
 		break;
 
 		case KEY_4:
 		{
-			input_buf[current_buf_len-1]='4';
+			input_buf[current_buf_len]='4';
 		}
 		break;
 
 		case KEY_5:
 		{
-			input_buf[current_buf_len-1]='5';
+			input_buf[current_buf_len]='5';
 		}
 		break;
 
 		case KEY_6:
 		{
-			input_buf[current_buf_len-1]='6';
+			input_buf[current_buf_len]='6';
 		}
 		break;
 
 		case KEY_7:
 		{
-			input_buf[current_buf_len-1]='7';
+			input_buf[current_buf_len]='7';
 		}
 		break;
 
 		case KEY_8:
 		{
-			input_buf[current_buf_len-1]='8';
+			input_buf[current_buf_len]='8';
 		}
 		break;
 
 		case KEY_9:
 		{
-			input_buf[current_buf_len-1]='9';
+			input_buf[current_buf_len]='9';
+		}
+		break;
+
+		case KEY_STAR://-
+		{
+
+		}
+		break;
+
+		case KEY_SHARP://+
+		{
+
+		}
+		break;
+
+		case KEY_C://backspace
+		{
+
 		}
 		break;
 
@@ -336,6 +442,6 @@ void Menu_Input_Field(uint8_t current_key)
 		}
 		break;
 	}
-	input_buf[current_buf_len]=0x0;
+	input_buf[current_buf_len+1]=0x0;
 	str_to_ind(IND_2,input_buf);
 }

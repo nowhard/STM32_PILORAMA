@@ -50,13 +50,26 @@
          <include file="..\..\..\cmsis_lib\include\misc.h"/>
          <include file="..\..\..\devices\dac.h"/>
       </source>
-      <source file="..\..\..\cmsis\core_cm3.c" lastModified="13f614ce8b7">
-      </source>
       <source file="..\..\..\cmsis_lib\source\stm32f4xx_tim.c" lastModified="14125d83d92">
          <include file="..\..\..\cmsis_lib\include\stm32f4xx_tim.h"/>
          <include file="..\..\..\cmsis_lib\include\stm32f4xx_rcc.h"/>
       </source>
+      <source file="..\..\..\cmsis\core_cm3.c" lastModified="13f614ce8b7">
+      </source>
       <source file="..\..\..\menu\menu.h" lastModified="14888ba3ad2">
+      </source>
+      <source file="..\..\..\menu\menu.c" lastModified="1488ce43d52">
+         <include file="..\..\..\cmsis_boot\stm32f4xx.h"/>
+         <include file="..\..\..\cmsis_lib\include\stm32f4xx_gpio.h"/>
+         <include file="..\..\..\cmsis_lib\include\stm32f4xx_rcc.h"/>
+         <include file="..\..\..\cmsis_lib\include\stm32f4xx_tim.h"/>
+         <include file="..\..\..\devices\keyboard.h"/>
+         <include file="..\..\..\menu\menu.h"/>
+         <include file="..\..\..\protocols\tablo_parser.h"/>
+         <include file="..\..\..\FreeRTOSV7.1.0\Source\include\FreeRTOS.h"/>
+         <include file="..\..\..\FreeRTOSV7.1.0\Source\include\task.h"/>
+         <include file="..\..\..\FreeRTOSV7.1.0\Source\include\queue.h"/>
+         <include file="..\..\..\FreeRTOSV7.1.0\Source\include\semphr.h"/>
       </source>
       <source file="..\..\..\devices\power_detector.h" lastModified="142a2da7b4e">
       </source>
@@ -99,22 +112,10 @@
       <source file="..\..\..\cmsis_lib\include\stm32f4xx_syscfg.h" lastModified="14125d878f6">
          <include file="..\..\..\cmsis_boot\stm32f4xx.h"/>
       </source>
-      <source file="..\..\..\devices\keyboard.h" lastModified="14882f0903e">
+      <source file="..\..\..\devices\keyboard.h" lastModified="1488cef7fd4">
       </source>
       <source file="..\..\..\FreeRTOSV7.1.0\Source\include\semphr.h" lastModified="13e3b1eb900">
          <include file="..\..\..\FreeRTOSV7.1.0\Source\include\queue.h"/>
-      </source>
-      <source file="..\..\..\devices\keyboard.c" lastModified="148880030a9">
-         <include file="..\..\..\cmsis_boot\stm32f4xx.h"/>
-         <include file="..\..\..\cmsis_lib\include\stm32f4xx_gpio.h"/>
-         <include file="..\..\..\cmsis_lib\include\stm32f4xx_rcc.h"/>
-         <include file="..\..\..\cmsis_lib\include\misc.h"/>
-         <include file="..\..\..\devices\keyboard.h"/>
-         <include file="..\..\..\FreeRTOSV7.1.0\Source\include\FreeRTOS.h"/>
-         <include file="..\..\..\FreeRTOSV7.1.0\Source\include\task.h"/>
-         <include file="..\..\..\FreeRTOSV7.1.0\Source\include\queue.h"/>
-         <include file="..\..\..\FreeRTOSV7.1.0\Source\include\semphr.h"/>
-         <include file="..\..\..\devices\buzzer.h"/>
       </source>
       <source file="..\..\..\FreeRTOSV7.1.0\Source\portable\GCC\ARM_CM4F\portmacro.h" lastModified="13e3b1eb900">
       </source>

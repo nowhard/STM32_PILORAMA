@@ -125,9 +125,14 @@ static void vKeyboardTask(void *pvParameters)
     		}
     		else
     		{
-    			if(tick_counter==(LONG_PRESS_KEY+1))
+    			if(tick_counter==(LONG_PRESS_KEY+1))//отпускаем после длительного нажатия
     			{
-    				//ничего не делаем
+					 key+=32;//дополнение кода при нажатии LONG_RELEASE
+					// buzzer_set_buzz(BUZZER_EFFECT_LONG_BEEP,BUZZER_ON);//beep
+					 if( xKeyQueue != 0 )
+					 {
+						 xQueueSend( xKeyQueue,  &key, ( portTickType ) 0 );
+					 }
     			}
     		}
     		last_key=0xFF;
