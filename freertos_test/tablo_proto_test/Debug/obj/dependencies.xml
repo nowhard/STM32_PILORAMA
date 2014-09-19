@@ -58,19 +58,6 @@
       </source>
       <source file="..\..\..\menu\menu.h" lastModified="14888ba3ad2">
       </source>
-      <source file="..\..\..\menu\menu.c" lastModified="1488d072c21">
-         <include file="..\..\..\cmsis_boot\stm32f4xx.h"/>
-         <include file="..\..\..\cmsis_lib\include\stm32f4xx_gpio.h"/>
-         <include file="..\..\..\cmsis_lib\include\stm32f4xx_rcc.h"/>
-         <include file="..\..\..\cmsis_lib\include\stm32f4xx_tim.h"/>
-         <include file="..\..\..\devices\keyboard.h"/>
-         <include file="..\..\..\menu\menu.h"/>
-         <include file="..\..\..\protocols\tablo_parser.h"/>
-         <include file="..\..\..\FreeRTOSV7.1.0\Source\include\FreeRTOS.h"/>
-         <include file="..\..\..\FreeRTOSV7.1.0\Source\include\task.h"/>
-         <include file="..\..\..\FreeRTOSV7.1.0\Source\include\queue.h"/>
-         <include file="..\..\..\FreeRTOSV7.1.0\Source\include\semphr.h"/>
-      </source>
       <source file="..\..\..\devices\power_detector.h" lastModified="142a2da7b4e">
       </source>
       <source file="..\..\..\devices\power_detector.c" lastModified="142a337107a">
@@ -318,10 +305,10 @@
       <source file="..\..\..\cmsis_lib\source\stm32f4xx_iwdg.c" lastModified="1428e61eab6">
          <include file="..\..\..\cmsis_lib\include\stm32f4xx_iwdg.h"/>
       </source>
-      <source file="..\..\..\FreeRTOSV7.1.0\Source\include\projdefs.h" lastModified="13e3b1eb8f0">
-      </source>
       <source file="..\..\..\protocols\tablo_parser.h" lastModified="148835d2ee2">
          <include file="..\..\..\devices\indicator.h"/>
+      </source>
+      <source file="..\..\..\FreeRTOSV7.1.0\Source\include\projdefs.h" lastModified="13e3b1eb8f0">
       </source>
       <source file="..\..\..\main.c" lastModified="1488db4486a">
          <include file="..\..\..\cmsis_boot\stm32f4xx.h"/>

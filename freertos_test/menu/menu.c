@@ -367,15 +367,39 @@ void MenuHandler( void *pvParameters )
     }
 }
 
-#define INPUT_BUF_LEN	8
-static	uint8_t input_buf[INPUT_BUF_LEN]="";
+#define INPUT_BUF_LEN		8
+#define INPUT_STRING_MAX	6
+//static	uint8_t input_buf[INPUT_BUF_LEN]="";
+
+struct input_buffer
+{
+	uint8_t buf[INPUT_BUF_LEN];
+	uint8_t counter;
+}input_buf;
 
 void Menu_Input_Field(uint8_t current_key)
 {
-	uint8_t current_buf_len=0;
-	current_buf_len=strlen(input_buf);
+//	uint8_t current_buf_len=0;
+//	current_buf_len=strlen(input_buf);
+//
+//	if(current_buf_len>(INPUT_BUF_LEN-1))
+//	{
+//		return;
+//	}
 
-	if(current_buf_len>(INPUT_BUF_LEN-1))
+	if(current_key==KEY_C)//backspace
+    {
+		if(input_buf.counter)
+		{
+			input_buf.buf[input_buf.counter-1]=0x0;
+			input_buf.counter--;
+			str_to_ind(IND_2,input_buf.buf);
+		}
+
+		return;
+    }
+
+	if(input_buf.counter>=INPUT_STRING_MAX)
 	{
 		return;
 	}
@@ -384,61 +408,71 @@ void Menu_Input_Field(uint8_t current_key)
 	{
 		case KEY_0:
 		{
-			input_buf[current_buf_len]='0';
+			input_buf.buf[input_buf.counter]='0';
+			input_buf.counter++;
 		}
 		break;
 
 		case KEY_1:
 		{
-			input_buf[current_buf_len]='1';
+			input_buf.buf[input_buf.counter]='1';
+			input_buf.counter++;
 		}
 		break;
 
 		case KEY_2:
 		{
-			input_buf[current_buf_len]='2';
+			input_buf.buf[input_buf.counter]='2';
+			input_buf.counter++;
 		}
 		break;
 
 		case KEY_3:
 		{
-			input_buf[current_buf_len]='3';
+			input_buf.buf[input_buf.counter]='3';
+			input_buf.counter++;
 		}
 		break;
 
 		case KEY_4:
 		{
-			input_buf[current_buf_len]='4';
+			input_buf.buf[input_buf.counter]='4';
+			input_buf.counter++;
 		}
 		break;
 
 		case KEY_5:
 		{
-			input_buf[current_buf_len]='5';
+			input_buf.buf[input_buf.counter]='5';
+			input_buf.counter++;
 		}
 		break;
 
 		case KEY_6:
 		{
-			input_buf[current_buf_len]='6';
+			input_buf.buf[input_buf.counter]='6';
+			input_buf.counter++;
 		}
 		break;
 
 		case KEY_7:
 		{
-			input_buf[current_buf_len]='7';
+			input_buf.buf[input_buf.counter]='7';
+			input_buf.counter++;
 		}
 		break;
 
 		case KEY_8:
 		{
-			input_buf[current_buf_len]='8';
+			input_buf.buf[input_buf.counter]='8';
+			input_buf.counter++;
 		}
 		break;
 
 		case KEY_9:
 		{
-			input_buf[current_buf_len]='9';
+			input_buf.buf[input_buf.counter]='9';
+			input_buf.counter++;
 		}
 		break;
 
@@ -454,18 +488,12 @@ void Menu_Input_Field(uint8_t current_key)
 		}
 		break;
 
-		case KEY_C://backspace
-		{
-
-		}
-		break;
-
 		default:
 		{
 
 		}
 		break;
 	}
-	input_buf[current_buf_len+1]=0x0;
-	str_to_ind(IND_2,input_buf);
+	input_buf.buf[input_buf.counter+1]=0x0;
+	str_to_ind(IND_2,input_buf.buf);
 }
