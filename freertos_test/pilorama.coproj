@@ -16,7 +16,6 @@
           <Define name="__ASSEMBLY__"/>
           <Define name="STM32F405RG"/>
           <Define name="STM32F4XX"/>
-          <Define name="__FPU_USED"/>
         </DefinedSymbols>
       </Compile>
       <Link useDefault="0">
@@ -56,7 +55,7 @@
       <Option name="org.coocox.codebugger.gdbjtag.core.userDefineGDBScript" value=""/>
       <Option name="org.coocox.codebugger.gdbjtag.core.targetEndianess" value="0"/>
       <Option name="org.coocox.codebugger.gdbjtag.core.jlinkResetMode" value="Type 0: Normal"/>
-      <Option name="org.coocox.codebugger.gdbjtag.core.resetMode" value="SYSRESETREQ"/>
+      <Option name="org.coocox.codebugger.gdbjtag.core.resetMode" value="HW RESET"/>
       <Option name="org.coocox.codebugger.gdbjtag.core.ifSemihost" value="0"/>
       <Option name="org.coocox.codebugger.gdbjtag.core.ifCacheRom" value="1"/>
       <Option name="org.coocox.codebugger.gdbjtag.core.ipAddress" value="127.0.0.1"/>
@@ -87,6 +86,7 @@
     <File name="FreeRTOSV7.1.0/Source/croutine.c" path="FreeRTOSV7.1.0/Source/croutine.c" type="1"/>
     <File name="cmsis_lib/source/stm32f4xx_gpio.c" path="cmsis_lib/source/stm32f4xx_gpio.c" type="1"/>
     <File name="protocols/tablo_parser.h" path="protocols/tablo_parser.h" type="1"/>
+    <File name="devices/external_events.h" path="devices/external_events.h" type="1"/>
     <File name="devices/keyboard.c" path="devices/keyboard.c" type="1"/>
     <File name="FreeRTOSV7.1.0/Source/portable/ARM_CM4F" path="" type="2"/>
     <File name="FreeRTOSV7.1.0/Source/readme.txt" path="FreeRTOSV7.1.0/Source/readme.txt" type="1"/>
@@ -167,6 +167,7 @@
     <File name="cmsis_lib/include/stm32f4xx_gpio.h" path="cmsis_lib/include/stm32f4xx_gpio.h" type="1"/>
     <File name="syscalls" path="" type="2"/>
     <File name="cmsis_lib/include/misc.h" path="cmsis_lib/include/misc.h" type="1"/>
+    <File name="devices/external_events.c" path="devices/external_events.c" type="1"/>
     <File name="FreeRTOSV7.1.0/Source/portable/MemMang" path="" type="2"/>
     <File name="FreeRTOSV7.1.0/Source/portable/ARM_CM4F/portmacro.h" path="FreeRTOSV7.1.0/Source/portable/GCC/ARM_CM4F/portmacro.h" type="1"/>
     <File name="cmsis_lib/include" path="" type="2"/>

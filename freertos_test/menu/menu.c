@@ -161,6 +161,30 @@ void Menu_Handle_Key(menuItem* currentMenuItem,uint8_t current_key)
 					}
 					break;
 
+					case KEY_STAR_LONG://движение вниз
+					{
+
+					}
+					break;
+
+					case KEY_SHARP_LONG://движение вверх
+					{
+
+					}
+					break;
+
+					case KEY_STAR_LONG_RELEASE://стоп движение вниз
+					{
+
+					}
+					break;
+
+					case KEY_SHARP_LONG_RELEASE://стоп движение вверх
+					{
+
+					}
+					break;
+
 					default:
 					{
 						Menu_Input_Field(current_key);

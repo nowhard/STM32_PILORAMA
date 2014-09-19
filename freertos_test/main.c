@@ -6,9 +6,6 @@
 #include <misc.h>
 #include "system_stm32f4xx.h"
 
-#include <stdio.h>
-#include <math.h>
-
 //FreeRTOS:
 
 #include "FreeRTOS.h"
@@ -28,6 +25,7 @@
 //#include "relay.h"
 //#include "power_detector.h"
 #include "encoder.h"
+#include "external_events.h"
 
 
 
@@ -56,10 +54,16 @@
 int main(void)
 {
 	SystemInit();
+
+	Encoder_Init();
+	External_Events_Init();
+
 	tablo_devices_init();
 	Keyboard_Init();
 	buzzer_init();
 	Menu_Init();
+
+
 
     vTaskStartScheduler();
 
