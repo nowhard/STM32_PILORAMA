@@ -4,8 +4,8 @@
       <target file="syscalls.o" lastModified="1488d77c67c">
          <source file="..\..\..\syscalls\syscalls.c" lastModified="1476293bc68"/>
       </target>
-      <target file="menu.o" lastModified="1488e1c3fb6">
-         <source file="..\..\..\menu\menu.c" lastModified="1488e1c3536"/>
+      <target file="menu.o" lastModified="1489d241daa">
+         <source file="..\..\..\menu\menu.c" lastModified="1489d240f72"/>
       </target>
       <target file="misc.o" lastModified="1488d77cddf">
          <source file="..\..\..\cmsis_lib\source\misc.c" lastModified="14125d86b88"/>
@@ -88,7 +88,7 @@
       <target file="encoder.o" lastModified="1488d92c977">
          <source file="..\..\..\devices\encoder.c" lastModified="1487dc64a5a"/>
       </target>
-      <target file="main.o" lastModified="1488db45fda">
+      <target file="main.o" lastModified="1489c48eb59">
          <source file="..\..\..\main.c" lastModified="1488db4486a"/>
       </target>
       <target file="system_stm32f4xx.o" lastModified="1488d77c582">

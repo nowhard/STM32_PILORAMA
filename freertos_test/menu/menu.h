@@ -22,4 +22,12 @@ enum {
     MENU_F_06
 };
 
+enum
+{
+	INPUT_WITHOUT_POINT_SIGN=0,
+	INPUT_WITH_POINT=1,
+	INPUT_WITH_SIGN=2
+};
+
+
 #endif
