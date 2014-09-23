@@ -5,4 +5,14 @@ void Backup_SRAM_Init(void);
 int8_t Backup_SRAM_Write( int16_t *data, uint16_t bytes, uint16_t offset );
 int8_t Backup_SRAM_Read ( int16_t *data, uint16_t bytes, uint16_t offset );
 
+struct dev_registers
+{
+	uint16_t F_01_cal_up;
+	uint16_t F_02_cal_down;
+	uint16_t F_03_cal_syncro;
+	uint16_t F_04_current_position;
+	uint16_t F_05_cal_speed_down;
+	uint16_t F_06_cal_stop;
+};
+
 #endif
