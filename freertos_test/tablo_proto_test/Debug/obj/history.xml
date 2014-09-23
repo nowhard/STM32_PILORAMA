@@ -4,8 +4,8 @@
       <target file="syscalls.o" lastModified="1488d77c67c">
          <source file="..\..\..\syscalls\syscalls.c" lastModified="1476293bc68"/>
       </target>
-      <target file="menu.o" lastModified="1489d241daa">
-         <source file="..\..\..\menu\menu.c" lastModified="1489d240f72"/>
+      <target file="menu.o" lastModified="148a1945b3a">
+         <source file="..\..\..\menu\menu.c" lastModified="148a1944fb1"/>
       </target>
       <target file="misc.o" lastModified="1488d77cddf">
          <source file="..\..\..\cmsis_lib\source\misc.c" lastModified="14125d86b88"/>

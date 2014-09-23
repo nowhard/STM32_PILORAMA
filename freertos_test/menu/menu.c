@@ -33,9 +33,18 @@ uint8_t display_buf[20];
 volatile unsigned char menuStackTop;
 void MenuHandler( void *pvParameters );
 void Menu_Handle_Key(menuItem* currentMenuItem,uint8_t current_key);
-void Menu_Input_Field(uint8_t current_key,uint8_t attributes);
-void Menu_Input_Field_Clear(void);
-void Menu_Input_Field_Shift(uint8_t direction);
+
+#define INPUT_BUF_LEN		8
+#define INPUT_STRING_MAX	5
+
+struct input_buffer
+{
+	uint8_t buf[INPUT_BUF_LEN];
+	uint8_t counter;
+}input_buf;
+void Menu_Input_Field(uint8_t current_key,uint8_t attributes,struct input_buffer *inp_buf);
+void Menu_Input_Field_Clear(struct input_buffer *inp_buf);
+void Menu_Input_Field_Shift(uint8_t direction,struct input_buffer *inp_buf);
 
 extern xQueueHandle xKeyQueue;//очередь клавиатуры
 
@@ -85,7 +94,7 @@ unsigned char dispMenu(void)
 
 	if ((void*)tempMenu == (void*)&NULL_ENTRY)
 	{ // мы на верхнем уровне
-
+		str_to_ind(IND_1,"UP");
 	}
 	else
 	{
@@ -99,7 +108,7 @@ unsigned char dispMenu(void)
 
 unsigned char startMenu(void) {
 	selectedMenuItem = (menuItem*)&m_s0i1;
-
+	Menu_Input_Field_Clear(&input_buf);
 	dispMenu();
 
 	return (0);
@@ -148,7 +157,7 @@ void Menu_Handle_Key(menuItem* currentMenuItem,uint8_t current_key)
 					case KEY_A_LONG:
 					{
 						Menu_Child();
-						Menu_Input_Field_Clear();
+						Menu_Input_Field_Clear(&input_buf);
 					}
 					break;
 
@@ -190,7 +199,7 @@ void Menu_Handle_Key(menuItem* currentMenuItem,uint8_t current_key)
 
 					default:
 					{
-						Menu_Input_Field(current_key,INPUT_WITH_POINT|INPUT_WITH_SIGN);
+						Menu_Input_Field(current_key,INPUT_WITH_POINT|INPUT_WITH_SIGN,&input_buf);
 					}
 					break;
 				}
@@ -210,13 +219,19 @@ void Menu_Handle_Key(menuItem* currentMenuItem,uint8_t current_key)
 					case KEY_A:
 					{
 						Menu_Next();
-						Menu_Input_Field_Clear();
+						Menu_Input_Field_Clear(&input_buf);
+					}
+					break;
+
+					case KEY_POINT_LONG://запомним значение
+					{
+
 					}
 					break;
 
 					default:
 					{
-						Menu_Input_Field(current_key,INPUT_WITH_POINT|INPUT_WITH_SIGN);
+						Menu_Input_Field(current_key,INPUT_WITH_POINT|INPUT_WITH_SIGN,&input_buf);
 					}
 					break;
 				}
@@ -236,13 +251,13 @@ void Menu_Handle_Key(menuItem* currentMenuItem,uint8_t current_key)
 					case KEY_A:
 					{
 						Menu_Next();
-						Menu_Input_Field_Clear();
+						Menu_Input_Field_Clear(&input_buf);
 					}
 					break;
 
 					default:
 					{
-						Menu_Input_Field(current_key,INPUT_WITH_POINT|INPUT_WITH_SIGN);
+						Menu_Input_Field(current_key,INPUT_WITH_POINT|INPUT_WITH_SIGN,&input_buf);
 					}
 					break;
 				}
@@ -262,12 +277,12 @@ void Menu_Handle_Key(menuItem* currentMenuItem,uint8_t current_key)
 					case KEY_A:
 					{
 						Menu_Next();
-						Menu_Input_Field_Clear();
+						Menu_Input_Field_Clear(&input_buf);
 					}
 					break;
 					default:
 					{
-						Menu_Input_Field(current_key,INPUT_WITH_POINT|INPUT_WITH_SIGN);
+						Menu_Input_Field(current_key,INPUT_WITH_POINT,&input_buf);
 					}
 					break;
 				}
@@ -287,13 +302,13 @@ void Menu_Handle_Key(menuItem* currentMenuItem,uint8_t current_key)
 					case KEY_A:
 					{
 						Menu_Next();
-						Menu_Input_Field_Clear();
+						Menu_Input_Field_Clear(&input_buf);
 					}
 					break;
 
 					default:
 					{
-						Menu_Input_Field(current_key,INPUT_WITH_POINT|INPUT_WITH_SIGN);
+						Menu_Input_Field(current_key,INPUT_WITH_POINT,&input_buf);
 					}
 					break;
 				}
@@ -313,14 +328,14 @@ void Menu_Handle_Key(menuItem* currentMenuItem,uint8_t current_key)
 					case KEY_A:
 					{
 						Menu_Next();
-						Menu_Input_Field_Clear();
+						Menu_Input_Field_Clear(&input_buf);
 						//return;
 					}
 					break;
 
 					default:
 					{
-						Menu_Input_Field(current_key,INPUT_WITH_POINT|INPUT_WITH_SIGN);
+						Menu_Input_Field(current_key,INPUT_WITH_POINT,&input_buf);
 					}
 					break;
 				}
@@ -341,7 +356,7 @@ void Menu_Handle_Key(menuItem* currentMenuItem,uint8_t current_key)
 					{
 						//Menu_Next();
 						selectedMenuItem = (menuItem*)&m_s1i1;
-						Menu_Input_Field_Clear();
+						Menu_Input_Field_Clear(&input_buf);
 						dispMenu();
 						//return;
 					}
@@ -349,7 +364,7 @@ void Menu_Handle_Key(menuItem* currentMenuItem,uint8_t current_key)
 
 					default:
 					{
-						Menu_Input_Field(current_key,INPUT_WITH_POINT|INPUT_WITH_SIGN);
+						Menu_Input_Field(current_key,INPUT_WITH_POINT,&input_buf);
 					}
 					break;
 				}
@@ -376,21 +391,13 @@ void MenuHandler( void *pvParameters )
     }
 }
 
-#define INPUT_BUF_LEN		8
-#define INPUT_STRING_MAX	5
-//static	uint8_t input_buf[INPUT_BUF_LEN]="";
 
-struct input_buffer
-{
-	uint8_t buf[INPUT_BUF_LEN];
-	uint8_t counter;
-}input_buf;
 
-void Menu_Input_Field_Clear(void)
+void Menu_Input_Field_Clear(struct input_buffer *inp_buf)
 {
 	input_buf.counter=0;
-	sprintf(&input_buf.buf," 000.0");
-	str_to_ind(IND_2,input_buf.buf);
+	sprintf(inp_buf->buf," 000.0");
+	str_to_ind(IND_2,inp_buf->buf);
 }
 
 enum
@@ -399,45 +406,59 @@ enum
 	DIRECTION_RIGHT
 };
 
-void Menu_Input_Field_Shift(uint8_t direction)
+void Menu_Input_Field_Shift(uint8_t direction,struct input_buffer *inp_buf)
 {
 	uint8_t i=0;
 	if(direction==DIRECTION_LEFT)
 	{
 		for(i=1;i<(INPUT_STRING_MAX-2);i++)
 		{
-			input_buf.buf[i]=input_buf.buf[i+1];
+			inp_buf->buf[i]=inp_buf->buf[i+1];
 		}
-		input_buf.buf[INPUT_STRING_MAX-2]=input_buf.buf[INPUT_STRING_MAX];
-		input_buf.buf[INPUT_STRING_MAX]='0';
-		input_buf.counter++;
+		inp_buf->buf[INPUT_STRING_MAX-2]=inp_buf->buf[INPUT_STRING_MAX];
+		inp_buf->buf[INPUT_STRING_MAX]='0';
+		inp_buf->counter++;
 	}
 	else
 	{
 		if(direction==DIRECTION_RIGHT)
 		{
-			input_buf.buf[INPUT_STRING_MAX]=input_buf.buf[INPUT_STRING_MAX-2];
+			inp_buf->buf[INPUT_STRING_MAX]=inp_buf->buf[INPUT_STRING_MAX-2];
 
 			for(i=(INPUT_STRING_MAX-2);i>1;i--)
 			{
-				input_buf.buf[i]=input_buf.buf[i-1];
+				inp_buf->buf[i]=inp_buf->buf[i-1];
 			}
-			input_buf.buf[1]='0';
-			input_buf.counter--;
+			inp_buf->buf[1]='0';
+			inp_buf->counter--;
 		}
 	}
 }
 
-void Menu_Input_Field(uint8_t current_key,uint8_t attributes)
+int16_t Menu_Input_Buf_To_Int(struct input_buffer *inp_buf)
+{
+	uint8_t temp_buf[6];
+	int16_t result=0;
+
+	temp_buf[0]=inp_buf->buf[0];//формируем целочисленную строку
+	temp_buf[1]=inp_buf->buf[1];
+	temp_buf[2]=inp_buf->buf[2];
+	temp_buf[3]=inp_buf->buf[3];
+	temp_buf[4]=inp_buf->buf[5];
+	temp_buf[5]=0x0;
+
+	sscanf(temp_buf,"%5d",&result);
+	return result;
+}
+
+void Menu_Input_Field(uint8_t current_key,uint8_t attributes,struct input_buffer *inp_buf)
 {
 	if(current_key==KEY_C)//backspace
     {
-		if(input_buf.counter)
+		if(inp_buf->counter)
 		{
-			//input_buf.buf[input_buf.counter-1]=0x0;
-			Menu_Input_Field_Shift(DIRECTION_RIGHT);
-			//input_buf.counter--;
-			str_to_ind(IND_2,input_buf.buf);
+			Menu_Input_Field_Shift(DIRECTION_RIGHT,&input_buf);
+			str_to_ind(IND_2,inp_buf->buf);
 		}
 
 		return;
@@ -449,132 +470,96 @@ void Menu_Input_Field(uint8_t current_key,uint8_t attributes)
 		{
 			case KEY_STAR://-
 			{
-				input_buf.buf[0]='-';
-				str_to_ind(IND_2,input_buf.buf);
+				inp_buf->buf[0]='-';
+				str_to_ind(IND_2,inp_buf->buf);
 				return;
 			}
 			break;
 
 			case KEY_SHARP://+
 			{
-				input_buf.buf[0]=' ';
-				str_to_ind(IND_2,input_buf.buf);
+				inp_buf->buf[0]=' ';
+				str_to_ind(IND_2,inp_buf->buf);
 				return;
 			}
 			break;
 		}
 	}
 
-	if(input_buf.counter>=(INPUT_STRING_MAX-1))
+	if(inp_buf->counter>=(INPUT_STRING_MAX-1))
 	{
 		return;
 	}
-
-//	if(input_buf.counter==1)
-//	{
-//		input_buf.buf[4]='.';
-//		input_buf.counter++;
-//	}
 
 	switch(current_key)
 	{
 		case KEY_0:
 		{
-//			input_buf.buf[input_buf.counter]='0';
-//			input_buf.counter++;
-			Menu_Input_Field_Shift(DIRECTION_LEFT);
-			input_buf.buf[INPUT_STRING_MAX]='0';
-
+			Menu_Input_Field_Shift(DIRECTION_LEFT,&input_buf);
+			inp_buf->buf[INPUT_STRING_MAX]='0';
 		}
 		break;
 
 		case KEY_1:
 		{
-//			input_buf.buf[input_buf.counter]='1';
-//			input_buf.counter++;
-			Menu_Input_Field_Shift(DIRECTION_LEFT);
-			input_buf.buf[INPUT_STRING_MAX]='1';
-
+			Menu_Input_Field_Shift(DIRECTION_LEFT,&input_buf);
+			inp_buf->buf[INPUT_STRING_MAX]='1';
 		}
 		break;
 
 		case KEY_2:
 		{
-//			input_buf.buf[input_buf.counter]='2';
-//			input_buf.counter++;
-			Menu_Input_Field_Shift(DIRECTION_LEFT);
-			input_buf.buf[INPUT_STRING_MAX]='2';
-
+			Menu_Input_Field_Shift(DIRECTION_LEFT,&input_buf);
+			inp_buf->buf[INPUT_STRING_MAX]='2';
 		}
 		break;
 
 		case KEY_3:
 		{
-//			input_buf.buf[input_buf.counter]='3';
-//			input_buf.counter++;
-			Menu_Input_Field_Shift(DIRECTION_LEFT);
-			input_buf.buf[INPUT_STRING_MAX]='3';
-
+			Menu_Input_Field_Shift(DIRECTION_LEFT,&input_buf);
+			inp_buf->buf[INPUT_STRING_MAX]='3';
 		}
 		break;
 
 		case KEY_4:
 		{
-//			input_buf.buf[input_buf.counter]='4';
-//			input_buf.counter++;
-			Menu_Input_Field_Shift(DIRECTION_LEFT);
-			input_buf.buf[INPUT_STRING_MAX]='4';
-
+			Menu_Input_Field_Shift(DIRECTION_LEFT,&input_buf);
+			inp_buf->buf[INPUT_STRING_MAX]='4';
 		}
 		break;
 
 		case KEY_5:
 		{
-//			input_buf.buf[input_buf.counter]='5';
-//			input_buf.counter++;
-			Menu_Input_Field_Shift(DIRECTION_LEFT);
-			input_buf.buf[INPUT_STRING_MAX]='5';
-
+			Menu_Input_Field_Shift(DIRECTION_LEFT,&input_buf);
+			inp_buf->buf[INPUT_STRING_MAX]='5';
 		}
 		break;
 
 		case KEY_6:
 		{
-//			input_buf.buf[input_buf.counter]='6';
-//			input_buf.counter++;
-			Menu_Input_Field_Shift(DIRECTION_LEFT);
-			input_buf.buf[INPUT_STRING_MAX]='6';
-
+			Menu_Input_Field_Shift(DIRECTION_LEFT,&input_buf);
+			inp_buf->buf[INPUT_STRING_MAX]='6';
 		}
 		break;
 
 		case KEY_7:
 		{
-//			input_buf.buf[input_buf.counter]='7';
-//			input_buf.counter++;
-			Menu_Input_Field_Shift(DIRECTION_LEFT);
-			input_buf.buf[INPUT_STRING_MAX]='7';
-
+			Menu_Input_Field_Shift(DIRECTION_LEFT,&input_buf);
+			inp_buf->buf[INPUT_STRING_MAX]='7';
 		}
 		break;
 
 		case KEY_8:
 		{
-//			input_buf.buf[input_buf.counter]='8';
-//			input_buf.counter++;
-			Menu_Input_Field_Shift(DIRECTION_LEFT);
-			input_buf.buf[INPUT_STRING_MAX]='8';
-
+			Menu_Input_Field_Shift(DIRECTION_LEFT,&input_buf);
+			inp_buf->buf[INPUT_STRING_MAX]='8';
 		}
 		break;
 
 		case KEY_9:
 		{
-//			input_buf.buf[input_buf.counter]='9';
-//			input_buf.counter++;
-			Menu_Input_Field_Shift(DIRECTION_LEFT);
-			input_buf.buf[INPUT_STRING_MAX]='9';
-
+			Menu_Input_Field_Shift(DIRECTION_LEFT,&input_buf);
+			inp_buf->buf[INPUT_STRING_MAX]='9';
 		}
 		break;
 
@@ -584,6 +569,8 @@ void Menu_Input_Field(uint8_t current_key,uint8_t attributes)
 		}
 		break;
 	}
-//	input_buf.buf[input_buf.counter+1]=0x0;
+
+
+
 	str_to_ind(IND_2,input_buf.buf);
 }
