@@ -26,6 +26,7 @@
 //#include "power_detector.h"
 #include "encoder.h"
 #include "external_events.h"
+#include "backup_sram.h"
 
 
 
@@ -51,9 +52,17 @@
 //    vTaskDelete( NULL );
 //}
 
+int16_t num=-876,num2=0;
+
+
 int main(void)
 {
 	SystemInit();
+	Backup_SRAM_Init();
+
+//	Backup_SRAM_Write(&num,1,0);
+
+//	Backup_SRAM_Read(&num2,1,0);
 
 	Encoder_Init();
 	External_Events_Init();

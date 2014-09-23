@@ -96,6 +96,7 @@
     <File name="devices/buzzer.h" path="devices/buzzer.h" type="1"/>
     <File name="menu" path="" type="2"/>
     <File name="FreeRTOSV7.1.0/Source/tasks.c" path="FreeRTOSV7.1.0/Source/tasks.c" type="1"/>
+    <File name="devices/backup_sram.c" path="devices/backup_sram.c" type="1"/>
     <File name="FreeRTOSV7.1.0/Source/include/croutine.h" path="FreeRTOSV7.1.0/Source/include/croutine.h" type="1"/>
     <File name="FreeRTOSV7.1.0/License" path="" type="2"/>
     <File name="cmsis_boot/startup" path="" type="2"/>
@@ -142,6 +143,7 @@
     <File name="cmsis_lib/include/stm32f4xx_iwdg.h" path="cmsis_lib/include/stm32f4xx_iwdg.h" type="1"/>
     <File name="cmsis_lib/source/stm32f4xx_pwr.c" path="cmsis_lib/source/stm32f4xx_pwr.c" type="1"/>
     <File name="cmsis/core_cm3.h" path="cmsis/core_cm3.h" type="1"/>
+    <File name="devices/backup_sram.h" path="devices/backup_sram.h" type="1"/>
     <File name="devices/encoder.c" path="devices/encoder.c" type="1"/>
     <File name="FreeRTOSV7.1.0/Source/list.c" path="FreeRTOSV7.1.0/Source/list.c" type="1"/>
     <File name="protocols/tablo_parser.c" path="protocols/tablo_parser.c" type="1"/>

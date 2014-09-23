@@ -36,6 +36,7 @@ void Menu_Handle_Key(menuItem* currentMenuItem,uint8_t current_key);
 
 #define INPUT_BUF_LEN		8
 #define INPUT_STRING_MAX	5
+#define INPUT_MAX_VALUE		6000//600.0
 
 struct input_buffer
 {
@@ -212,6 +213,7 @@ void Menu_Handle_Key(menuItem* currentMenuItem,uint8_t current_key)
 				{
 					case KEY_C_LONG:
 					{
+						Menu_Input_Field_Clear(&input_buf);
 						Menu_Parent();
 					}
 					break;
@@ -244,6 +246,7 @@ void Menu_Handle_Key(menuItem* currentMenuItem,uint8_t current_key)
 				{
 					case KEY_C_LONG:
 					{
+						Menu_Input_Field_Clear(&input_buf);
 						Menu_Parent();
 					}
 					break;
@@ -270,6 +273,7 @@ void Menu_Handle_Key(menuItem* currentMenuItem,uint8_t current_key)
 				{
 					case KEY_C_LONG:
 					{
+						Menu_Input_Field_Clear(&input_buf);
 						Menu_Parent();
 					}
 					break;
@@ -295,6 +299,7 @@ void Menu_Handle_Key(menuItem* currentMenuItem,uint8_t current_key)
 				{
 					case KEY_C_LONG:
 					{
+						Menu_Input_Field_Clear(&input_buf);
 						Menu_Parent();
 					}
 					break;
@@ -321,6 +326,7 @@ void Menu_Handle_Key(menuItem* currentMenuItem,uint8_t current_key)
 				{
 					case KEY_C_LONG:
 					{
+						Menu_Input_Field_Clear(&input_buf);
 						Menu_Parent();
 					}
 					break;
@@ -348,6 +354,7 @@ void Menu_Handle_Key(menuItem* currentMenuItem,uint8_t current_key)
 				{
 					case KEY_C_LONG:
 					{
+						Menu_Input_Field_Clear(&input_buf);
 						Menu_Parent();
 					}
 					break;
@@ -437,17 +444,25 @@ void Menu_Input_Field_Shift(uint8_t direction,struct input_buffer *inp_buf)
 
 int16_t Menu_Input_Buf_To_Int(struct input_buffer *inp_buf)
 {
-	uint8_t temp_buf[6];
+//	uint8_t temp_buf[6];
 	int16_t result=0;
+	uint8_t i=0,counter=0,temp_val=0;
 
-	temp_buf[0]=inp_buf->buf[0];//формируем целочисленную строку
-	temp_buf[1]=inp_buf->buf[1];
-	temp_buf[2]=inp_buf->buf[2];
-	temp_buf[3]=inp_buf->buf[3];
-	temp_buf[4]=inp_buf->buf[5];
-	temp_buf[5]=0x0;
+//	temp_buf[0]=inp_buf->buf[0];//формируем целочисленную строку
+//	temp_buf[1]=inp_buf->buf[1];
+//	temp_buf[2]=inp_buf->buf[2];
+//	temp_buf[3]=inp_buf->buf[3];
+//	temp_buf[4]=inp_buf->buf[5];
+//	temp_buf[5]=0x0;
 
-	sscanf(temp_buf,"%5d",&result);
+	//sscanf(temp_buf,"%5d",&result);
+	result=((inp_buf->buf[1]-0x30)*1000)+((inp_buf->buf[2]-0x30)*100)+((inp_buf->buf[3]-0x30)*10)+((inp_buf->buf[5]-0x30));
+
+	if(inp_buf->buf[0]=='-')
+	{
+		result=-result;
+	}
+
 	return result;
 }
 
@@ -457,7 +472,7 @@ void Menu_Input_Field(uint8_t current_key,uint8_t attributes,struct input_buffer
     {
 		if(inp_buf->counter)
 		{
-			Menu_Input_Field_Shift(DIRECTION_RIGHT,&input_buf);
+			Menu_Input_Field_Shift(DIRECTION_RIGHT,inp_buf);
 			str_to_ind(IND_2,inp_buf->buf);
 		}
 
@@ -495,70 +510,75 @@ void Menu_Input_Field(uint8_t current_key,uint8_t attributes,struct input_buffer
 	{
 		case KEY_0:
 		{
-			Menu_Input_Field_Shift(DIRECTION_LEFT,&input_buf);
+			if(inp_buf->counter==0)
+			{
+				return;
+			}
+
+			Menu_Input_Field_Shift(DIRECTION_LEFT,inp_buf);
 			inp_buf->buf[INPUT_STRING_MAX]='0';
 		}
 		break;
 
 		case KEY_1:
 		{
-			Menu_Input_Field_Shift(DIRECTION_LEFT,&input_buf);
+			Menu_Input_Field_Shift(DIRECTION_LEFT,inp_buf);
 			inp_buf->buf[INPUT_STRING_MAX]='1';
 		}
 		break;
 
 		case KEY_2:
 		{
-			Menu_Input_Field_Shift(DIRECTION_LEFT,&input_buf);
+			Menu_Input_Field_Shift(DIRECTION_LEFT,inp_buf);
 			inp_buf->buf[INPUT_STRING_MAX]='2';
 		}
 		break;
 
 		case KEY_3:
 		{
-			Menu_Input_Field_Shift(DIRECTION_LEFT,&input_buf);
+			Menu_Input_Field_Shift(DIRECTION_LEFT,inp_buf);
 			inp_buf->buf[INPUT_STRING_MAX]='3';
 		}
 		break;
 
 		case KEY_4:
 		{
-			Menu_Input_Field_Shift(DIRECTION_LEFT,&input_buf);
+			Menu_Input_Field_Shift(DIRECTION_LEFT,inp_buf);
 			inp_buf->buf[INPUT_STRING_MAX]='4';
 		}
 		break;
 
 		case KEY_5:
 		{
-			Menu_Input_Field_Shift(DIRECTION_LEFT,&input_buf);
+			Menu_Input_Field_Shift(DIRECTION_LEFT,inp_buf);
 			inp_buf->buf[INPUT_STRING_MAX]='5';
 		}
 		break;
 
 		case KEY_6:
 		{
-			Menu_Input_Field_Shift(DIRECTION_LEFT,&input_buf);
+			Menu_Input_Field_Shift(DIRECTION_LEFT,inp_buf);
 			inp_buf->buf[INPUT_STRING_MAX]='6';
 		}
 		break;
 
 		case KEY_7:
 		{
-			Menu_Input_Field_Shift(DIRECTION_LEFT,&input_buf);
+			Menu_Input_Field_Shift(DIRECTION_LEFT,inp_buf);
 			inp_buf->buf[INPUT_STRING_MAX]='7';
 		}
 		break;
 
 		case KEY_8:
 		{
-			Menu_Input_Field_Shift(DIRECTION_LEFT,&input_buf);
+			Menu_Input_Field_Shift(DIRECTION_LEFT,inp_buf);
 			inp_buf->buf[INPUT_STRING_MAX]='8';
 		}
 		break;
 
 		case KEY_9:
 		{
-			Menu_Input_Field_Shift(DIRECTION_LEFT,&input_buf);
+			Menu_Input_Field_Shift(DIRECTION_LEFT,inp_buf);
 			inp_buf->buf[INPUT_STRING_MAX]='9';
 		}
 		break;
@@ -570,7 +590,10 @@ void Menu_Input_Field(uint8_t current_key,uint8_t attributes,struct input_buffer
 		break;
 	}
 
+	if(Menu_Input_Buf_To_Int(inp_buf)>INPUT_MAX_VALUE)//выход за диапазон-удаляем последний введенный символ
+	{
+		Menu_Input_Field_Shift(DIRECTION_RIGHT,inp_buf);
+	}
 
-
-	str_to_ind(IND_2,input_buf.buf);
+	str_to_ind(IND_2,inp_buf->buf);
 }

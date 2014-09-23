@@ -4,8 +4,8 @@
       <target file="syscalls.o" lastModified="1488d77c67c">
          <source file="..\..\..\syscalls\syscalls.c" lastModified="1476293bc68"/>
       </target>
-      <target file="menu.o" lastModified="148a1945b3a">
-         <source file="..\..\..\menu\menu.c" lastModified="148a1944fb1"/>
+      <target file="menu.o" lastModified="148a1dec363">
+         <source file="..\..\..\menu\menu.c" lastModified="148a1deb8f3"/>
       </target>
       <target file="misc.o" lastModified="1488d77cddf">
          <source file="..\..\..\cmsis_lib\source\misc.c" lastModified="14125d86b88"/>
@@ -39,6 +39,9 @@
       </target>
       <target file="stm32f4xx_gpio.o" lastModified="1488d77c3bd">
          <source file="..\..\..\cmsis_lib\source\stm32f4xx_gpio.c" lastModified="14125d809a2"/>
+      </target>
+      <target file="backup_sram.o" lastModified="148a27cf3f8">
+         <source file="..\..\..\devices\backup_sram.c" lastModified="148a2747e42"/>
       </target>
       <target file="stm32f4xx_rcc.o" lastModified="1488d77ba66">
          <source file="..\..\..\cmsis_lib\source\stm32f4xx_rcc.c" lastModified="14125d7fd5d"/>
@@ -88,8 +91,8 @@
       <target file="encoder.o" lastModified="1488d92c977">
          <source file="..\..\..\devices\encoder.c" lastModified="1487dc64a5a"/>
       </target>
-      <target file="main.o" lastModified="1489c48eb59">
-         <source file="..\..\..\main.c" lastModified="1488db4486a"/>
+      <target file="main.o" lastModified="148a28871ec">
+         <source file="..\..\..\main.c" lastModified="148a28868a5"/>
       </target>
       <target file="system_stm32f4xx.o" lastModified="1488d77c582">
          <source file="..\..\..\cmsis_boot\system_stm32f4xx.c" lastModified="1428e3c1104"/>
