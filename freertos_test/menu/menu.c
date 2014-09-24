@@ -109,7 +109,8 @@ unsigned char dispMenu(void)
 		{
 			case MENU_F_01:
 			{
-				Menu_Input_Int_To_Buf(dev_reg->F_01_cal_up,&input_buf);
+				Menu_Input_Field_Clear(&input_buf);
+				//Menu_Input_Int_To_Buf(dev_reg->F_01_cal_up,&input_buf);
 			}
 			break;
 
@@ -127,19 +128,22 @@ unsigned char dispMenu(void)
 
 			case MENU_F_04:
 			{
-				Menu_Input_Field_Clear(&input_buf);
+				//Menu_Input_Field_Clear(&input_buf);
+				Menu_Input_Int_To_Buf(dev_reg->F_04_current_position,&input_buf);
 			}
 			break;
 
 			case MENU_F_05:
 			{
-				Menu_Input_Field_Clear(&input_buf);
+				//Menu_Input_Field_Clear(&input_buf);
+				Menu_Input_Int_To_Buf(dev_reg->F_05_cal_speed_down,&input_buf);
 			}
 			break;
 
 			case MENU_F_06:
 			{
-				Menu_Input_Field_Clear(&input_buf);
+				//Menu_Input_Field_Clear(&input_buf);
+				Menu_Input_Int_To_Buf(dev_reg->F_06_cal_stop,&input_buf);
 			}
 			break;
 
@@ -307,6 +311,12 @@ void Menu_Handle_Key(menuItem* currentMenuItem,uint8_t current_key)
 					}
 					break;
 
+					case KEY_POINT_LONG://запомним значение
+					{
+						Backup_SRAM_Write_Reg(&dev_reg->F_02_cal_down,Menu_Input_Buf_To_Int(&input_buf));
+					}
+					break;
+
 					default:
 					{
 						Menu_Input_Field(current_key,INPUT_WITH_POINT|INPUT_WITH_SIGN,&input_buf);
@@ -333,6 +343,13 @@ void Menu_Handle_Key(menuItem* currentMenuItem,uint8_t current_key)
 						//Menu_Input_Field_Clear(&input_buf);
 					}
 					break;
+
+					case KEY_POINT_LONG://запомним значение
+					{
+						Backup_SRAM_Write_Reg(&dev_reg->F_03_cal_syncro,Menu_Input_Buf_To_Int(&input_buf));
+					}
+					break;
+
 					default:
 					{
 						Menu_Input_Field(current_key,INPUT_WITH_POINT,&input_buf);
@@ -357,6 +374,12 @@ void Menu_Handle_Key(menuItem* currentMenuItem,uint8_t current_key)
 					{
 						Menu_Next();
 						//Menu_Input_Field_Clear(&input_buf);
+					}
+					break;
+
+					case KEY_POINT_LONG://запомним значение
+					{
+						Backup_SRAM_Write_Reg(&dev_reg->F_04_current_position,Menu_Input_Buf_To_Int(&input_buf));
 					}
 					break;
 
@@ -388,6 +411,12 @@ void Menu_Handle_Key(menuItem* currentMenuItem,uint8_t current_key)
 					}
 					break;
 
+					case KEY_POINT_LONG://запомним значение
+					{
+						Backup_SRAM_Write_Reg(&dev_reg->F_05_cal_speed_down,Menu_Input_Buf_To_Int(&input_buf));
+					}
+					break;
+
 					default:
 					{
 						Menu_Input_Field(current_key,INPUT_WITH_POINT,&input_buf);
@@ -415,6 +444,12 @@ void Menu_Handle_Key(menuItem* currentMenuItem,uint8_t current_key)
 						//Menu_Input_Field_Clear(&input_buf);
 						dispMenu();
 						//return;
+					}
+					break;
+
+					case KEY_POINT_LONG://запомним значение
+					{
+						Backup_SRAM_Write_Reg(&dev_reg->F_06_cal_stop,Menu_Input_Buf_To_Int(&input_buf));
 					}
 					break;
 
