@@ -135,7 +135,7 @@ void PWR_DeInit(void)
 void PWR_BackupAccessCmd(FunctionalState NewState)
 {
   /* Check the parameters */
-  assert_param(IS_FUNCTIONAL_STATE(NewState));
+ // assert_param(IS_FUNCTIONAL_STATE(NewState));
   
   *(__IO uint32_t *) CR_DBP_BB = (uint32_t)NewState;
 }
@@ -298,7 +298,7 @@ void PWR_WakeUpPinCmd(FunctionalState NewState)
 void PWR_BackupRegulatorCmd(FunctionalState NewState)
 {
   /* Check the parameters */
-  assert_param(IS_FUNCTIONAL_STATE(NewState));
+ // assert_param(IS_FUNCTIONAL_STATE(NewState));
 
   *(__IO uint32_t *) CSR_BRE_BB = (uint32_t)NewState;
 }

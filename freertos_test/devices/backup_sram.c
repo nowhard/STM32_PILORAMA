@@ -3,23 +3,25 @@
 #include "stm32f4xx_rcc.h"
 #include "stm32f4xx_pwr.h"
 
+ struct dev_registers *dev_reg;
+
 void Backup_SRAM_Init(void)
 {
 	  RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_BKPSRAM, ENABLE);
 	  RCC_APB1PeriphClockCmd(RCC_APB1Periph_PWR, ENABLE);
-//	  PWR_BackupAccessCmd(ENABLE);
-//
-//
-//	  PWR_BackupRegulatorCmd(ENABLE);
-//
-//	  PWR_BackupAccessCmd(DISABLE);
+
+	  dev_reg=(struct dev_registers *) BKPSRAM_BASE;
 }
 
-//void Backup_SRAM_Write_Reg(uint8_t reg_num, uint16_t reg_val)
-//{
-//
-//}
-//
+void Backup_SRAM_Write_Reg(int16_t *reg, int16_t reg_val)
+{
+	  PWR_BackupAccessCmd(ENABLE);        // set PWR->CR.dbp = 1;
+	  PWR_BackupRegulatorCmd(ENABLE);     // set PWR->CSR.bre = 1;
+
+	  *reg=reg_val;
+	  PWR_BackupAccessCmd(DISABLE);                     // reset PWR->CR.dbp = 0;
+}
+
 //uint16_t Backup_SRAM_Read_Reg(uint8_ reg_num)
 //{
 //
