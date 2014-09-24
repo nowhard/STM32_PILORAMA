@@ -23,7 +23,7 @@ extern struct tablo tab;
 extern struct task_watch task_watches[];
 
 static void spi_task(void *pvParameters);//
-//static void spi2_task(void *pvParameters);
+
 static void	spi1_config(void);
 static void	spi2_config(void);
 
@@ -35,12 +35,9 @@ uint8_t spi_buses_init(void)//
 	spi1_config();
 	spi2_config();
 	xTaskCreate(spi_task,(signed char*)"SPI_TASK",128,NULL, tskIDLE_PRIORITY + 1, NULL);
-//	xTaskCreate(spi2_task,(signed char*)"SPI_2_TASK",128,NULL, tskIDLE_PRIORITY + 1, NULL);
-	task_watches[SPI_TASK_1].task_status=TASK_ACTIVE;
-//	task_watches[SPI_TASK_2].task_status=TASK_ACTIVE;
 
-	 xSPI_Buf_Mutex=xSemaphoreCreateMutex();
-//	 xSPI2_Buf_Mutex=xSemaphoreCreateMutex();
+	task_watches[SPI_TASK_1].task_status=TASK_ACTIVE;
+	xSPI_Buf_Mutex=xSemaphoreCreateMutex();
 
 	return 0;
 }
@@ -153,10 +150,6 @@ static void spi_task(void *pvParameters)//
 	//buzzer_set_buzz(BUZZER_EFFECT_3_BEEP,BUZZER_ON);
 	while(1)
 	{
-//		Indicator_Blink_Handler(BUS_SPI_1);
-
-		//str_to_ind(IND_1,"Err0r");
-		//str_to_ind(IND_2,"A-54");
 		Indicator_Blink_Handler();
 
 		if( xSemaphoreTake( xSPI_Buf_Mutex, portMAX_DELAY ) == pdTRUE )
@@ -217,39 +210,3 @@ static void spi_task(void *pvParameters)//
 }
 
 //-------------------------------------------------
-
-
-//static void spi2_task(void *pvParameters)
-//{
-//	uint8_t i=0;
-//
-//	while(1)
-//	{
-////		Indicator_Blink_Handler(BUS_SPI_2);
-////		str_to_ind(&tab.indicators[1],"-123");
-//	//	str_to_ind(IND_2,"A-54");
-//
-//		if( xSemaphoreTake( xSPI2_Buf_Mutex, portMAX_DELAY ) == pdTRUE )
-//		{
-//			for(i=0;i<IND_COMMAND_LEN;i++)
-//			{
-//				 SPI2_GPIO_CS->BSRRH|=SPI2_CS1;//reset pin SPI2_CS1
-//			     SPI_I2S_SendData(SPI2, tab.buses[BUS_SPI_2].bus_buf[0][i]);
-//				 while(SPI2->SR & SPI_SR_BSY)
-//				 {
-//					 taskYIELD();
-//				 }
-//
-//				taskYIELD();
-//				SPI2_GPIO_CS->BSRRL|=SPI2_CS1;//set pin SPI1_CS1
-//				taskYIELD();
-//				SPI2_GPIO_CS->BSRRH|=SPI2_CS1;//reset pin SPI2_CS1
-//			}
-//			xSemaphoreGive( xSPI2_Buf_Mutex );
-//	    }
-//
-//		task_watches[SPI_TASK_2].counter++;
-//		vTaskDelay(100);
-//	}
-//}
-

@@ -257,6 +257,8 @@ void Menu_Handle_Key(menuItem* currentMenuItem,uint8_t current_key)
 					}
 					break;
 				}
+
+
 			}
 			break;
 
@@ -528,18 +530,9 @@ void Menu_Input_Field_Shift(uint8_t direction,struct input_buffer *inp_buf)
 
 int16_t Menu_Input_Buf_To_Int(struct input_buffer *inp_buf)
 {
-//	uint8_t temp_buf[6];
 	int16_t result=0;
 	uint8_t i=0,counter=0,temp_val=0;
 
-//	temp_buf[0]=inp_buf->buf[0];//формируем целочисленную строку
-//	temp_buf[1]=inp_buf->buf[1];
-//	temp_buf[2]=inp_buf->buf[2];
-//	temp_buf[3]=inp_buf->buf[3];
-//	temp_buf[4]=inp_buf->buf[5];
-//	temp_buf[5]=0x0;
-
-	//sscanf(temp_buf,"%5d",&result);
 	result=((inp_buf->buf[1]-0x30)*1000)+((inp_buf->buf[2]-0x30)*100)+((inp_buf->buf[3]-0x30)*10)+((inp_buf->buf[5]-0x30));
 
 	if(inp_buf->buf[0]=='-')
@@ -561,19 +554,6 @@ void Menu_Input_Int_To_Buf(int16_t val,struct input_buffer *inp_buf)
 	}
 	else
 	{
-//		if(val>=0)
-//		{
-//			sprintf(inp_buf->buf," %d",0234);//val);
-//		}
-//		else
-//		{
-//			sprintf(inp_buf->buf,"%d",3210);//val);
-//		}
-//
-//		inp_buf->buf[5]=inp_buf->buf[4];
-//		inp_buf->buf[4]='.';
-//		//sprintf(inp_buf->buf," 123.4");
-//		inp_buf->counter=4;
 		sprintf(inp_buf->buf," 000.0");
 		if(val>=0)
 		{

@@ -85,6 +85,7 @@
   </Components>
   <Files>
     <File name="FreeRTOSV7.1.0/Source/croutine.c" path="FreeRTOSV7.1.0/Source/croutine.c" type="1"/>
+    <File name="devices/drive.h" path="devices/drive.h" type="1"/>
     <File name="devices/tablo.c" path="devices/tablo.c" type="1"/>
     <File name="menu" path="" type="2"/>
     <File name="devices/backup_sram.c" path="devices/backup_sram.c" type="1"/>
@@ -95,8 +96,8 @@
     <File name="cmsis_lib/source/stm32f4xx_spi.c" path="cmsis_lib/source/stm32f4xx_spi.c" type="1"/>
     <File name="cmsis/core_cmFunc.h" path="cmsis/core_cmFunc.h" type="1"/>
     <File name="devices/spi_bus.c" path="devices/spi_bus.c" type="1"/>
-    <File name="menu/menu.h" path="menu/menu.h" type="1"/>
     <File name="FreeRTOSV7.1.0/Source/include/task.h" path="FreeRTOSV7.1.0/Source/include/task.h" type="1"/>
+    <File name="menu/menu.h" path="menu/menu.h" type="1"/>
     <File name="FreeRTOSV7.1.0/Source/include/FreeRTOS.h" path="FreeRTOSV7.1.0/Source/include/FreeRTOS.h" type="1"/>
     <File name="devices/spi_bus.h" path="devices/spi_bus.h" type="1"/>
     <File name="devices/indicator.c" path="devices/indicator.c" type="1"/>
@@ -110,6 +111,7 @@
     <File name="menu/menu.c" path="menu/menu.c" type="1"/>
     <File name="stdio/printf.c" path="stdio/printf.c" type="1"/>
     <File name="cmsis_lib/include/stm32f4xx_rcc.h" path="cmsis_lib/include/stm32f4xx_rcc.h" type="1"/>
+    <File name="devices/drive.c" path="devices/drive.c" type="1"/>
     <File name="cmsis_lib/source/stm32f4xx_syscfg.c" path="cmsis_lib/source/stm32f4xx_syscfg.c" type="1"/>
     <File name="cmsis_lib/include/stm32f4xx_pwr.h" path="cmsis_lib/include/stm32f4xx_pwr.h" type="1"/>
     <File name="cmsis_boot/startup/startup_stm32f4xx.c" path="cmsis_boot/startup/startup_stm32f4xx.c" type="1"/>
@@ -130,8 +132,8 @@
     <File name="FreeRTOSV7.1.0/readme.txt" path="FreeRTOSV7.1.0/readme.txt" type="1"/>
     <File name="cmsis_lib" path="" type="2"/>
     <File name="devices/power_detector.h" path="devices/power_detector.h" type="1"/>
-    <File name="devices/external_events.c" path="devices/external_events.c" type="1"/>
     <File name="cmsis_lib/include/misc.h" path="cmsis_lib/include/misc.h" type="1"/>
+    <File name="devices/external_events.c" path="devices/external_events.c" type="1"/>
     <File name="FreeRTOSV7.1.0/Source/portable/ARM_CM4F/portmacro.h" path="FreeRTOSV7.1.0/Source/portable/GCC/ARM_CM4F/portmacro.h" type="1"/>
     <File name="FreeRTOSV7.1.0/Source/include/queue.h" path="FreeRTOSV7.1.0/Source/include/queue.h" type="1"/>
     <File name="main.c" path="main.c" type="1"/>

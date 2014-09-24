@@ -15,7 +15,6 @@
 #include "buzzer.h"
 
 xQueueHandle xKeyQueue;//очередь клавиатуры
-//xSemaphoreHandle xKeySemaphore;
 
 static void vKeyboardTask(void *pvParameters);
 
@@ -59,7 +58,7 @@ enum
 	ROW_2,
 	ROW_3,
 };
-#define LONG_PRESS_KEY	20
+
 
 static uint8_t Keyboard_Scan_Matrix(void);
 

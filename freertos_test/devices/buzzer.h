@@ -3,13 +3,11 @@
 
 #include "stm32f4xx.h"
 
-
 enum
 {
 	BUZZER_OFF=0,
 	BUZZER_ON=1
 };
-
 
 enum
 {

@@ -10,10 +10,10 @@
 #include "queue.h"
 #include "semphr.h"
 
-#include "tablo.h"
 #include "watchdog.h"
 
-extern struct tablo tab;
+
+struct buzzer buz;
 extern struct task_watch task_watches[];
 xTaskHandle xBuzzer_Handle;
 
@@ -44,9 +44,9 @@ void buzzer_task(void *pvParameters )
 {
 	while(1)
 	{
-		if(tab.buz.buzzer_enable==BUZZER_ON)
+		if( buz.buzzer_enable==BUZZER_ON)
 		{
-			switch(tab.buz.buzzer_effect)
+			switch( buz.buzzer_effect)
 			{
 				case BUZZER_EFFECT_1_BEEP:
 				{
@@ -54,7 +54,7 @@ void buzzer_task(void *pvParameters )
 					vTaskDelay(200);
 					BUZZER_PORT->BSRRH=BUZZER_PIN;
 					//vTaskDelay(200);
-					tab.buz.buzzer_enable=BUZZER_OFF;
+					 buz.buzzer_enable=BUZZER_OFF;
 				}
 				break;
 
@@ -68,7 +68,7 @@ void buzzer_task(void *pvParameters )
 					vTaskDelay(200);
 					BUZZER_PORT->BSRRH=BUZZER_PIN;
 					//vTaskDelay(200);
-					tab.buz.buzzer_enable=BUZZER_OFF;
+					 buz.buzzer_enable=BUZZER_OFF;
 				}
 				break;
 
@@ -86,7 +86,7 @@ void buzzer_task(void *pvParameters )
 					vTaskDelay(200);
 					BUZZER_PORT->BSRRH=BUZZER_PIN;
 					//vTaskDelay(200);
-					tab.buz.buzzer_enable=BUZZER_OFF;
+					 buz.buzzer_enable=BUZZER_OFF;
 				}
 				break;
 
@@ -102,7 +102,7 @@ void buzzer_task(void *pvParameters )
 					vTaskDelay(1000);
 					BUZZER_PORT->BSRRH=BUZZER_PIN;
 					//vTaskDelay(200);
-					tab.buz.buzzer_enable=BUZZER_OFF;
+					 buz.buzzer_enable=BUZZER_OFF;
 				}
 				break;
 
@@ -123,23 +123,23 @@ void buzzer_set_buzz(uint8_t effect, uint8_t enable)
 {
 	if(enable&0x1)
 	{
-		if(tab.buz.buzzer_enable==BUZZER_OFF)
+		if( buz.buzzer_enable==BUZZER_OFF)
 		{
 			vTaskResume(xBuzzer_Handle);
-			tab.buz.buzzer_enable=BUZZER_ON;
+			 buz.buzzer_enable=BUZZER_ON;
 		}
 		task_watches[BUZZER_TASK].task_status=TASK_ACTIVE;
 	}
 	else
 	{
-		if(tab.buz.buzzer_enable==BUZZER_ON)
+		if( buz.buzzer_enable==BUZZER_ON)
 		{
 			vTaskSuspend (xBuzzer_Handle);
-			tab.buz.buzzer_enable=BUZZER_OFF;
+			 buz.buzzer_enable=BUZZER_OFF;
 		}
 		task_watches[BUZZER_TASK].task_status=TASK_IDLE;
 		//GPIO_WriteBit(BUZZER_PORT, BUZZER_PIN,0);
 		BUZZER_PORT->BSRRH=BUZZER_PIN;
 	}
-	tab.buz.buzzer_effect=effect&0x7;
+	 buz.buzzer_effect=effect&0x7;
 }
