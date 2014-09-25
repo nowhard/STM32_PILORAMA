@@ -27,43 +27,30 @@
 #include "encoder.h"
 #include "external_events.h"
 #include "backup_sram.h"
+#include "drive.h"
 
 
 
-//static void Init_Task(void *pvParameters);//
-//
+
 //static void Init_Task(void *pvParameters)
 //{
 //
 //	//Power_Detector_Init();
-//	//vTaskDelay(200);
+
 //
 //
 //
 //	//Watchdog_Init();
-////
-//	spi1_config();
-//	tablo_devices_init();
-////
-////    buzzer_init();
-//	//Encoder_Init();
-//	//Proto_Init(PROTO_FIRST_INIT);
-//
-//    vTaskDelete( NULL );
-//}
 
-int16_t num=-876,num2=0;
+
+//}
 
 
 int main(void)
 {
 	SystemInit();
 	Backup_SRAM_Init();
-
-//	Backup_SRAM_Write(&num,1,0);
-
-//	Backup_SRAM_Read(&num2,1,0);
-
+	Drive_Init();
 	Encoder_Init();
 	External_Events_Init();
 

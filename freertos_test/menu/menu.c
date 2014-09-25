@@ -8,6 +8,8 @@
 #include "menu.h"
 #include "tablo_parser.h"
 #include "backup_sram.h"
+#include "drive.h"
+#include "buzzer.h"
 
 //Инклуды от FreeRTOS:
 
@@ -35,18 +37,47 @@ void Menu_Handle_Key(menuItem* currentMenuItem,uint8_t current_key);
 
 #define INPUT_BUF_LEN		8
 #define INPUT_STRING_MAX	5
-#define INPUT_MAX_VALUE		6000//600.0
+
+
+#define MENU_ROOT_MAX_VAL	 6000
+#define MENU_ROOT_MIN_VAL	-6000
+
+#define MENU_F01_MAX_VAL	 6000
+#define MENU_F01_MIN_VAL	-6000
+
+#define MENU_F02_MAX_VAL	 6000
+#define MENU_F02_MIN_VAL	-6000
+
+#define MENU_F03_MAX_VAL	 6000
+#define MENU_F03_MIN_VAL		0
+
+#define MENU_F04_MAX_VAL	 6000
+#define MENU_F04_MIN_VAL	    0
+
+#define MENU_F05_MAX_VAL	 6000
+#define MENU_F05_MIN_VAL		0
+
+#define MENU_F06_MAX_VAL	 6000
+#define MENU_F06_MIN_VAL		0
 
 struct input_buffer
 {
 	uint8_t buf[INPUT_BUF_LEN];
 	uint8_t counter;
 }input_buf;
-void 	Menu_Input_Field(uint8_t current_key,uint8_t attributes,struct input_buffer *inp_buf);
+
+void 	Menu_Input_Field(uint8_t current_key,uint8_t attributes,struct input_buffer *inp_buf,int16_t min_value, int16_t max_value);
 void 	Menu_Input_Field_Clear(struct input_buffer *inp_buf);
 void 	Menu_Input_Field_Shift(uint8_t direction,struct input_buffer *inp_buf);
-int16_t Menu_Input_Buf_To_Int(struct input_buffer *inp_buf);
-void 	Menu_Input_Int_To_Buf(int16_t val,struct input_buffer *inp_buf);
+
+enum
+{
+	INPUT_OK=0,
+	INPUT_ERR,
+};
+
+uint8_t Menu_Input_Buf_To_Int(struct input_buffer *inp_buf,int16_t *val,int16_t min_value, int16_t max_value);
+uint8_t Menu_Input_Int_To_Buf(int16_t val,struct input_buffer *inp_buf,int16_t min_value, int16_t max_value);
 
 extern xQueueHandle xKeyQueue;//очередь клавиатуры
 
@@ -79,7 +110,9 @@ MAKE_MENU(m_s1i5,  m_s1i6,    m_s1i4,      m_s0i1, 	   NULL_ENTRY,  MENU_F_05,  
 MAKE_MENU(m_s1i6,  NULL_ENTRY,m_s1i5,      m_s0i1, 	   NULL_ENTRY,  MENU_F_06,  "F-06");
 
 
-extern  struct dev_registers *dev_reg;
+//extern  struct dev_registers *dev_reg;
+
+extern struct drive drv;
 
 void menuChange(menuItem* NewMenu)
 {
@@ -110,7 +143,6 @@ unsigned char dispMenu(void)
 			case MENU_F_01:
 			{
 				Menu_Input_Field_Clear(&input_buf);
-				//Menu_Input_Int_To_Buf(dev_reg->F_01_cal_up,&input_buf);
 			}
 			break;
 
@@ -128,22 +160,37 @@ unsigned char dispMenu(void)
 
 			case MENU_F_04:
 			{
-				//Menu_Input_Field_Clear(&input_buf);
-				Menu_Input_Int_To_Buf(dev_reg->F_04_current_position,&input_buf);
+				if(Menu_Input_Int_To_Buf(drv.bkp_reg->F_04_current_position,&input_buf,MENU_F04_MIN_VAL,MENU_F04_MAX_VAL)==INPUT_ERR)
+				{
+					Menu_Input_Field_Clear(&input_buf);
+					Indicator_Blink_Set(IND_2,0xFF,2);
+					buzzer_set_buzz(BUZZER_EFFECT_3_BEEP,BUZZER_ON);
+					//error
+				}
 			}
 			break;
 
 			case MENU_F_05:
 			{
-				//Menu_Input_Field_Clear(&input_buf);
-				Menu_Input_Int_To_Buf(dev_reg->F_05_cal_speed_down,&input_buf);
+				if(Menu_Input_Int_To_Buf(drv.bkp_reg->F_05_cal_speed_down,&input_buf,MENU_F05_MIN_VAL,MENU_F05_MAX_VAL)==INPUT_ERR)
+				{
+					Menu_Input_Field_Clear(&input_buf);
+					Indicator_Blink_Set(IND_2,0xFF,2);
+					buzzer_set_buzz(BUZZER_EFFECT_3_BEEP,BUZZER_ON);
+					//error
+				}
 			}
 			break;
 
 			case MENU_F_06:
 			{
-				//Menu_Input_Field_Clear(&input_buf);
-				Menu_Input_Int_To_Buf(dev_reg->F_06_cal_stop,&input_buf);
+				if(Menu_Input_Int_To_Buf(drv.bkp_reg->F_06_cal_stop,&input_buf,MENU_F06_MIN_VAL,MENU_F06_MAX_VAL)==INPUT_ERR)
+				{
+					Menu_Input_Field_Clear(&input_buf);
+					Indicator_Blink_Set(IND_2,0xFF,2);
+					buzzer_set_buzz(BUZZER_EFFECT_3_BEEP,BUZZER_ON);
+					//error
+				}
 			}
 			break;
 
@@ -159,12 +206,9 @@ unsigned char dispMenu(void)
 }
 
 
-
 unsigned char startMenu(void) {
 	selectedMenuItem = (menuItem*)&m_s0i1;
-	//Menu_Input_Field_Clear(&input_buf);
 	dispMenu();
-
 	return (0);
 }
 
@@ -253,7 +297,7 @@ void Menu_Handle_Key(menuItem* currentMenuItem,uint8_t current_key)
 
 					default:
 					{
-						Menu_Input_Field(current_key,INPUT_WITH_POINT|INPUT_WITH_SIGN,&input_buf);
+						Menu_Input_Field(current_key,INPUT_WITH_POINT|INPUT_WITH_SIGN,&input_buf,MENU_ROOT_MIN_VAL,MENU_ROOT_MAX_VAL);
 					}
 					break;
 				}
@@ -282,13 +326,21 @@ void Menu_Handle_Key(menuItem* currentMenuItem,uint8_t current_key)
 
 					case KEY_POINT_LONG://запомним значение
 					{
-						Backup_SRAM_Write_Reg(&dev_reg->F_01_cal_up,Menu_Input_Buf_To_Int(&input_buf));
+						int16_t temp_val;
+						if(Menu_Input_Buf_To_Int(&input_buf,&temp_val,MENU_F01_MIN_VAL,MENU_F01_MAX_VAL)==INPUT_OK)
+						{
+							Backup_SRAM_Write_Reg(&drv.bkp_reg->F_01_cal_up,temp_val);
+						}
+						else
+						{
+							//input error
+						}
 					}
 					break;
 
 					default:
 					{
-						Menu_Input_Field(current_key,INPUT_WITH_POINT|INPUT_WITH_SIGN,&input_buf);
+						Menu_Input_Field(current_key,INPUT_WITH_POINT|INPUT_WITH_SIGN,&input_buf,MENU_F01_MIN_VAL,MENU_F01_MAX_VAL);
 					}
 					break;
 				}
@@ -315,13 +367,21 @@ void Menu_Handle_Key(menuItem* currentMenuItem,uint8_t current_key)
 
 					case KEY_POINT_LONG://запомним значение
 					{
-						Backup_SRAM_Write_Reg(&dev_reg->F_02_cal_down,Menu_Input_Buf_To_Int(&input_buf));
+						int16_t temp_val;
+						if(Menu_Input_Buf_To_Int(&input_buf,&temp_val,MENU_F02_MIN_VAL,MENU_F02_MAX_VAL)==INPUT_OK)
+						{
+							Backup_SRAM_Write_Reg(&drv.bkp_reg->F_02_cal_down,temp_val);
+						}
+						else
+						{
+							//input error
+						}
 					}
 					break;
 
 					default:
 					{
-						Menu_Input_Field(current_key,INPUT_WITH_POINT|INPUT_WITH_SIGN,&input_buf);
+						Menu_Input_Field(current_key,INPUT_WITH_POINT|INPUT_WITH_SIGN,&input_buf,MENU_F02_MIN_VAL,MENU_F02_MAX_VAL);
 					}
 					break;
 				}
@@ -348,13 +408,21 @@ void Menu_Handle_Key(menuItem* currentMenuItem,uint8_t current_key)
 
 					case KEY_POINT_LONG://запомним значение
 					{
-						Backup_SRAM_Write_Reg(&dev_reg->F_03_cal_syncro,Menu_Input_Buf_To_Int(&input_buf));
+						int16_t temp_val;
+						if(Menu_Input_Buf_To_Int(&input_buf,&temp_val,MENU_F03_MIN_VAL,MENU_F03_MAX_VAL)==INPUT_OK)
+						{
+							Backup_SRAM_Write_Reg(&drv.bkp_reg->F_03_cal_syncro,temp_val);
+						}
+						else
+						{
+							//input error
+						}
 					}
 					break;
 
 					default:
 					{
-						Menu_Input_Field(current_key,INPUT_WITH_POINT,&input_buf);
+						Menu_Input_Field(current_key,INPUT_WITH_POINT,&input_buf,MENU_F03_MIN_VAL,MENU_F03_MAX_VAL);
 					}
 					break;
 				}
@@ -381,13 +449,21 @@ void Menu_Handle_Key(menuItem* currentMenuItem,uint8_t current_key)
 
 					case KEY_POINT_LONG://запомним значение
 					{
-						Backup_SRAM_Write_Reg(&dev_reg->F_04_current_position,Menu_Input_Buf_To_Int(&input_buf));
+						int16_t temp_val;
+						if(Menu_Input_Buf_To_Int(&input_buf,&temp_val,MENU_F04_MIN_VAL,MENU_F04_MAX_VAL)==INPUT_OK)
+						{
+							Backup_SRAM_Write_Reg(&drv.bkp_reg->F_04_current_position,temp_val);
+						}
+						else
+						{
+							//input error
+						}
 					}
 					break;
 
 					default:
 					{
-						Menu_Input_Field(current_key,INPUT_WITH_POINT,&input_buf);
+						Menu_Input_Field(current_key,INPUT_WITH_POINT,&input_buf,MENU_F04_MIN_VAL,MENU_F04_MAX_VAL);
 					}
 					break;
 				}
@@ -415,13 +491,21 @@ void Menu_Handle_Key(menuItem* currentMenuItem,uint8_t current_key)
 
 					case KEY_POINT_LONG://запомним значение
 					{
-						Backup_SRAM_Write_Reg(&dev_reg->F_05_cal_speed_down,Menu_Input_Buf_To_Int(&input_buf));
+						int16_t temp_val;
+						if(Menu_Input_Buf_To_Int(&input_buf,&temp_val,MENU_F05_MIN_VAL,MENU_F05_MAX_VAL)==INPUT_OK)
+						{
+							Backup_SRAM_Write_Reg(&drv.bkp_reg->F_05_cal_speed_down,temp_val);
+						}
+						else
+						{
+							//input error
+						}
 					}
 					break;
 
 					default:
 					{
-						Menu_Input_Field(current_key,INPUT_WITH_POINT,&input_buf);
+						Menu_Input_Field(current_key,INPUT_WITH_POINT,&input_buf,MENU_F05_MIN_VAL,MENU_F05_MAX_VAL);
 					}
 					break;
 				}
@@ -451,13 +535,21 @@ void Menu_Handle_Key(menuItem* currentMenuItem,uint8_t current_key)
 
 					case KEY_POINT_LONG://запомним значение
 					{
-						Backup_SRAM_Write_Reg(&dev_reg->F_06_cal_stop,Menu_Input_Buf_To_Int(&input_buf));
+						int16_t temp_val;
+						if(Menu_Input_Buf_To_Int(&input_buf,&temp_val,MENU_F06_MIN_VAL,MENU_F06_MAX_VAL)==INPUT_OK)
+						{
+							Backup_SRAM_Write_Reg(&drv.bkp_reg->F_06_cal_stop,temp_val);
+						}
+						else
+						{
+							//input error
+						}
 					}
 					break;
 
 					default:
 					{
-						Menu_Input_Field(current_key,INPUT_WITH_POINT,&input_buf);
+						Menu_Input_Field(current_key,INPUT_WITH_POINT,&input_buf,MENU_F06_MIN_VAL,MENU_F06_MAX_VAL);
 					}
 					break;
 				}
@@ -528,10 +620,9 @@ void Menu_Input_Field_Shift(uint8_t direction,struct input_buffer *inp_buf)
 	}
 }
 
-int16_t Menu_Input_Buf_To_Int(struct input_buffer *inp_buf)
+uint8_t Menu_Input_Buf_To_Int(struct input_buffer *inp_buf,int16_t *val,int16_t min_value, int16_t max_value)
 {
 	int16_t result=0;
-	uint8_t i=0,counter=0,temp_val=0;
 
 	result=((inp_buf->buf[1]-0x30)*1000)+((inp_buf->buf[2]-0x30)*100)+((inp_buf->buf[3]-0x30)*10)+((inp_buf->buf[5]-0x30));
 
@@ -540,17 +631,26 @@ int16_t Menu_Input_Buf_To_Int(struct input_buffer *inp_buf)
 		result=-result;
 	}
 
-	return result;
+	*val=result;
+
+	if((result<min_value)||(result>max_value))
+	{
+		return INPUT_ERR;
+	}
+
+	return INPUT_OK;
 }
 
-void Menu_Input_Int_To_Buf(int16_t val,struct input_buffer *inp_buf)
+uint8_t Menu_Input_Int_To_Buf(int16_t val,struct input_buffer *inp_buf,int16_t min_value, int16_t max_value)
 {
 	uint8_t tmp_val,i;
 
-	if((val>INPUT_MAX_VALUE)||(val<(-INPUT_MAX_VALUE)))
+	if((val>max_value)||(val<min_value))
 	{
 		sprintf(inp_buf->buf," 000.0");
 		inp_buf->counter=0x0;
+
+		return INPUT_ERR;
 	}
 	else
 	{
@@ -626,9 +726,10 @@ void Menu_Input_Int_To_Buf(int16_t val,struct input_buffer *inp_buf)
 		}
 	}
 	str_to_ind(IND_2,inp_buf->buf);
+	return INPUT_OK;
 }
 
-void Menu_Input_Field(uint8_t current_key,uint8_t attributes,struct input_buffer *inp_buf)
+void Menu_Input_Field(uint8_t current_key,uint8_t attributes,struct input_buffer *inp_buf,int16_t min_value, int16_t max_value)
 {
 	if(current_key==KEY_C)//backspace
     {
@@ -752,7 +853,10 @@ void Menu_Input_Field(uint8_t current_key,uint8_t attributes,struct input_buffer
 		break;
 	}
 
-	if((Menu_Input_Buf_To_Int(inp_buf)>INPUT_MAX_VALUE)||(Menu_Input_Buf_To_Int(inp_buf)<(-INPUT_MAX_VALUE)))//выход за диапазон-удаляем последний введенный символ
+
+	int16_t temp_val;
+
+	if(Menu_Input_Buf_To_Int(inp_buf,&temp_val,min_value,max_value)==INPUT_ERR)//выход за диапазон-удаляем последний введенный символ
 	{
 		Menu_Input_Field_Shift(DIRECTION_RIGHT,inp_buf);
 	}

@@ -34,4 +34,7 @@ struct drive
 	uint8_t error_flag;
 };
 
+void Drive_Init(void);
+
+
 #endif

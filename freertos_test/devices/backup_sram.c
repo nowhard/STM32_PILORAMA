@@ -3,14 +3,12 @@
 #include "stm32f4xx_rcc.h"
 #include "stm32f4xx_pwr.h"
 
- struct dev_registers *dev_reg;
+
 
 void Backup_SRAM_Init(void)
 {
 	  RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_BKPSRAM, ENABLE);
 	  RCC_APB1PeriphClockCmd(RCC_APB1Periph_PWR, ENABLE);
-
-	  dev_reg=(struct dev_registers *) BKPSRAM_BASE;
 }
 
 void Backup_SRAM_Write_Reg(int16_t *reg, int16_t reg_val)
