@@ -165,6 +165,7 @@ unsigned char dispMenu(void)
 					Menu_Input_Field_Clear(&input_buf);
 					Indicator_Blink_Set(IND_2,0xFF,2);
 					buzzer_set_buzz(BUZZER_EFFECT_3_BEEP,BUZZER_ON);
+					Indicator_Blink_Set(IND_2,0xFF,2);
 					//error
 				}
 			}
@@ -177,6 +178,7 @@ unsigned char dispMenu(void)
 					Menu_Input_Field_Clear(&input_buf);
 					Indicator_Blink_Set(IND_2,0xFF,2);
 					buzzer_set_buzz(BUZZER_EFFECT_3_BEEP,BUZZER_ON);
+					Indicator_Blink_Set(IND_2,0xFF,2);
 					//error
 				}
 			}
@@ -189,6 +191,7 @@ unsigned char dispMenu(void)
 					Menu_Input_Field_Clear(&input_buf);
 					Indicator_Blink_Set(IND_2,0xFF,2);
 					buzzer_set_buzz(BUZZER_EFFECT_3_BEEP,BUZZER_ON);
+					Indicator_Blink_Set(IND_2,0xFF,2);
 					//error
 				}
 			}
@@ -255,7 +258,7 @@ void Menu_Handle_Key(menuItem* currentMenuItem,uint8_t current_key)
 					case KEY_A_LONG:
 					{
 						Menu_Child();
-						//Menu_Input_Field_Clear(&input_buf);
+						buzzer_set_buzz(BUZZER_EFFECT_LONG_BEEP,BUZZER_ON);
 					}
 					break;
 
@@ -312,15 +315,15 @@ void Menu_Handle_Key(menuItem* currentMenuItem,uint8_t current_key)
 				{
 					case KEY_C_LONG:
 					{
-						//Menu_Input_Field_Clear(&input_buf);
 						Menu_Parent();
+						buzzer_set_buzz(BUZZER_EFFECT_LONG_BEEP,BUZZER_ON);
 					}
 					break;
 
 					case KEY_A:
 					{
 						Menu_Next();
-						//Menu_Input_Field_Clear(&input_buf);
+						buzzer_set_buzz(BUZZER_EFFECT_1_BEEP,BUZZER_ON);
 					}
 					break;
 
@@ -330,10 +333,12 @@ void Menu_Handle_Key(menuItem* currentMenuItem,uint8_t current_key)
 						if(Menu_Input_Buf_To_Int(&input_buf,&temp_val,MENU_F01_MIN_VAL,MENU_F01_MAX_VAL)==INPUT_OK)
 						{
 							Backup_SRAM_Write_Reg(&drv.bkp_reg->F_01_cal_up,temp_val);
+							buzzer_set_buzz(BUZZER_EFFECT_2_BEEP,BUZZER_ON);
 						}
 						else
 						{
-							//input error
+							buzzer_set_buzz(BUZZER_EFFECT_3_BEEP,BUZZER_ON);
+							Indicator_Blink_Set(IND_2,0xFF,2);
 						}
 					}
 					break;
@@ -353,15 +358,15 @@ void Menu_Handle_Key(menuItem* currentMenuItem,uint8_t current_key)
 				{
 					case KEY_C_LONG:
 					{
-						//Menu_Input_Field_Clear(&input_buf);
 						Menu_Parent();
+						buzzer_set_buzz(BUZZER_EFFECT_LONG_BEEP,BUZZER_ON);
 					}
 					break;
 
 					case KEY_A:
 					{
 						Menu_Next();
-						//Menu_Input_Field_Clear(&input_buf);
+						buzzer_set_buzz(BUZZER_EFFECT_1_BEEP,BUZZER_ON);
 					}
 					break;
 
@@ -371,9 +376,12 @@ void Menu_Handle_Key(menuItem* currentMenuItem,uint8_t current_key)
 						if(Menu_Input_Buf_To_Int(&input_buf,&temp_val,MENU_F02_MIN_VAL,MENU_F02_MAX_VAL)==INPUT_OK)
 						{
 							Backup_SRAM_Write_Reg(&drv.bkp_reg->F_02_cal_down,temp_val);
+							buzzer_set_buzz(BUZZER_EFFECT_2_BEEP,BUZZER_ON);
 						}
 						else
 						{
+							buzzer_set_buzz(BUZZER_EFFECT_3_BEEP,BUZZER_ON);
+							Indicator_Blink_Set(IND_2,0xFF,2);
 							//input error
 						}
 					}
@@ -394,15 +402,15 @@ void Menu_Handle_Key(menuItem* currentMenuItem,uint8_t current_key)
 				{
 					case KEY_C_LONG:
 					{
-						//Menu_Input_Field_Clear(&input_buf);
 						Menu_Parent();
+						buzzer_set_buzz(BUZZER_EFFECT_LONG_BEEP,BUZZER_ON);
 					}
 					break;
 
 					case KEY_A:
 					{
 						Menu_Next();
-						//Menu_Input_Field_Clear(&input_buf);
+						buzzer_set_buzz(BUZZER_EFFECT_1_BEEP,BUZZER_ON);
 					}
 					break;
 
@@ -412,9 +420,12 @@ void Menu_Handle_Key(menuItem* currentMenuItem,uint8_t current_key)
 						if(Menu_Input_Buf_To_Int(&input_buf,&temp_val,MENU_F03_MIN_VAL,MENU_F03_MAX_VAL)==INPUT_OK)
 						{
 							Backup_SRAM_Write_Reg(&drv.bkp_reg->F_03_cal_syncro,temp_val);
+							buzzer_set_buzz(BUZZER_EFFECT_2_BEEP,BUZZER_ON);
 						}
 						else
 						{
+							buzzer_set_buzz(BUZZER_EFFECT_3_BEEP,BUZZER_ON);
+							Indicator_Blink_Set(IND_2,0xFF,2);
 							//input error
 						}
 					}
@@ -435,15 +446,15 @@ void Menu_Handle_Key(menuItem* currentMenuItem,uint8_t current_key)
 				{
 					case KEY_C_LONG:
 					{
-						//Menu_Input_Field_Clear(&input_buf);
 						Menu_Parent();
+						buzzer_set_buzz(BUZZER_EFFECT_LONG_BEEP,BUZZER_ON);
 					}
 					break;
 
 					case KEY_A:
 					{
 						Menu_Next();
-						//Menu_Input_Field_Clear(&input_buf);
+						buzzer_set_buzz(BUZZER_EFFECT_1_BEEP,BUZZER_ON);
 					}
 					break;
 
@@ -453,9 +464,12 @@ void Menu_Handle_Key(menuItem* currentMenuItem,uint8_t current_key)
 						if(Menu_Input_Buf_To_Int(&input_buf,&temp_val,MENU_F04_MIN_VAL,MENU_F04_MAX_VAL)==INPUT_OK)
 						{
 							Backup_SRAM_Write_Reg(&drv.bkp_reg->F_04_current_position,temp_val);
+							buzzer_set_buzz(BUZZER_EFFECT_2_BEEP,BUZZER_ON);
 						}
 						else
 						{
+							buzzer_set_buzz(BUZZER_EFFECT_3_BEEP,BUZZER_ON);
+							Indicator_Blink_Set(IND_2,0xFF,2);
 							//input error
 						}
 					}
@@ -476,16 +490,15 @@ void Menu_Handle_Key(menuItem* currentMenuItem,uint8_t current_key)
 				{
 					case KEY_C_LONG:
 					{
-						//Menu_Input_Field_Clear(&input_buf);
 						Menu_Parent();
+						buzzer_set_buzz(BUZZER_EFFECT_LONG_BEEP,BUZZER_ON);
 					}
 					break;
 
 					case KEY_A:
 					{
 						Menu_Next();
-						//Menu_Input_Field_Clear(&input_buf);
-						//return;
+						buzzer_set_buzz(BUZZER_EFFECT_1_BEEP,BUZZER_ON);
 					}
 					break;
 
@@ -495,9 +508,12 @@ void Menu_Handle_Key(menuItem* currentMenuItem,uint8_t current_key)
 						if(Menu_Input_Buf_To_Int(&input_buf,&temp_val,MENU_F05_MIN_VAL,MENU_F05_MAX_VAL)==INPUT_OK)
 						{
 							Backup_SRAM_Write_Reg(&drv.bkp_reg->F_05_cal_speed_down,temp_val);
+							buzzer_set_buzz(BUZZER_EFFECT_2_BEEP,BUZZER_ON);
 						}
 						else
 						{
+							buzzer_set_buzz(BUZZER_EFFECT_3_BEEP,BUZZER_ON);
+							Indicator_Blink_Set(IND_2,0xFF,2);
 							//input error
 						}
 					}
@@ -518,18 +534,16 @@ void Menu_Handle_Key(menuItem* currentMenuItem,uint8_t current_key)
 				{
 					case KEY_C_LONG:
 					{
-						//Menu_Input_Field_Clear(&input_buf);
 						Menu_Parent();
+						buzzer_set_buzz(BUZZER_EFFECT_LONG_BEEP,BUZZER_ON);
 					}
 					break;
 
 					case KEY_A:
 					{
-						//Menu_Next();
 						selectedMenuItem = (menuItem*)&m_s1i1;
-						//Menu_Input_Field_Clear(&input_buf);
 						dispMenu();
-						//return;
+						buzzer_set_buzz(BUZZER_EFFECT_1_BEEP,BUZZER_ON);
 					}
 					break;
 
@@ -539,9 +553,12 @@ void Menu_Handle_Key(menuItem* currentMenuItem,uint8_t current_key)
 						if(Menu_Input_Buf_To_Int(&input_buf,&temp_val,MENU_F06_MIN_VAL,MENU_F06_MAX_VAL)==INPUT_OK)
 						{
 							Backup_SRAM_Write_Reg(&drv.bkp_reg->F_06_cal_stop,temp_val);
+							buzzer_set_buzz(BUZZER_EFFECT_2_BEEP,BUZZER_ON);
 						}
 						else
 						{
+							buzzer_set_buzz(BUZZER_EFFECT_3_BEEP,BUZZER_ON);
+							Indicator_Blink_Set(IND_2,0xFF,2);
 							//input error
 						}
 					}
@@ -731,41 +748,57 @@ uint8_t Menu_Input_Int_To_Buf(int16_t val,struct input_buffer *inp_buf,int16_t m
 
 void Menu_Input_Field(uint8_t current_key,uint8_t attributes,struct input_buffer *inp_buf,int16_t min_value, int16_t max_value)
 {
+
+	if((current_key>KEY_9)&&(current_key!=KEY_C)&&(current_key!=KEY_STAR)&&(current_key!=KEY_SHARP))
+	{
+		return;
+	}
+
 	if(current_key==KEY_C)//backspace
     {
 		if(inp_buf->counter)
 		{
 			Menu_Input_Field_Shift(DIRECTION_RIGHT,inp_buf);
 			str_to_ind(IND_2,inp_buf->buf);
+			buzzer_set_buzz(BUZZER_EFFECT_1_BEEP,BUZZER_ON);
 		}
 
 		return;
     }
 
-	if(attributes&INPUT_WITH_SIGN)
+
+	switch(current_key)
 	{
-		switch(current_key)
+		case KEY_STAR://-
 		{
-			case KEY_STAR://-
+			if(attributes&INPUT_WITH_SIGN)
 			{
 				inp_buf->buf[0]='-';
 				str_to_ind(IND_2,inp_buf->buf);
-				return;
+				buzzer_set_buzz(BUZZER_EFFECT_1_BEEP,BUZZER_ON);
 			}
-			break;
+			return;
+		}
+		break;
 
-			case KEY_SHARP://+
+		case KEY_SHARP://+
+		{
+			if(attributes&INPUT_WITH_SIGN)
 			{
 				inp_buf->buf[0]=' ';
 				str_to_ind(IND_2,inp_buf->buf);
-				return;
+				buzzer_set_buzz(BUZZER_EFFECT_1_BEEP,BUZZER_ON);
 			}
-			break;
+			return;
 		}
+		break;
 	}
 
-	if(inp_buf->counter>=(INPUT_STRING_MAX-1))
+
+	if((inp_buf->counter>=(INPUT_STRING_MAX-1)))
 	{
+		buzzer_set_buzz(BUZZER_EFFECT_3_BEEP,BUZZER_ON);
+		Indicator_Blink_Set(IND_2,0xFF,2);
 		return;
 	}
 
@@ -780,6 +813,7 @@ void Menu_Input_Field(uint8_t current_key,uint8_t attributes,struct input_buffer
 
 			Menu_Input_Field_Shift(DIRECTION_LEFT,inp_buf);
 			inp_buf->buf[INPUT_STRING_MAX]='0';
+			buzzer_set_buzz(BUZZER_EFFECT_1_BEEP,BUZZER_ON);
 		}
 		break;
 
@@ -787,6 +821,7 @@ void Menu_Input_Field(uint8_t current_key,uint8_t attributes,struct input_buffer
 		{
 			Menu_Input_Field_Shift(DIRECTION_LEFT,inp_buf);
 			inp_buf->buf[INPUT_STRING_MAX]='1';
+			buzzer_set_buzz(BUZZER_EFFECT_1_BEEP,BUZZER_ON);
 		}
 		break;
 
@@ -794,6 +829,7 @@ void Menu_Input_Field(uint8_t current_key,uint8_t attributes,struct input_buffer
 		{
 			Menu_Input_Field_Shift(DIRECTION_LEFT,inp_buf);
 			inp_buf->buf[INPUT_STRING_MAX]='2';
+			buzzer_set_buzz(BUZZER_EFFECT_1_BEEP,BUZZER_ON);
 		}
 		break;
 
@@ -801,6 +837,7 @@ void Menu_Input_Field(uint8_t current_key,uint8_t attributes,struct input_buffer
 		{
 			Menu_Input_Field_Shift(DIRECTION_LEFT,inp_buf);
 			inp_buf->buf[INPUT_STRING_MAX]='3';
+			buzzer_set_buzz(BUZZER_EFFECT_1_BEEP,BUZZER_ON);
 		}
 		break;
 
@@ -808,6 +845,7 @@ void Menu_Input_Field(uint8_t current_key,uint8_t attributes,struct input_buffer
 		{
 			Menu_Input_Field_Shift(DIRECTION_LEFT,inp_buf);
 			inp_buf->buf[INPUT_STRING_MAX]='4';
+			buzzer_set_buzz(BUZZER_EFFECT_1_BEEP,BUZZER_ON);
 		}
 		break;
 
@@ -815,6 +853,7 @@ void Menu_Input_Field(uint8_t current_key,uint8_t attributes,struct input_buffer
 		{
 			Menu_Input_Field_Shift(DIRECTION_LEFT,inp_buf);
 			inp_buf->buf[INPUT_STRING_MAX]='5';
+			buzzer_set_buzz(BUZZER_EFFECT_1_BEEP,BUZZER_ON);
 		}
 		break;
 
@@ -822,6 +861,7 @@ void Menu_Input_Field(uint8_t current_key,uint8_t attributes,struct input_buffer
 		{
 			Menu_Input_Field_Shift(DIRECTION_LEFT,inp_buf);
 			inp_buf->buf[INPUT_STRING_MAX]='6';
+			buzzer_set_buzz(BUZZER_EFFECT_1_BEEP,BUZZER_ON);
 		}
 		break;
 
@@ -829,6 +869,7 @@ void Menu_Input_Field(uint8_t current_key,uint8_t attributes,struct input_buffer
 		{
 			Menu_Input_Field_Shift(DIRECTION_LEFT,inp_buf);
 			inp_buf->buf[INPUT_STRING_MAX]='7';
+			buzzer_set_buzz(BUZZER_EFFECT_1_BEEP,BUZZER_ON);
 		}
 		break;
 
@@ -836,6 +877,7 @@ void Menu_Input_Field(uint8_t current_key,uint8_t attributes,struct input_buffer
 		{
 			Menu_Input_Field_Shift(DIRECTION_LEFT,inp_buf);
 			inp_buf->buf[INPUT_STRING_MAX]='8';
+			buzzer_set_buzz(BUZZER_EFFECT_1_BEEP,BUZZER_ON);
 		}
 		break;
 
@@ -843,6 +885,7 @@ void Menu_Input_Field(uint8_t current_key,uint8_t attributes,struct input_buffer
 		{
 			Menu_Input_Field_Shift(DIRECTION_LEFT,inp_buf);
 			inp_buf->buf[INPUT_STRING_MAX]='9';
+			buzzer_set_buzz(BUZZER_EFFECT_1_BEEP,BUZZER_ON);
 		}
 		break;
 
@@ -859,6 +902,8 @@ void Menu_Input_Field(uint8_t current_key,uint8_t attributes,struct input_buffer
 	if(Menu_Input_Buf_To_Int(inp_buf,&temp_val,min_value,max_value)==INPUT_ERR)//выход за диапазон-удаляем последний введенный символ
 	{
 		Menu_Input_Field_Shift(DIRECTION_RIGHT,inp_buf);
+		buzzer_set_buzz(BUZZER_EFFECT_3_BEEP,BUZZER_ON);
+		Indicator_Blink_Set(IND_2,0xFF,2);
 	}
 
 	str_to_ind(IND_2,inp_buf->buf);

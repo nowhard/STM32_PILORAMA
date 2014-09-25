@@ -61,11 +61,11 @@ void buzzer_task(void *pvParameters )
 				case BUZZER_EFFECT_2_BEEP:
 				{
 					BUZZER_PORT->BSRRL=BUZZER_PIN;
-					vTaskDelay(200);
+					vTaskDelay(100);
 					BUZZER_PORT->BSRRH=BUZZER_PIN;
-					vTaskDelay(200);
+					vTaskDelay(100);
 					BUZZER_PORT->BSRRL=BUZZER_PIN;
-					vTaskDelay(200);
+					vTaskDelay(100);
 					BUZZER_PORT->BSRRH=BUZZER_PIN;
 					//vTaskDelay(200);
 					 buz.buzzer_enable=BUZZER_OFF;
@@ -75,15 +75,15 @@ void buzzer_task(void *pvParameters )
 				case BUZZER_EFFECT_3_BEEP:
 				{
 					BUZZER_PORT->BSRRL=BUZZER_PIN;
-					vTaskDelay(200);
+					vTaskDelay(50);
 					BUZZER_PORT->BSRRH=BUZZER_PIN;
-					vTaskDelay(200);
+					vTaskDelay(50);
 					BUZZER_PORT->BSRRL=BUZZER_PIN;
-					vTaskDelay(200);
+					vTaskDelay(50);
 					BUZZER_PORT->BSRRH=BUZZER_PIN;
-					vTaskDelay(200);
+					vTaskDelay(50);
 					BUZZER_PORT->BSRRL=BUZZER_PIN;
-					vTaskDelay(200);
+					vTaskDelay(50);
 					BUZZER_PORT->BSRRH=BUZZER_PIN;
 					//vTaskDelay(200);
 					 buz.buzzer_enable=BUZZER_OFF;

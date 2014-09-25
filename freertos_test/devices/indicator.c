@@ -4,6 +4,8 @@
 extern struct tablo tab;
 static uint8_t blink_flag=0;
 
+#define BLINK_TIME_PERIOD 6
+
 void Indicator_Blink_Handler(void)
 {
 	uint8_t indicator=0;
@@ -11,7 +13,7 @@ void Indicator_Blink_Handler(void)
 
 	blink_flag++;
 
-	if(blink_flag<5)
+	if(blink_flag<(BLINK_TIME_PERIOD>>1))
 	{
 		for(indicator=0;indicator<IND_ALL_NUM;indicator++)
 		{
@@ -20,12 +22,12 @@ void Indicator_Blink_Handler(void)
 		return;
 	}
 
-	if(blink_flag>=10)
+	if(blink_flag>=BLINK_TIME_PERIOD)
 	{
 		blink_flag=0;
 	}
 
-	if(blink_flag==5)
+	if(blink_flag==(BLINK_TIME_PERIOD>>1))
 	{
 		for(indicator=0;indicator<IND_ALL_NUM;indicator++)
 		{

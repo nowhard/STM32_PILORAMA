@@ -7,8 +7,8 @@
       <target file="syscalls.o" lastModified="1488d77c67c">
          <source file="..\..\..\syscalls\syscalls.c" lastModified="1476293bc68"/>
       </target>
-      <target file="menu.o" lastModified="148ac16ad94">
-         <source file="..\..\..\menu\menu.c" lastModified="148ac16494c"/>
+      <target file="menu.o" lastModified="148ac515c39">
+         <source file="..\..\..\menu\menu.c" lastModified="148ac513d57"/>
       </target>
       <target file="misc.o" lastModified="1488d77cddf">
          <source file="..\..\..\cmsis_lib\source\misc.c" lastModified="14125d86b88"/>
@@ -25,8 +25,8 @@
       <target file="timers.o" lastModified="1488d92c87d">
          <source file="..\..\..\FreeRTOSV7.1.0\Source\timers.c" lastModified="13e3b1eb910"/>
       </target>
-      <target file="indicator.o" lastModified="148a7c77ac2">
-         <source file="..\..\..\devices\indicator.c" lastModified="14887d44d7e"/>
+      <target file="indicator.o" lastModified="148ac3afe84">
+         <source file="..\..\..\devices\indicator.c" lastModified="148ac3ada14"/>
       </target>
       <target file="stm32f4xx_iwdg.o" lastModified="1488d77b769">
          <source file="..\..\..\cmsis_lib\source\stm32f4xx_iwdg.c" lastModified="1428e61eab6"/>
@@ -64,8 +64,8 @@
       <target file="port.o" lastModified="1488d92d175">
          <source file="..\..\..\FreeRTOSV7.1.0\Source\portable\GCC\ARM_CM4F\port.c" lastModified="13e3b1eb900"/>
       </target>
-      <target file="buzzer.o" lastModified="148a7c77a16">
-         <source file="..\..\..\devices\buzzer.c" lastModified="148a7c77081"/>
+      <target file="buzzer.o" lastModified="148ac3d86e4">
+         <source file="..\..\..\devices\buzzer.c" lastModified="148ac3d730e"/>
       </target>
       <target file="startup_stm32f4xx.o" lastModified="1488d77b6ad">
          <source file="..\..\..\cmsis_boot\startup\startup_stm32f4xx.c" lastModified="13cedd0ed70"/>
@@ -76,8 +76,8 @@
       <target file="power_detector.o" lastModified="1488d77d253">
          <source file="..\..\..\devices\power_detector.c" lastModified="142a337107a"/>
       </target>
-      <target file="keyboard.o" lastModified="148a7c77ca6">
-         <source file="..\..\..\devices\keyboard.c" lastModified="148a7c770ee"/>
+      <target file="keyboard.o" lastModified="148ac3049fa">
+         <source file="..\..\..\devices\keyboard.c" lastModified="148ac248075"/>
       </target>
       <target file="spi_bus.o" lastModified="148a7c78263">
          <source file="..\..\..\devices\spi_bus.c" lastModified="148a7c5880a"/>
