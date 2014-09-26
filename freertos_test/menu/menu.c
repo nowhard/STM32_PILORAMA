@@ -36,7 +36,7 @@ void MenuHandler( void *pvParameters );
 void Menu_Handle_Key(menuItem* currentMenuItem,uint8_t current_key);
 
 #define INPUT_BUF_LEN		8
-#define INPUT_STRING_MAX	5
+#define INPUT_STRING_MAX	4
 
 
 #define MENU_ROOT_MAX_VAL	 6000
@@ -64,6 +64,7 @@ struct input_buffer
 {
 	uint8_t buf[INPUT_BUF_LEN];
 	uint8_t counter;
+	uint8_t sign;
 }input_buf;
 
 void 	Menu_Input_Field(uint8_t current_key,uint8_t attributes,struct input_buffer *inp_buf,int16_t min_value, int16_t max_value);
@@ -78,6 +79,7 @@ enum
 
 uint8_t Menu_Input_Buf_To_Int(struct input_buffer *inp_buf,int16_t *val,int16_t min_value, int16_t max_value);
 uint8_t Menu_Input_Int_To_Buf(int16_t val,struct input_buffer *inp_buf,int16_t min_value, int16_t max_value);
+uint8_t Menu_Input_Buf_To_Indicator(struct input_buffer *inp_buf);
 
 extern xQueueHandle xKeyQueue;//очередь клавиатуры
 
@@ -211,6 +213,8 @@ unsigned char dispMenu(void)
 
 unsigned char startMenu(void) {
 	selectedMenuItem = (menuItem*)&m_s0i1;
+	input_buf.counter=0;
+	input_buf.sign=' ';
 	dispMenu();
 	return (0);
 }
@@ -594,56 +598,85 @@ void MenuHandler( void *pvParameters )
 }
 
 
-
 void Menu_Input_Field_Clear(struct input_buffer *inp_buf)
 {
-	input_buf.counter=0;
-	sprintf(inp_buf->buf," 000.0");
-	str_to_ind(IND_2,inp_buf->buf);
+	inp_buf->counter=0;
+	inp_buf->sign=' ';
+	Menu_Input_Buf_To_Indicator(inp_buf);
 }
 
-enum
+#define POINT_POS	4
+uint8_t Menu_Input_Buf_To_Indicator(struct input_buffer *inp_buf)
 {
-	DIRECTION_LEFT=0,
-	DIRECTION_RIGHT
-};
+	uint8_t temp_buf[INPUT_BUF_LEN]="   0.0";
+	int8_t i=0,j=0;
 
-void Menu_Input_Field_Shift(uint8_t direction,struct input_buffer *inp_buf)
-{
-	uint8_t i=0;
-	if(direction==DIRECTION_LEFT)
+	if(inp_buf->counter==0)
 	{
-		for(i=1;i<(INPUT_STRING_MAX-2);i++)
+		if(inp_buf->sign=='-')
 		{
-			inp_buf->buf[i]=inp_buf->buf[i+1];
+			str_to_ind(IND_2,"-  0.0");
 		}
-		inp_buf->buf[INPUT_STRING_MAX-2]=inp_buf->buf[INPUT_STRING_MAX];
-		inp_buf->buf[INPUT_STRING_MAX]='0';
-		inp_buf->counter++;
+		else
+		{
+			str_to_ind(IND_2,"   0.0");
+		}
+		return INPUT_OK;
+	}
+
+	if(inp_buf->counter<=INPUT_STRING_MAX)
+	{
+		j=5;
+		for(i=(inp_buf->counter-1);i>=0;i--)
+		{
+			temp_buf[j]=inp_buf->buf[i];
+			j--;
+			if(j==POINT_POS)
+			{
+				j--;
+			}
+		}
+
+		if(inp_buf->sign=='-')
+		{
+			temp_buf[0]='-';
+		}
+
+		str_to_ind(IND_2,temp_buf);
+		return INPUT_OK;
 	}
 	else
 	{
-		if(direction==DIRECTION_RIGHT)
-		{
-			inp_buf->buf[INPUT_STRING_MAX]=inp_buf->buf[INPUT_STRING_MAX-2];
-
-			for(i=(INPUT_STRING_MAX-2);i>1;i--)
-			{
-				inp_buf->buf[i]=inp_buf->buf[i-1];
-			}
-			inp_buf->buf[1]='0';
-			inp_buf->counter--;
-		}
+		return INPUT_ERR;
 	}
 }
+
 
 uint8_t Menu_Input_Buf_To_Int(struct input_buffer *inp_buf,int16_t *val,int16_t min_value, int16_t max_value)
 {
 	int16_t result=0;
+	int8_t i=0;
 
-	result=((inp_buf->buf[1]-0x30)*1000)+((inp_buf->buf[2]-0x30)*100)+((inp_buf->buf[3]-0x30)*10)+((inp_buf->buf[5]-0x30));
+	uint16_t dec_mult=1;
 
-	if(inp_buf->buf[0]=='-')
+	if(inp_buf->counter==0x0)
+	{
+		*val=0x0;
+		return INPUT_OK;
+	}
+
+	for(i=(inp_buf->counter-1);i>=0;i--)
+	{
+		if((inp_buf->buf[i]<'0')||(inp_buf->buf[i]>'9'))
+		{
+			return INPUT_ERR;
+		}
+
+		result+=(inp_buf->buf[i]-0x30)*dec_mult;
+		dec_mult*=10;
+	}
+
+	if(inp_buf->sign=='-')
 	{
 		result=-result;
 	}
@@ -660,89 +693,50 @@ uint8_t Menu_Input_Buf_To_Int(struct input_buffer *inp_buf,int16_t *val,int16_t 
 
 uint8_t Menu_Input_Int_To_Buf(int16_t val,struct input_buffer *inp_buf,int16_t min_value, int16_t max_value)
 {
-	uint8_t tmp_val,i;
+	uint8_t tmp_val;
 
 	if((val>max_value)||(val<min_value))
 	{
-		sprintf(inp_buf->buf," 000.0");
-		inp_buf->counter=0x0;
-
+		Menu_Input_Field_Clear(inp_buf);
 		return INPUT_ERR;
 	}
 	else
 	{
-		sprintf(inp_buf->buf," 000.0");
-		if(val>=0)
+		if(val<0)
 		{
-			inp_buf->buf[0]=' ';
+			inp_buf->sign='-';
+			val=-val;
 		}
 		else
 		{
-			inp_buf->buf[0]='-';
-			val=-val;
+			inp_buf->sign=' ';
 		}
 
+		inp_buf->counter=0;
 
-		tmp_val=val%10;
-		inp_buf->buf[5]=tmp_val+0x30;
-		val=val/10;
+		uint16_t divider=1000;
+		uint8_t temp_val;
+		uint8_t del_null_flag=0;
 
-		tmp_val=val%10;
-		inp_buf->buf[3]=tmp_val+0x30;
-		val=val/10;
-
-		tmp_val=val%10;
-		inp_buf->buf[2]=tmp_val+0x30;
-		val=val/10;
-
-		tmp_val=val%10;
-		inp_buf->buf[1]=tmp_val+0x30;
-		val=val/10;
-
-
-
-		for(i=1;i<=5;i++)
+		while(divider!=0)
 		{
-			if((inp_buf->buf[i]!='0')&&(inp_buf->buf[i]!='.'))
-			{
-				break;
-			}
-		}
+			temp_val=val/divider;
 
-		switch(i)
-		{
-			case 1:
+			if(temp_val<10)
 			{
-				inp_buf->counter=4;
+				if((temp_val>0)||(del_null_flag))
+				{
+					inp_buf->buf[inp_buf->counter]=(temp_val+0x30);
+					inp_buf->counter++;
+					del_null_flag=0x1;
+				}
 			}
-			break;
 
-			case 2:
-			{
-				inp_buf->counter=3;
-			}
-			break;
-
-			case 3:
-			{
-				inp_buf->counter=2;
-			}
-			break;
-
-			case 5:
-			{
-				inp_buf->counter=1;
-			}
-			break;
-
-			default:
-			{
-				inp_buf->counter=0;
-			}
-			break;
+			val=val%divider;
+			divider=divider/10;
 		}
 	}
-	str_to_ind(IND_2,inp_buf->buf);
+	Menu_Input_Buf_To_Indicator(inp_buf);
 	return INPUT_OK;
 }
 
@@ -758,8 +752,12 @@ void Menu_Input_Field(uint8_t current_key,uint8_t attributes,struct input_buffer
     {
 		if(inp_buf->counter)
 		{
-			Menu_Input_Field_Shift(DIRECTION_RIGHT,inp_buf);
-			str_to_ind(IND_2,inp_buf->buf);
+			if(inp_buf->counter>0)
+			{
+				inp_buf->counter--;
+			}
+
+			Menu_Input_Buf_To_Indicator(inp_buf);
 			buzzer_set_buzz(BUZZER_EFFECT_1_BEEP,BUZZER_ON);
 		}
 
@@ -773,8 +771,8 @@ void Menu_Input_Field(uint8_t current_key,uint8_t attributes,struct input_buffer
 		{
 			if(attributes&INPUT_WITH_SIGN)
 			{
-				inp_buf->buf[0]='-';
-				str_to_ind(IND_2,inp_buf->buf);
+				inp_buf->sign='-';
+				Menu_Input_Buf_To_Indicator(inp_buf);
 				buzzer_set_buzz(BUZZER_EFFECT_1_BEEP,BUZZER_ON);
 			}
 			return;
@@ -785,8 +783,8 @@ void Menu_Input_Field(uint8_t current_key,uint8_t attributes,struct input_buffer
 		{
 			if(attributes&INPUT_WITH_SIGN)
 			{
-				inp_buf->buf[0]=' ';
-				str_to_ind(IND_2,inp_buf->buf);
+				inp_buf->sign=' ';
+				Menu_Input_Buf_To_Indicator(inp_buf);
 				buzzer_set_buzz(BUZZER_EFFECT_1_BEEP,BUZZER_ON);
 			}
 			return;
@@ -795,7 +793,7 @@ void Menu_Input_Field(uint8_t current_key,uint8_t attributes,struct input_buffer
 	}
 
 
-	if((inp_buf->counter>=(INPUT_STRING_MAX-1)))
+	if(inp_buf->counter>=INPUT_STRING_MAX)
 	{
 		buzzer_set_buzz(BUZZER_EFFECT_3_BEEP,BUZZER_ON);
 		Indicator_Blink_Set(IND_2,0xFF,2);
@@ -811,80 +809,70 @@ void Menu_Input_Field(uint8_t current_key,uint8_t attributes,struct input_buffer
 				return;
 			}
 
-			Menu_Input_Field_Shift(DIRECTION_LEFT,inp_buf);
-			inp_buf->buf[INPUT_STRING_MAX]='0';
+			inp_buf->buf[inp_buf->counter]='0';
 			buzzer_set_buzz(BUZZER_EFFECT_1_BEEP,BUZZER_ON);
 		}
 		break;
 
 		case KEY_1:
 		{
-			Menu_Input_Field_Shift(DIRECTION_LEFT,inp_buf);
-			inp_buf->buf[INPUT_STRING_MAX]='1';
+			inp_buf->buf[inp_buf->counter]='1';
 			buzzer_set_buzz(BUZZER_EFFECT_1_BEEP,BUZZER_ON);
 		}
 		break;
 
 		case KEY_2:
 		{
-			Menu_Input_Field_Shift(DIRECTION_LEFT,inp_buf);
-			inp_buf->buf[INPUT_STRING_MAX]='2';
+			inp_buf->buf[inp_buf->counter]='2';
 			buzzer_set_buzz(BUZZER_EFFECT_1_BEEP,BUZZER_ON);
 		}
 		break;
 
 		case KEY_3:
 		{
-			Menu_Input_Field_Shift(DIRECTION_LEFT,inp_buf);
-			inp_buf->buf[INPUT_STRING_MAX]='3';
+			inp_buf->buf[inp_buf->counter]='3';
 			buzzer_set_buzz(BUZZER_EFFECT_1_BEEP,BUZZER_ON);
 		}
 		break;
 
 		case KEY_4:
 		{
-			Menu_Input_Field_Shift(DIRECTION_LEFT,inp_buf);
-			inp_buf->buf[INPUT_STRING_MAX]='4';
+			inp_buf->buf[inp_buf->counter]='4';
 			buzzer_set_buzz(BUZZER_EFFECT_1_BEEP,BUZZER_ON);
 		}
 		break;
 
 		case KEY_5:
 		{
-			Menu_Input_Field_Shift(DIRECTION_LEFT,inp_buf);
-			inp_buf->buf[INPUT_STRING_MAX]='5';
+			inp_buf->buf[inp_buf->counter]='5';
 			buzzer_set_buzz(BUZZER_EFFECT_1_BEEP,BUZZER_ON);
 		}
 		break;
 
 		case KEY_6:
 		{
-			Menu_Input_Field_Shift(DIRECTION_LEFT,inp_buf);
-			inp_buf->buf[INPUT_STRING_MAX]='6';
+			inp_buf->buf[inp_buf->counter]='6';
 			buzzer_set_buzz(BUZZER_EFFECT_1_BEEP,BUZZER_ON);
 		}
 		break;
 
 		case KEY_7:
 		{
-			Menu_Input_Field_Shift(DIRECTION_LEFT,inp_buf);
-			inp_buf->buf[INPUT_STRING_MAX]='7';
+			inp_buf->buf[inp_buf->counter]='7';
 			buzzer_set_buzz(BUZZER_EFFECT_1_BEEP,BUZZER_ON);
 		}
 		break;
 
 		case KEY_8:
 		{
-			Menu_Input_Field_Shift(DIRECTION_LEFT,inp_buf);
-			inp_buf->buf[INPUT_STRING_MAX]='8';
+			inp_buf->buf[inp_buf->counter]='8';
 			buzzer_set_buzz(BUZZER_EFFECT_1_BEEP,BUZZER_ON);
 		}
 		break;
 
 		case KEY_9:
 		{
-			Menu_Input_Field_Shift(DIRECTION_LEFT,inp_buf);
-			inp_buf->buf[INPUT_STRING_MAX]='9';
+			inp_buf->buf[inp_buf->counter]='9';
 			buzzer_set_buzz(BUZZER_EFFECT_1_BEEP,BUZZER_ON);
 		}
 		break;
@@ -895,16 +883,17 @@ void Menu_Input_Field(uint8_t current_key,uint8_t attributes,struct input_buffer
 		}
 		break;
 	}
-
+	inp_buf->counter++;
 
 	int16_t temp_val;
 
-	if(Menu_Input_Buf_To_Int(inp_buf,&temp_val,min_value,max_value)==INPUT_ERR)//выход за диапазон-удаляем последний введенный символ
-	{
-		Menu_Input_Field_Shift(DIRECTION_RIGHT,inp_buf);
-		buzzer_set_buzz(BUZZER_EFFECT_3_BEEP,BUZZER_ON);
-		Indicator_Blink_Set(IND_2,0xFF,2);
-	}
+//	if(Menu_Input_Buf_To_Int(inp_buf,&temp_val,min_value,max_value)==INPUT_ERR)//выход за диапазон-удаляем последний введенный символ
+//	{
+//		Menu_Input_Field_Shift(DIRECTION_RIGHT,inp_buf);
+//		buzzer_set_buzz(BUZZER_EFFECT_3_BEEP,BUZZER_ON);
+//		Indicator_Blink_Set(IND_2,0xFF,2);
+//	}
 
-	str_to_ind(IND_2,inp_buf->buf);
+
+	Menu_Input_Buf_To_Indicator(inp_buf);
 }
