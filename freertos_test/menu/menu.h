@@ -1,9 +1,6 @@
 #ifndef _MENU_H_
 #define _MENU_H_
 
-
-
-
 void Menu_Init(void);
 void Menu_Previous(void);
 void Menu_Parent(void);
@@ -27,6 +24,12 @@ enum
 	INPUT_WITHOUT_POINT_SIGN=0,
 	INPUT_WITH_POINT=1,
 	INPUT_WITH_SIGN=2
+};
+
+enum
+{
+	INPUT_OK=0,
+	INPUT_ERR,
 };
 
 

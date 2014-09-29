@@ -17,6 +17,19 @@ enum
 	DRIVE_ERROR,
 };
 
+enum
+{
+	STOP_USER=1,
+	STOP_HI_SENSOR,
+	STOP_LO_SENSOR,
+};
+
+enum
+{
+	DRIVE_SPEED_LOW=0,
+	DRIVE_SPEED_HI,
+};
+
 struct backup_registers
 {
 	uint16_t F_01_cal_up;
@@ -29,12 +42,21 @@ struct backup_registers
 
 struct drive
 {
-	struct backup_registers *bkp_reg;
-	uint8_t move_type_flag;
-	uint8_t error_flag;
+	struct 		backup_registers *bkp_reg;
+	uint32_t 	current_position;
+	uint8_t 	move_type_flag;
+	uint8_t 	error_flag;
 };
 
+#define IMPULSE_PER_MM	(240000/785)
+
 void Drive_Init(void);
+uint8_t Drive_Start(uint8_t move_type,int16_t move_val);
+uint8_t Drive_Set_Speed(uint8_t val_speed);
+uint8_t Drive_Stop(uint8_t stop_type);
+
+uint32_t Drive_MM_To_Impulse(uint16_t val_mm);
+uint16_t Drive_Impulse_To_MM(uint32_t val_impulse);
 
 
 #endif

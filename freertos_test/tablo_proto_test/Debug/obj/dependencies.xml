@@ -65,7 +65,7 @@
          <include file="..\..\..\cmsis_lib\include\stm32f4xx_tim.h"/>
          <include file="..\..\..\cmsis_lib\include\stm32f4xx_rcc.h"/>
       </source>
-      <source file="..\..\..\menu\menu.h" lastModified="1489c48e29e">
+      <source file="..\..\..\menu\menu.h" lastModified="148b1f537ba">
       </source>
       <source file="..\..\..\devices\power_detector.h" lastModified="142a2da7b4e">
       </source>

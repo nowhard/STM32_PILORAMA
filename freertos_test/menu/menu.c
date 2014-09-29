@@ -69,14 +69,6 @@ struct input_buffer
 
 void 	Menu_Input_Field(uint8_t current_key,uint8_t attributes,struct input_buffer *inp_buf,int16_t min_value, int16_t max_value);
 void 	Menu_Input_Field_Clear(struct input_buffer *inp_buf);
-void 	Menu_Input_Field_Shift(uint8_t direction,struct input_buffer *inp_buf);
-
-enum
-{
-	INPUT_OK=0,
-	INPUT_ERR,
-};
-
 uint8_t Menu_Input_Buf_To_Int(struct input_buffer *inp_buf,int16_t *val,int16_t min_value, int16_t max_value);
 uint8_t Menu_Input_Int_To_Buf(int16_t val,struct input_buffer *inp_buf,int16_t min_value, int16_t max_value);
 uint8_t Menu_Input_Buf_To_Indicator(struct input_buffer *inp_buf);
@@ -111,8 +103,6 @@ MAKE_MENU(m_s1i4,  m_s1i5,    m_s1i3,      m_s0i1, 	   NULL_ENTRY,  MENU_F_04,  
 MAKE_MENU(m_s1i5,  m_s1i6,    m_s1i4,      m_s0i1, 	   NULL_ENTRY,  MENU_F_05,  "F-05");
 MAKE_MENU(m_s1i6,  NULL_ENTRY,m_s1i5,      m_s0i1, 	   NULL_ENTRY,  MENU_F_06,  "F-06");
 
-
-//extern  struct dev_registers *dev_reg;
 
 extern struct drive drv;
 
@@ -222,7 +212,6 @@ unsigned char startMenu(void) {
 void Menu_Init(void)
 {
 	 xTaskCreate(MenuHandler,(signed char*)"Menu",128,NULL, tskIDLE_PRIORITY + 1, NULL);
-	 //startMenu();
 }
 
 void Menu_Previous(void)
@@ -308,8 +297,6 @@ void Menu_Handle_Key(menuItem* currentMenuItem,uint8_t current_key)
 					}
 					break;
 				}
-
-
 			}
 			break;
 
@@ -349,7 +336,7 @@ void Menu_Handle_Key(menuItem* currentMenuItem,uint8_t current_key)
 
 					default:
 					{
-						Menu_Input_Field(current_key,INPUT_WITH_POINT|INPUT_WITH_SIGN,&input_buf,MENU_F01_MIN_VAL,MENU_F01_MAX_VAL);
+						Menu_Input_Field(current_key,INPUT_WITH_POINT,&input_buf,MENU_F01_MIN_VAL,MENU_F01_MAX_VAL);
 					}
 					break;
 				}
@@ -393,7 +380,7 @@ void Menu_Handle_Key(menuItem* currentMenuItem,uint8_t current_key)
 
 					default:
 					{
-						Menu_Input_Field(current_key,INPUT_WITH_POINT|INPUT_WITH_SIGN,&input_buf,MENU_F02_MIN_VAL,MENU_F02_MAX_VAL);
+						Menu_Input_Field(current_key,INPUT_WITH_POINT,&input_buf,MENU_F02_MIN_VAL,MENU_F02_MAX_VAL);
 					}
 					break;
 				}
@@ -887,13 +874,12 @@ void Menu_Input_Field(uint8_t current_key,uint8_t attributes,struct input_buffer
 
 	int16_t temp_val;
 
-//	if(Menu_Input_Buf_To_Int(inp_buf,&temp_val,min_value,max_value)==INPUT_ERR)//выход за диапазон-удаляем последний введенный символ
-//	{
-//		Menu_Input_Field_Shift(DIRECTION_RIGHT,inp_buf);
-//		buzzer_set_buzz(BUZZER_EFFECT_3_BEEP,BUZZER_ON);
-//		Indicator_Blink_Set(IND_2,0xFF,2);
-//	}
-
+	if(Menu_Input_Buf_To_Int(inp_buf,&temp_val,min_value,max_value)==INPUT_ERR)//выход за диапазон-удаляем последний введенный символ
+	{
+		inp_buf->counter--;
+		buzzer_set_buzz(BUZZER_EFFECT_3_BEEP,BUZZER_ON);
+		Indicator_Blink_Set(IND_2,0xFF,2);
+	}
 
 	Menu_Input_Buf_To_Indicator(inp_buf);
 }
