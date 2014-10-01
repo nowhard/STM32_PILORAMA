@@ -11,12 +11,25 @@ void Backup_SRAM_Init(void)
 	  RCC_APB1PeriphClockCmd(RCC_APB1Periph_PWR, ENABLE);
 }
 
-void Backup_SRAM_Write_Reg(int16_t *reg, int16_t reg_val)
+//void Backup_SRAM_Write_Reg(int16_t *reg, int16_t reg_val)
+//{
+//	  PWR_BackupAccessCmd(ENABLE);        // set PWR->CR.dbp = 1;
+//	  PWR_BackupRegulatorCmd(ENABLE);     // set PWR->CSR.bre = 1;
+//
+//	  *reg=reg_val;
+//	  PWR_BackupAccessCmd(DISABLE);                     // reset PWR->CR.dbp = 0;
+//}
+
+void Backup_SRAM_Write_Reg(void *backup_reg, void *source_reg,uint8_t reg_size)
 {
+	  uint8_t i=0;
 	  PWR_BackupAccessCmd(ENABLE);        // set PWR->CR.dbp = 1;
 	  PWR_BackupRegulatorCmd(ENABLE);     // set PWR->CSR.bre = 1;
 
-	  *reg=reg_val;
+	  for(i=0;i<reg_size;i++)
+	  {
+		  *((uint8_t*)backup_reg+i)=*((uint8_t*)source_reg+i);
+	  }
 	  PWR_BackupAccessCmd(DISABLE);                     // reset PWR->CR.dbp = 0;
 }
 

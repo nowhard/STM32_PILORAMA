@@ -152,7 +152,7 @@ unsigned char dispMenu(void)
 
 			case MENU_F_04:
 			{
-				if(Menu_Input_Int_To_Buf(drv.bkp_reg->F_04_current_position,&input_buf,MENU_F04_MIN_VAL,MENU_F04_MAX_VAL)==INPUT_ERR)
+				if(Menu_Input_Int_To_Buf(drv.bkp_reg->F_04_function_back,&input_buf,MENU_F04_MIN_VAL,MENU_F04_MAX_VAL)==INPUT_ERR)
 				{
 					Menu_Input_Field_Clear(&input_buf);
 					Indicator_Blink_Set(IND_2,0xFF,2);
@@ -242,6 +242,9 @@ void Menu_Next(void)
 
 void Menu_Handle_Key(menuItem* currentMenuItem,uint8_t current_key)
 {
+	struct mm_imp temp_mm_imp;
+	int16_t temp_val;
+
 		switch(currentMenuItem->Select)
 		{
 			case MENU_ROOT:
@@ -320,10 +323,11 @@ void Menu_Handle_Key(menuItem* currentMenuItem,uint8_t current_key)
 
 					case KEY_POINT_LONG://запомним значение
 					{
-						int16_t temp_val;
-						if(Menu_Input_Buf_To_Int(&input_buf,&temp_val,MENU_F01_MIN_VAL,MENU_F01_MAX_VAL)==INPUT_OK)
+						//int16_t temp_val;
+						if(Menu_Input_Buf_To_Int(&input_buf,&temp_mm_imp.mm,MENU_F01_MIN_VAL,MENU_F01_MAX_VAL)==INPUT_OK)
 						{
-							Backup_SRAM_Write_Reg(&drv.bkp_reg->F_01_cal_up,temp_val);
+							temp_mm_imp.imp=drv.current_position;
+							Backup_SRAM_Write_Reg(&drv.bkp_reg->F_01_cal_up,&temp_mm_imp,sizeof(struct mm_imp));
 							buzzer_set_buzz(BUZZER_EFFECT_2_BEEP,BUZZER_ON);
 						}
 						else
@@ -364,9 +368,10 @@ void Menu_Handle_Key(menuItem* currentMenuItem,uint8_t current_key)
 					case KEY_POINT_LONG://запомним значение
 					{
 						int16_t temp_val;
-						if(Menu_Input_Buf_To_Int(&input_buf,&temp_val,MENU_F02_MIN_VAL,MENU_F02_MAX_VAL)==INPUT_OK)
+						if(Menu_Input_Buf_To_Int(&input_buf,&temp_mm_imp.mm,MENU_F02_MIN_VAL,MENU_F02_MAX_VAL)==INPUT_OK)
 						{
-							Backup_SRAM_Write_Reg(&drv.bkp_reg->F_02_cal_down,temp_val);
+							temp_mm_imp.imp=drv.current_position;
+							Backup_SRAM_Write_Reg(&drv.bkp_reg->F_02_cal_down,&temp_mm_imp,sizeof(struct mm_imp));
 							buzzer_set_buzz(BUZZER_EFFECT_2_BEEP,BUZZER_ON);
 						}
 						else
@@ -407,10 +412,10 @@ void Menu_Handle_Key(menuItem* currentMenuItem,uint8_t current_key)
 
 					case KEY_POINT_LONG://запомним значение
 					{
-						int16_t temp_val;
-						if(Menu_Input_Buf_To_Int(&input_buf,&temp_val,MENU_F03_MIN_VAL,MENU_F03_MAX_VAL)==INPUT_OK)
+						if(Menu_Input_Buf_To_Int(&input_buf,&temp_mm_imp.mm,MENU_F03_MIN_VAL,MENU_F03_MAX_VAL)==INPUT_OK)
 						{
-							Backup_SRAM_Write_Reg(&drv.bkp_reg->F_03_cal_syncro,temp_val);
+							temp_mm_imp.imp=drv.current_position;
+							Backup_SRAM_Write_Reg(&drv.bkp_reg->F_03_cal_syncro,&temp_mm_imp,sizeof(struct mm_imp));
 							buzzer_set_buzz(BUZZER_EFFECT_2_BEEP,BUZZER_ON);
 						}
 						else
@@ -451,10 +456,9 @@ void Menu_Handle_Key(menuItem* currentMenuItem,uint8_t current_key)
 
 					case KEY_POINT_LONG://запомним значение
 					{
-						int16_t temp_val;
 						if(Menu_Input_Buf_To_Int(&input_buf,&temp_val,MENU_F04_MIN_VAL,MENU_F04_MAX_VAL)==INPUT_OK)
 						{
-							Backup_SRAM_Write_Reg(&drv.bkp_reg->F_04_current_position,temp_val);
+							Backup_SRAM_Write_Reg(&drv.bkp_reg->F_04_function_back,&temp_val,sizeof(uint16_t));
 							buzzer_set_buzz(BUZZER_EFFECT_2_BEEP,BUZZER_ON);
 						}
 						else
@@ -495,10 +499,9 @@ void Menu_Handle_Key(menuItem* currentMenuItem,uint8_t current_key)
 
 					case KEY_POINT_LONG://запомним значение
 					{
-						int16_t temp_val;
 						if(Menu_Input_Buf_To_Int(&input_buf,&temp_val,MENU_F05_MIN_VAL,MENU_F05_MAX_VAL)==INPUT_OK)
 						{
-							Backup_SRAM_Write_Reg(&drv.bkp_reg->F_05_cal_speed_down,temp_val);
+							Backup_SRAM_Write_Reg(&drv.bkp_reg->F_05_cal_speed_down,&temp_val,sizeof(uint16_t));
 							buzzer_set_buzz(BUZZER_EFFECT_2_BEEP,BUZZER_ON);
 						}
 						else
@@ -543,7 +546,7 @@ void Menu_Handle_Key(menuItem* currentMenuItem,uint8_t current_key)
 						int16_t temp_val;
 						if(Menu_Input_Buf_To_Int(&input_buf,&temp_val,MENU_F06_MIN_VAL,MENU_F06_MAX_VAL)==INPUT_OK)
 						{
-							Backup_SRAM_Write_Reg(&drv.bkp_reg->F_06_cal_stop,temp_val);
+							Backup_SRAM_Write_Reg(&drv.bkp_reg->F_06_cal_stop,&temp_val,sizeof(uint16_t));
 							buzzer_set_buzz(BUZZER_EFFECT_2_BEEP,BUZZER_ON);
 						}
 						else

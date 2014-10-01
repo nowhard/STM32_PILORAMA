@@ -19,9 +19,11 @@ enum
 
 enum
 {
-	STOP_USER=1,
+	STOP_NONE=0,
+	STOP_USER,
 	STOP_HI_SENSOR,
 	STOP_LO_SENSOR,
+	STOP_END_OF_OPERATION,
 };
 
 enum
@@ -30,12 +32,21 @@ enum
 	DRIVE_SPEED_HI,
 };
 
+struct mm_imp
+{
+	uint16_t mm;
+	uint32_t imp;
+};
+
 struct backup_registers
 {
-	uint16_t F_01_cal_up;
-	uint16_t F_02_cal_down;
-	uint16_t F_03_cal_syncro;
-	uint16_t F_04_current_position;
+	struct mm_imp F_01_cal_up;
+	struct mm_imp F_02_cal_down;
+	struct mm_imp F_03_cal_syncro;
+	//uint16_t F_01_cal_up;
+	//uint16_t F_02_cal_down;
+	//uint16_t F_03_cal_syncro;
+	uint16_t F_04_function_back;
 	uint16_t F_05_cal_speed_down;
 	uint16_t F_06_cal_stop;
 };

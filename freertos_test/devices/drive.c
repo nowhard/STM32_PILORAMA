@@ -9,6 +9,7 @@
 #include "queue.h"
 #include "semphr.h"
 
+
 struct drive drv;
 xQueueHandle xDriveCommandQueue;
 
@@ -44,10 +45,17 @@ void Drive_Init(void)
 
 	drv.bkp_reg=(struct dev_registers *) BKPSRAM_BASE;
 	drv.move_type_flag=MOVE_TYPE_NONE;
+	drv.stop_type=STOP_NONE;
 	drv.error_flag=DRIVE_OK;
+	drv.current_position=0x80008000;
+
+//	if((drv.bkp_reg->F_03_cal_syncro<0x90000000)&&(drv.bkp_reg->F_03_cal_syncro>0x70000000))
+//	{
+//		drv.current_position=drv.bkp_reg->F_03_cal_syncro;
+//	}
 
 	xDriveCommandQueue = xQueueCreate( 2, sizeof( struct DriveCommand ) );
-	xTaskCreate(xDriveCommandQueue,(signed char*)"Drive",256,NULL, tskIDLE_PRIORITY + 1, NULL);
+//	xTaskCreate(xDriveCommandQueue,(signed char*)"Drive",256,NULL, tskIDLE_PRIORITY + 1, NULL);
 }
 
 uint8_t Drive_Start(uint8_t move_type,int16_t move_val)
@@ -169,9 +177,34 @@ void DriveHandler( void *pvParameters )
 			 {
 				 drv.move_type_flag=drvcmd.move_type;
 
-				 while(0)//цикл установки привода
+
+				 while((drv.error_flag==DRIVE_OK)&&(drv.stop_type==STOP_NONE))//цикл установки привода
 				 {
-					 //
+					int32_t  remain=drv.current_position-drvcmd.move_val;
+					uint32_t carriage_sped_down=Drive_MM_To_Impulse(drv.bkp_reg->F_05_cal_speed_down);
+					uint32_t carriage_stop=Drive_MM_To_Impulse(drv.bkp_reg->F_06_cal_stop);
+
+					if(remain<0)
+					{
+						remain=-remain;
+					}
+
+
+					if(remain>carriage_sped_down)
+					{
+						Drive_Set_Speed(DRIVE_SPEED_HI);
+					}
+					else
+					{
+						if(remain>carriage_stop)
+						{
+							Drive_Set_Speed(DRIVE_SPEED_LOW);
+						}
+						else
+						{
+							Drive_Stop(STOP_END_OF_OPERATION);
+						}
+					}
 				 }
 
 				 if(drv.error_flag==DRIVE_OK)
