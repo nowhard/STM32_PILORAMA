@@ -7,8 +7,8 @@
       <target file="syscalls.o" lastModified="1488d77c67c">
          <source file="..\..\..\syscalls\syscalls.c" lastModified="1476293bc68"/>
       </target>
-      <target file="menu.o" lastModified="148c0173d88">
-         <source file="..\..\..\menu\menu.c" lastModified="148c01729a2"/>
+      <target file="menu.o" lastModified="148cadd94e8">
+         <source file="..\..\..\menu\menu.c" lastModified="148c01a9d3e"/>
       </target>
       <target file="misc.o" lastModified="1488d77cddf">
          <source file="..\..\..\cmsis_lib\source\misc.c" lastModified="14125d86b88"/>
@@ -97,11 +97,11 @@
       <target file="encoder.o" lastModified="1488d92c977">
          <source file="..\..\..\devices\encoder.c" lastModified="1487dc64a5a"/>
       </target>
-      <target file="main.o" lastModified="148c017376e">
+      <target file="main.o" lastModified="148cadd920a">
          <source file="..\..\..\main.c" lastModified="148aba9084e"/>
       </target>
-      <target file="drive.o" lastModified="148aba83a7e">
-         <source file="..\..\..\devices\drive.c" lastModified="148aba7da9c"/>
+      <target file="drive.o" lastModified="148cadd917d">
+         <source file="..\..\..\devices\drive.c" lastModified="148cadca20d"/>
       </target>
       <target file="system_stm32f4xx.o" lastModified="1488d77c582">
          <source file="..\..\..\cmsis_boot\system_stm32f4xx.c" lastModified="1428e3c1104"/>

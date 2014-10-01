@@ -46,9 +46,23 @@ struct drive
 	uint32_t 	current_position;
 	uint8_t 	move_type_flag;
 	uint8_t 	error_flag;
+	uint8_t 	stop_type;
 };
 
-#define IMPULSE_PER_MM	(240000/785)
+
+#define DRIVE_ERROR_PORT    		GPIOA
+#define DRIVE_ERROR_PORT_RCC 		RCC_AHB1Periph_GPIOA
+
+#define DRIVE_ERROR 	GPIO_Pin_0
+
+#define DRIVE_CONTROL_PORT    		GPIOC
+#define DRIVE_CONTROL_PORT_RCC		RCC_AHB1Periph_GPIOC
+
+#define DRIVE_FORWARD  	GPIO_Pin_0
+#define DRIVE_BACKWARD 	GPIO_Pin_1
+#define DRIVE_RESET		GPIO_Pin_2
+#define DRIVE_SPEED		GPIO_Pin_3
+
 
 void Drive_Init(void);
 uint8_t Drive_Start(uint8_t move_type,int16_t move_val);
