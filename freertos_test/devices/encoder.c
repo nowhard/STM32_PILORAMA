@@ -1,27 +1,37 @@
 #include "encoder.h"
+#include "drive.h"
 
-//uint32_t counter=0x80008000;
-uint32_t counter2=0x80008000;
-uint32_t tim1_cnt=0;
-
-
+extern struct drive drv;
 
 void TIM1_UP_TIM10_IRQHandler(void)
 {
-  if (TIM_GetITStatus(TIM1, TIM_IT_Update) != RESET)
+//  if (TIM_GetITStatus(TIM1, TIM_IT_Update) != RESET)
   {
-    TIM_ClearITPendingBit(TIM1, TIM_IT_Update);
+	  TIM1->SR = (uint16_t)~TIM_IT_Update;
+//    TIM_ClearITPendingBit(TIM1, TIM_IT_Update);
 
     if(TIM1->CR1 & TIM_CR1_DIR)
     {
-    	//counter2-- ;
+    	drv.current_position--;
     }
     else
     {
-    	//counter2++;
+    	drv.current_position++;
     }
 
-    //tim1_cnt=TIM1->CNT;
+    if((drv.error_flag==DRIVE_OK)&&(drv.stop_type==STOP_NONE)&&(drv.move_type_flag!=MOVE_TYPE_NONE))
+    {
+    	if(drv.current_position==drv.min_speed_position)
+    	{
+    		Drive_Set_Speed(DRIVE_SPEED_LOW);
+    	}
+
+    	if(drv.current_position==drv.dest_position)
+    	{
+    		Drive_Stop(STOP_END_OF_OPERATION);
+    	}
+    }
+ //   drv.current_position=TIM1->CNT;
   }
 }
 

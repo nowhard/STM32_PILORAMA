@@ -7,6 +7,7 @@
 #include <misc.h>
 
 #include "tablo_parser.h"
+#include "drive.h"
 
 void External_Events_Init(void)
 {
@@ -64,6 +65,7 @@ void EXTI0_IRQHandler(void)
     if(EXTI_GetITStatus(EXTI_Line0) != RESET)
     {
         EXTI_ClearITPendingBit(EXTI_Line0);
+        Drive_Stop(STOP_INVERTOR_ERROR);
     }
 }
 
@@ -72,10 +74,12 @@ void EXTI9_5_IRQHandler(void)
     if(EXTI_GetITStatus(EXTI_Line6) != RESET)
     {
         EXTI_ClearITPendingBit(EXTI_Line6);
+        Drive_Stop(STOP_HI_SENSOR);
     }
 
     if(EXTI_GetITStatus(EXTI_Line7) != RESET)
     {
         EXTI_ClearITPendingBit(EXTI_Line7);
+        Drive_Stop(STOP_LO_SENSOR);
     }
 }
