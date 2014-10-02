@@ -13,6 +13,7 @@ enum
 enum
 {
 	DRIVE_OK=0,
+	DRIVE_BUSY,
 	DRIVE_ERR,
 };
 

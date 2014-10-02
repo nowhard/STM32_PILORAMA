@@ -1,28 +1,28 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <history>
    <processor signature="4.7.2 -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=softfp -mthumb -Wall -g -nostartfiles -Map=tablo_proto_test.map -O0 --gc-sections -LC:\CooCox\CoIDE\configuration\ProgramData\pilorama -TC:\CooCox\CoIDE\configuration\ProgramData\pilorama/link.ld -g">
-      <target file="tablo_proto_test.elf" lastModified="148d0aad7c7">
+      <target file="tablo_proto_test.elf" lastModified="148d110ff92">
          <source file="..\obj\stm32f4xx_syscfg.o" lastModified="1488d77b19c"/>
          <source file="..\obj\tablo_parser.o" lastModified="148a7c7792b"/>
          <source file="..\obj\core_cm3.o" lastModified="1488d77b352"/>
          <source file="..\obj\buzzer.o" lastModified="148ac3d86e4"/>
-         <source file="..\obj\external_events.o" lastModified="148d0a98ff5"/>
+         <source file="..\obj\external_events.o" lastModified="148d0e60976"/>
          <source file="..\obj\stm32f4xx_pwr.o" lastModified="148a675aa78"/>
-         <source file="..\obj\drive.o" lastModified="148d0a9910e"/>
+         <source file="..\obj\drive.o" lastModified="148d110fd40"/>
          <source file="..\obj\startup_stm32f4xx.o" lastModified="1488d77b6ad"/>
          <source file="..\obj\backup_sram.o" lastModified="148cbd1f3a0"/>
          <source file="..\obj\stm32f4xx_iwdg.o" lastModified="1488d77b769"/>
          <source file="..\obj\indicator.o" lastModified="148ac3afe84"/>
-         <source file="..\obj\main.o" lastModified="148d0a991d9"/>
+         <source file="..\obj\main.o" lastModified="148d0e60c16"/>
          <source file="..\obj\stm32f4xx_rcc.o" lastModified="1488d77ba66"/>
          <source file="..\obj\timers.o" lastModified="1488d92c87d"/>
          <source file="..\obj\tablo.o" lastModified="148a7c77c0a"/>
          <source file="..\obj\printf.o" lastModified="148a6f89955"/>
-         <source file="..\obj\encoder.o" lastModified="148d0aad41d"/>
+         <source file="..\obj\encoder.o" lastModified="148d0e60cc2"/>
          <source file="..\obj\watchdog.o" lastModified="1488d92ca42"/>
          <source file="..\obj\tasks.o" lastModified="1488d92cbd8"/>
          <source file="..\obj\keyboard.o" lastModified="148ac3049fa"/>
-         <source file="..\obj\menu.o" lastModified="148d0a99563"/>
+         <source file="..\obj\menu.o" lastModified="148d0e60fa0"/>
          <source file="..\obj\stm32f4xx_gpio.o" lastModified="1488d77c3bd"/>
          <source file="..\obj\list.o" lastModified="1488d92cfa1"/>
          <source file="..\obj\system_stm32f4xx.o" lastModified="1488d77c582"/>

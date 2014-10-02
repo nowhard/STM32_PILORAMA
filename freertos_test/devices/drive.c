@@ -12,17 +12,6 @@
 #include "backup_sram.h"
 
 struct drive drv;
-//xQueueHandle xDriveCommandQueue;
-
-struct DriveCommand
-{
-	uint8_t move_type;
-	uint32_t move_val;// impulse
-	uint8_t timeout;//seconds
-
-};
-
-//void DriveHandler(void *pvParameters);
 
 void Drive_Init(void)
 {
@@ -49,19 +38,11 @@ void Drive_Init(void)
 	drv.stop_type=STOP_NONE;
 	drv.error_flag=DRIVE_OK;
 	drv.current_position=drv.bkp_reg->backup_current_position;
-
-//	if()
-//	{
-//		drv.current_position=drv.bkp_reg->F_03_cal_syncro;
-//	}
-
-//	xDriveCommandQueue = xQueueCreate( 2, sizeof( struct DriveCommand ) );
-//	xTaskCreate(xDriveCommandQueue,(signed char*)"Drive",256,NULL, tskIDLE_PRIORITY + 1, NULL);
+	//проверить данные?
 }
 
 uint8_t Drive_Set_Position(uint8_t move_type,int16_t move_val)
 {
-	struct DriveCommand drvcmd;
 	Drive_Set_Speed(DRIVE_SPEED_LOW);
 
 	if((drv.move_type_flag==MOVE_TYPE_NONE)&&(drv.error_flag==DRIVE_OK))
@@ -137,7 +118,7 @@ uint8_t Drive_Set_Position(uint8_t move_type,int16_t move_val)
 	}
 	else//привод занят
 	{
-
+		return DRIVE_BUSY;
 	}
 	return DRIVE_ERR;
 }
@@ -198,75 +179,19 @@ uint8_t Drive_Stop(uint8_t stop_type)
 {
 	DRIVE_CONTROL_PORT->BSRRH=(DRIVE_FORWARD | DRIVE_BACKWARD | DRIVE_SPEED);
 	drv.stop_type=stop_type;
+	drv.move_type_flag=MOVE_TYPE_NONE;
 }
 
 
-#define MAGIC_IMPULSE 	240000
-#define MAGIC_MM		785
-
+//#define MAGIC_IMPULSE 	240000
+//#define MAGIC_MM		785
 
 uint32_t Drive_MM_To_Impulse(uint16_t val_mm)
 {
-	//return ((uint32_t)val_mm*MAGIC_IMPULSE/MAGIC_MM);
 	return (val_mm*(drv.bkp_reg->F_01_cal_up.imp-drv.bkp_reg->F_02_cal_down.imp))/(drv.bkp_reg->F_01_cal_up.mm-drv.bkp_reg->F_02_cal_down.mm);
 }
 
 uint16_t Drive_Impulse_To_MM(uint32_t val_impulse)
 {
-	return (uint16_t)((uint64_t)val_impulse*MAGIC_MM/MAGIC_IMPULSE);
+	return (val_impulse*(drv.bkp_reg->F_01_cal_up.mm-drv.bkp_reg->F_02_cal_down.mm))/(drv.bkp_reg->F_01_cal_up.imp-drv.bkp_reg->F_02_cal_down.imp);
 }
-
-//void DriveHandler( void *pvParameters )
-//{
-//	struct DriveCommand drvcmd;
-//    while(1)
-//    {
-//		if( (xDriveCommandQueue != 0)&&(uxQueueMessagesWaiting(xDriveCommandQueue)) )
-//		 {
-//			 if( xQueueReceive( xDriveCommandQueue, &( drvcmd ), ( portTickType ) 10 ) )
-//			 {
-//				drv.move_type_flag=drvcmd.move_type;
-//				uint32_t carriage_sped_down=Drive_MM_To_Impulse(drv.bkp_reg->F_05_cal_speed_down);
-//				uint32_t carriage_stop=Drive_MM_To_Impulse(drv.bkp_reg->F_06_cal_stop);
-//
-//				 while((drv.error_flag==DRIVE_OK)&&(drv.stop_type==STOP_NONE))//цикл установки привода
-//				 {
-//					int32_t  remain=drv.current_position-drvcmd.move_val;
-//
-//					if(remain<0)
-//					{
-//						remain=-remain;
-//					}
-//
-//					if(remain>carriage_sped_down)
-//					{
-//						Drive_Set_Speed(DRIVE_SPEED_HI);
-//					}
-//					else
-//					{
-//						if(remain>carriage_stop)
-//						{
-//							Drive_Set_Speed(DRIVE_SPEED_LOW);
-//						}
-//						else
-//						{
-//							Drive_Stop(STOP_END_OF_OPERATION);
-//						}
-//					}
-//				 }
-//
-//				 if(drv.error_flag==DRIVE_OK)
-//				 {
-//					 drv.move_type_flag=MOVE_TYPE_NONE;//привод занял положение
-//					 Backup_SRAM_Write_Reg(&drv.bkp_reg->backup_current_position,&drv.current_position,sizeof(uint32_t));
-//
-//				 }
-//				 else//ошибка привода
-//				 {
-//
-//				 }
-//			 }
-//		 }
-//    	vTaskDelay(10);
-//    }
-//}

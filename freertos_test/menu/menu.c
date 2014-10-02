@@ -245,6 +245,16 @@ void Menu_Handle_Key(menuItem* currentMenuItem,uint8_t current_key)
 	struct mm_imp temp_mm_imp;
 	int16_t temp_val;
 
+	if(drv.move_type_flag!=MOVE_TYPE_NONE)//аварийная остановка привода при движении
+	{
+		if(current_key==KEY_C)
+		{
+			Drive_Stop(STOP_USER);
+			buzzer_set_buzz(BUZZER_EFFECT_LONG_BEEP,BUZZER_ON);
+		}
+	}
+	else
+	{
 		switch(currentMenuItem->Select)
 		{
 			case MENU_ROOT:
@@ -264,6 +274,12 @@ void Menu_Handle_Key(menuItem* currentMenuItem,uint8_t current_key)
 					}
 					break;
 
+					case KEY_POINT_LONG://ввод значения
+					{
+
+					}
+					break;
+
 					case KEY_B://функция BACK
 					{
 
@@ -272,25 +288,27 @@ void Menu_Handle_Key(menuItem* currentMenuItem,uint8_t current_key)
 
 					case KEY_STAR_LONG://движение вниз
 					{
-
+						Drive_Set_Speed(DRIVE_SPEED_HI);
+						Drive_Start(DRIVE_DIRECTION_DOWN);
 					}
 					break;
 
 					case KEY_SHARP_LONG://движение вверх
 					{
-
+						Drive_Set_Speed(DRIVE_SPEED_HI);
+						Drive_Start(DRIVE_DIRECTION_UP);
 					}
 					break;
 
 					case KEY_STAR_LONG_RELEASE://стоп движение вниз
 					{
-
+						Drive_Stop(STOP_USER);
 					}
 					break;
 
 					case KEY_SHARP_LONG_RELEASE://стоп движение вверх
 					{
-
+						Drive_Stop(STOP_USER);
 					}
 					break;
 
@@ -568,6 +586,7 @@ void Menu_Handle_Key(menuItem* currentMenuItem,uint8_t current_key)
 			break;
 
 		}
+	}
 }
 
 void MenuHandler( void *pvParameters )
