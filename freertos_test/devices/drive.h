@@ -92,6 +92,7 @@ uint8_t Drive_Stop(uint8_t stop_type);
 
 uint32_t Drive_MM_To_Impulse(uint16_t val_mm);
 uint16_t Drive_Impulse_To_MM(uint32_t val_impulse);
+uint16_t Drive_Impulse_To_MM_Absolute(uint32_t val_impulse);
 
 
 #endif

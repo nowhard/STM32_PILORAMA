@@ -10,6 +10,7 @@
 #include "semphr.h"
 
 #include "backup_sram.h"
+#include "buzzer.h"
 
 struct drive drv;
 
@@ -38,6 +39,7 @@ void Drive_Init(void)
 	drv.stop_type=STOP_NONE;
 	drv.error_flag=DRIVE_OK;
 	drv.current_position=drv.bkp_reg->backup_current_position;
+	drv.current_position=0x80008000;//temp!
 	//проверить данные?
 }
 
@@ -178,6 +180,45 @@ uint8_t Drive_Start(uint8_t direction)
 uint8_t Drive_Stop(uint8_t stop_type)
 {
 	DRIVE_CONTROL_PORT->BSRRH=(DRIVE_FORWARD | DRIVE_BACKWARD | DRIVE_SPEED);
+
+	switch(stop_type)
+	{
+		case STOP_END_OF_OPERATION:
+		{
+			buzzer_set_buzz(BUZZER_EFFECT_3_BEEP,BUZZER_ON);
+		}
+		break;
+
+		case STOP_HI_SENSOR:
+		{
+
+		}
+		break;
+
+		case STOP_LO_SENSOR:
+		{
+
+		}
+		break;
+
+		case STOP_INVERTOR_ERROR:
+		{
+
+		}
+		break;
+
+		case STOP_CONTROLLER_FAULT:
+		{
+
+		}
+		break;
+
+		default:
+		{
+
+		}
+		break;
+	}
 	drv.stop_type=stop_type;
 	drv.move_type_flag=MOVE_TYPE_NONE;
 }
@@ -194,4 +235,16 @@ uint32_t Drive_MM_To_Impulse(uint16_t val_mm)
 uint16_t Drive_Impulse_To_MM(uint32_t val_impulse)
 {
 	return (val_impulse*(drv.bkp_reg->F_01_cal_up.mm-drv.bkp_reg->F_02_cal_down.mm))/(drv.bkp_reg->F_01_cal_up.imp-drv.bkp_reg->F_02_cal_down.imp);
+}
+
+uint16_t Drive_Impulse_To_MM_Absolute(uint32_t val_impulse)
+{
+	if(val_impulse>=drv.bkp_reg->F_03_cal_syncro.imp)
+	{
+		return drv.bkp_reg->F_03_cal_syncro.mm+Drive_Impulse_To_MM(val_impulse-drv.bkp_reg->F_03_cal_syncro.imp);
+	}
+	else
+	{
+		return drv.bkp_reg->F_03_cal_syncro.mm-Drive_Impulse_To_MM(drv.bkp_reg->F_03_cal_syncro.imp-val_impulse);
+	}
 }

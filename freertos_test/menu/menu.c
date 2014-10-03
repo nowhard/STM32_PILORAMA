@@ -38,6 +38,8 @@ void Menu_Handle_Key(menuItem* currentMenuItem,uint8_t current_key);
 #define INPUT_BUF_LEN		8
 #define INPUT_STRING_MAX	4
 
+#define MENU_ABS_MAX_VAL	 6000
+#define MENU_ABS_MIN_VAL		0
 
 #define MENU_ROOT_MAX_VAL	 6000
 #define MENU_ROOT_MIN_VAL	-6000
@@ -65,13 +67,13 @@ struct input_buffer
 	uint8_t buf[INPUT_BUF_LEN];
 	uint8_t counter;
 	uint8_t sign;
-}input_buf;
+}input_buf, abs_buf;
 
 void 	Menu_Input_Field(uint8_t current_key,uint8_t attributes,struct input_buffer *inp_buf,int16_t min_value, int16_t max_value);
 void 	Menu_Input_Field_Clear(struct input_buffer *inp_buf);
 uint8_t Menu_Input_Buf_To_Int(struct input_buffer *inp_buf,int16_t *val,int16_t min_value, int16_t max_value);
 uint8_t Menu_Input_Int_To_Buf(int16_t val,struct input_buffer *inp_buf,int16_t min_value, int16_t max_value);
-uint8_t Menu_Input_Buf_To_Indicator(struct input_buffer *inp_buf);
+uint8_t Menu_Input_Buf_To_Indicator(struct input_buffer *inp_buf,uint8_t indicator);
 
 extern xQueueHandle xKeyQueue;//очередь клавиатуры
 
@@ -123,7 +125,6 @@ unsigned char dispMenu(void)
 
 	if ((void*)tempMenu == (void*)&NULL_ENTRY)
 	{ // мы на верхнем уровне
-		str_to_ind(IND_1,"UP");
 		Menu_Input_Field_Clear(&input_buf);
 	}
 	else
@@ -160,6 +161,10 @@ unsigned char dispMenu(void)
 					Indicator_Blink_Set(IND_2,0xFF,2);
 					//error
 				}
+				else
+				{
+					Menu_Input_Buf_To_Indicator(&input_buf,IND_2);
+				}
 			}
 			break;
 
@@ -173,6 +178,10 @@ unsigned char dispMenu(void)
 					Indicator_Blink_Set(IND_2,0xFF,2);
 					//error
 				}
+				else
+				{
+					Menu_Input_Buf_To_Indicator(&input_buf,IND_2);
+				}
 			}
 			break;
 
@@ -185,6 +194,10 @@ unsigned char dispMenu(void)
 					buzzer_set_buzz(BUZZER_EFFECT_3_BEEP,BUZZER_ON);
 					Indicator_Blink_Set(IND_2,0xFF,2);
 					//error
+				}
+				else
+				{
+					Menu_Input_Buf_To_Indicator(&input_buf,IND_2);
 				}
 			}
 			break;
@@ -268,9 +281,10 @@ void Menu_Handle_Key(menuItem* currentMenuItem,uint8_t current_key)
 					}
 					break;
 
-					case KEY_POINT://ввод значения
+					case KEY_C_LONG://очистим поле
 					{
-
+						Menu_Input_Field_Clear(&input_buf);
+						buzzer_set_buzz(BUZZER_EFFECT_1_BEEP,BUZZER_ON);
 					}
 					break;
 
@@ -286,7 +300,16 @@ void Menu_Handle_Key(menuItem* currentMenuItem,uint8_t current_key)
 									if(Drive_Set_Position(MOVE_TYPE_RELATIVE_UP, move_val)!=DRIVE_OK)
 									{
 										Drive_Stop(STOP_CONTROLLER_FAULT);
+										buzzer_set_buzz(BUZZER_EFFECT_3_BEEP,BUZZER_ON);
 									}
+									else
+									{
+										buzzer_set_buzz(BUZZER_EFFECT_1_BEEP,BUZZER_ON);
+									}
+								}
+								else
+								{
+									buzzer_set_buzz(BUZZER_EFFECT_3_BEEP,BUZZER_ON);
 								}
 							}
 							break;
@@ -299,6 +322,14 @@ void Menu_Handle_Key(menuItem* currentMenuItem,uint8_t current_key)
 									{
 										Drive_Stop(STOP_CONTROLLER_FAULT);
 									}
+									else
+									{
+										buzzer_set_buzz(BUZZER_EFFECT_1_BEEP,BUZZER_ON);
+									}
+								}
+								else
+								{
+									buzzer_set_buzz(BUZZER_EFFECT_3_BEEP,BUZZER_ON);
 								}
 							}
 							break;
@@ -311,6 +342,14 @@ void Menu_Handle_Key(menuItem* currentMenuItem,uint8_t current_key)
 									{
 										Drive_Stop(STOP_CONTROLLER_FAULT);
 									}
+									else
+									{
+										buzzer_set_buzz(BUZZER_EFFECT_1_BEEP,BUZZER_ON);
+									}
+								}
+								else
+								{
+									buzzer_set_buzz(BUZZER_EFFECT_3_BEEP,BUZZER_ON);
 								}
 							}
 							break;
@@ -650,6 +689,22 @@ void MenuHandler( void *pvParameters )
 				 Menu_Handle_Key(selectedMenuItem,key);
 			 }
 		 }
+
+		if(selectedMenuItem->Select==MENU_ROOT)
+		{
+			if(drv.error_flag==DRIVE_OK)
+			{
+				if(Menu_Input_Int_To_Buf(Drive_Impulse_To_MM_Absolute(drv.current_position),&abs_buf, MENU_ABS_MIN_VAL,MENU_ABS_MAX_VAL)!=INPUT_ERR)
+				{
+					Menu_Input_Buf_To_Indicator(&abs_buf,IND_1);
+				}
+			}
+			else
+			{
+				str_to_ind(IND_1,"Err0r");
+			}
+		}
+
     	vTaskDelay(10);
     }
 }
@@ -659,11 +714,11 @@ void Menu_Input_Field_Clear(struct input_buffer *inp_buf)
 {
 	inp_buf->counter=0;
 	inp_buf->sign=' ';
-	Menu_Input_Buf_To_Indicator(inp_buf);
+	Menu_Input_Buf_To_Indicator(inp_buf,IND_2);
 }
 
 #define POINT_POS	4
-uint8_t Menu_Input_Buf_To_Indicator(struct input_buffer *inp_buf)
+uint8_t Menu_Input_Buf_To_Indicator(struct input_buffer *inp_buf,uint8_t indicator)
 {
 	uint8_t temp_buf[INPUT_BUF_LEN]="   0.0";
 	int8_t i=0,j=0;
@@ -672,11 +727,11 @@ uint8_t Menu_Input_Buf_To_Indicator(struct input_buffer *inp_buf)
 	{
 		if(inp_buf->sign=='-')
 		{
-			str_to_ind(IND_2,"-  0.0");
+			str_to_ind(indicator,"-  0.0");
 		}
 		else
 		{
-			str_to_ind(IND_2,"   0.0");
+			str_to_ind(indicator,"   0.0");
 		}
 		return INPUT_OK;
 	}
@@ -699,7 +754,7 @@ uint8_t Menu_Input_Buf_To_Indicator(struct input_buffer *inp_buf)
 			temp_buf[0]='-';
 		}
 
-		str_to_ind(IND_2,temp_buf);
+		str_to_ind(indicator,temp_buf);
 		return INPUT_OK;
 	}
 	else
@@ -793,7 +848,7 @@ uint8_t Menu_Input_Int_To_Buf(int16_t val,struct input_buffer *inp_buf,int16_t m
 			divider=divider/10;
 		}
 	}
-	Menu_Input_Buf_To_Indicator(inp_buf);
+	//Menu_Input_Buf_To_Indicator(inp_buf,IND_2);
 	return INPUT_OK;
 }
 
@@ -814,7 +869,7 @@ void Menu_Input_Field(uint8_t current_key,uint8_t attributes,struct input_buffer
 				inp_buf->counter--;
 			}
 
-			Menu_Input_Buf_To_Indicator(inp_buf);
+			Menu_Input_Buf_To_Indicator(inp_buf,IND_2);
 			buzzer_set_buzz(BUZZER_EFFECT_1_BEEP,BUZZER_ON);
 		}
 
@@ -829,7 +884,7 @@ void Menu_Input_Field(uint8_t current_key,uint8_t attributes,struct input_buffer
 			if(attributes&INPUT_WITH_SIGN)
 			{
 				inp_buf->sign='-';
-				Menu_Input_Buf_To_Indicator(inp_buf);
+				Menu_Input_Buf_To_Indicator(inp_buf,IND_2);
 				buzzer_set_buzz(BUZZER_EFFECT_1_BEEP,BUZZER_ON);
 			}
 			return;
@@ -841,7 +896,7 @@ void Menu_Input_Field(uint8_t current_key,uint8_t attributes,struct input_buffer
 			if(attributes&INPUT_WITH_SIGN)
 			{
 				inp_buf->sign='+';
-				Menu_Input_Buf_To_Indicator(inp_buf);
+				Menu_Input_Buf_To_Indicator(inp_buf,IND_2);
 				buzzer_set_buzz(BUZZER_EFFECT_1_BEEP,BUZZER_ON);
 			}
 			return;
@@ -951,5 +1006,5 @@ void Menu_Input_Field(uint8_t current_key,uint8_t attributes,struct input_buffer
 		Indicator_Blink_Set(IND_2,0xFF,2);
 	}
 
-	Menu_Input_Buf_To_Indicator(inp_buf);
+	Menu_Input_Buf_To_Indicator(inp_buf,IND_2);
 }

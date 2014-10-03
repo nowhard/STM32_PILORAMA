@@ -245,7 +245,7 @@
       <source file="..\..\..\cmsis_lib\source\stm32f4xx_rcc.c" lastModified="14125d7fd5d">
          <include file="..\..\..\cmsis_lib\include\stm32f4xx_rcc.h"/>
       </source>
-      <source file="..\..\..\devices\drive.h" lastModified="148d4facc63">
+      <source file="..\..\..\devices\drive.h" lastModified="148d5e73591">
          <include file="..\..\..\cmsis_boot\stm32f4xx.h"/>
       </source>
       <source file="..\..\..\devices\encoder.h" lastModified="146fb1186b8">
@@ -275,7 +275,7 @@
          <include file="..\..\..\FreeRTOSV7.1.0\Source\include\timers.h"/>
          <include file="..\..\..\FreeRTOSV7.1.0\Source\include\StackMacros.h"/>
       </source>
-      <source file="..\..\..\devices\drive.c" lastModified="148d10efe92">
+      <source file="..\..\..\devices\drive.c" lastModified="148d5e6f163">
          <include file="..\..\..\devices\drive.h"/>
          <include file="..\..\..\cmsis_boot\stm32f4xx.h"/>
          <include file="..\..\..\cmsis_lib\include\stm32f4xx_gpio.h"/>
@@ -286,6 +286,7 @@
          <include file="..\..\..\FreeRTOSV7.1.0\Source\include\queue.h"/>
          <include file="..\..\..\FreeRTOSV7.1.0\Source\include\semphr.h"/>
          <include file="..\..\..\devices\backup_sram.h"/>
+         <include file="..\..\..\devices\buzzer.h"/>
       </source>
       <source file="..\..\..\devices\encoder.c" lastModified="148d0aaccba">
          <include file="..\..\..\devices\encoder.h"/>
