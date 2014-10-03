@@ -93,7 +93,7 @@ static void vKeyboardTask(void *pvParameters)
 				{
 					if(tick_counter==LONG_PRESS_KEY)//долгое нажатие
 					{
-						 tick_counter++;
+						 tick_counter=LONG_PRESS_KEY+1;
 		    			//отправим в очередь код
 						 key+=16;//дополнение кода при нажатии LONG
 						// buzzer_set_buzz(BUZZER_EFFECT_LONG_BEEP,BUZZER_ON);//beep
@@ -115,22 +115,19 @@ static void vKeyboardTask(void *pvParameters)
     		if((tick_counter>0)&&(tick_counter<LONG_PRESS_KEY))
     		{
     			//отправим в очередь код
-    			  //buzzer_set_buzz(BUZZER_EFFECT_1_BEEP,BUZZER_ON);//beep
 				 if( xKeyQueue != 0 )
 				 {
 					 xQueueSend( xKeyQueue,  &key_temp, ( portTickType ) 0 );
 				 }
-				// xSemaphoreGive(xKeySemaphore);
     		}
     		else
     		{
     			if(tick_counter==(LONG_PRESS_KEY+1))//отпускаем после длительного нажатия
     			{
-					 key+=32;//дополнение кода при нажатии LONG_RELEASE
-					// buzzer_set_buzz(BUZZER_EFFECT_LONG_BEEP,BUZZER_ON);//beep
+    				key_temp+=32;//дополнение кода при нажатии LONG_RELEASE
 					 if( xKeyQueue != 0 )
 					 {
-						 xQueueSend( xKeyQueue,  &key, ( portTickType ) 0 );
+						 xQueueSend( xKeyQueue,  &key_temp, ( portTickType ) 0 );
 					 }
     			}
     		}

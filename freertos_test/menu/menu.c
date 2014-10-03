@@ -276,7 +276,51 @@ void Menu_Handle_Key(menuItem* currentMenuItem,uint8_t current_key)
 
 					case KEY_POINT_LONG://ввод значения
 					{
+						int16_t move_val=0;
+						switch(input_buf.sign)
+						{
+							case '+':
+							{
+								if(Menu_Input_Buf_To_Int(&input_buf,&move_val,MENU_ROOT_MIN_VAL,MENU_ROOT_MAX_VAL)==INPUT_OK)
+								{
+									if(Drive_Set_Position(MOVE_TYPE_RELATIVE_UP, move_val)!=DRIVE_OK)
+									{
+										Drive_Stop(STOP_CONTROLLER_FAULT);
+									}
+								}
+							}
+							break;
 
+							case '-':
+							{
+								if(Menu_Input_Buf_To_Int(&input_buf,&move_val,MENU_ROOT_MIN_VAL,MENU_ROOT_MAX_VAL)==INPUT_OK)
+								{
+									if(Drive_Set_Position(MOVE_TYPE_RELATIVE_DOWN, move_val)!=DRIVE_OK)
+									{
+										Drive_Stop(STOP_CONTROLLER_FAULT);
+									}
+								}
+							}
+							break;
+
+							case ' ':
+							{
+								if(Menu_Input_Buf_To_Int(&input_buf,&move_val,MENU_ROOT_MIN_VAL,MENU_ROOT_MAX_VAL)==INPUT_OK)
+								{
+									if(Drive_Set_Position(MOVE_TYPE_ABSOLUTE, move_val)!=DRIVE_OK)
+									{
+										Drive_Stop(STOP_CONTROLLER_FAULT);
+									}
+								}
+							}
+							break;
+
+							default :
+							{
+								//sign incorrect
+							}
+							break;
+						}
 					}
 					break;
 
@@ -290,6 +334,7 @@ void Menu_Handle_Key(menuItem* currentMenuItem,uint8_t current_key)
 					{
 						Drive_Set_Speed(DRIVE_SPEED_HI);
 						Drive_Start(DRIVE_DIRECTION_DOWN);
+						buzzer_set_buzz(BUZZER_EFFECT_1_BEEP,BUZZER_ON);
 					}
 					break;
 
@@ -297,18 +342,21 @@ void Menu_Handle_Key(menuItem* currentMenuItem,uint8_t current_key)
 					{
 						Drive_Set_Speed(DRIVE_SPEED_HI);
 						Drive_Start(DRIVE_DIRECTION_UP);
+						buzzer_set_buzz(BUZZER_EFFECT_1_BEEP,BUZZER_ON);
 					}
 					break;
 
 					case KEY_STAR_LONG_RELEASE://стоп движение вниз
 					{
 						Drive_Stop(STOP_USER);
+						buzzer_set_buzz(BUZZER_EFFECT_2_BEEP,BUZZER_ON);
 					}
 					break;
 
 					case KEY_SHARP_LONG_RELEASE://стоп движение вверх
 					{
 						Drive_Stop(STOP_USER);
+						buzzer_set_buzz(BUZZER_EFFECT_2_BEEP,BUZZER_ON);
 					}
 					break;
 
@@ -792,7 +840,7 @@ void Menu_Input_Field(uint8_t current_key,uint8_t attributes,struct input_buffer
 		{
 			if(attributes&INPUT_WITH_SIGN)
 			{
-				inp_buf->sign=' ';
+				inp_buf->sign='+';
 				Menu_Input_Buf_To_Indicator(inp_buf);
 				buzzer_set_buzz(BUZZER_EFFECT_1_BEEP,BUZZER_ON);
 			}
