@@ -61,11 +61,27 @@
       </source>
       <source file="..\..\..\cmsis\core_cm3.c" lastModified="13f614ce8b7">
       </source>
-      <source file="..\..\..\cmsis_lib\source\stm32f4xx_tim.c" lastModified="14125d83d92">
+      <source file="..\..\..\cmsis_lib\source\stm32f4xx_tim.c" lastModified="148e9d5a6b9">
          <include file="..\..\..\cmsis_lib\include\stm32f4xx_tim.h"/>
          <include file="..\..\..\cmsis_lib\include\stm32f4xx_rcc.h"/>
       </source>
       <source file="..\..\..\menu\menu.h" lastModified="148b1f537ba">
+      </source>
+      <source file="..\..\..\menu\menu.c" lastModified="148d5fbefe6">
+         <include file="..\..\..\cmsis_boot\stm32f4xx.h"/>
+         <include file="..\..\..\cmsis_lib\include\stm32f4xx_gpio.h"/>
+         <include file="..\..\..\cmsis_lib\include\stm32f4xx_rcc.h"/>
+         <include file="..\..\..\cmsis_lib\include\stm32f4xx_tim.h"/>
+         <include file="..\..\..\devices\keyboard.h"/>
+         <include file="..\..\..\menu\menu.h"/>
+         <include file="..\..\..\protocols\tablo_parser.h"/>
+         <include file="..\..\..\devices\backup_sram.h"/>
+         <include file="..\..\..\devices\drive.h"/>
+         <include file="..\..\..\devices\buzzer.h"/>
+         <include file="..\..\..\FreeRTOSV7.1.0\Source\include\FreeRTOS.h"/>
+         <include file="..\..\..\FreeRTOSV7.1.0\Source\include\task.h"/>
+         <include file="..\..\..\FreeRTOSV7.1.0\Source\include\queue.h"/>
+         <include file="..\..\..\FreeRTOSV7.1.0\Source\include\semphr.h"/>
       </source>
       <source file="..\..\..\devices\power_detector.h" lastModified="142a2da7b4e">
       </source>
@@ -275,20 +291,7 @@
          <include file="..\..\..\FreeRTOSV7.1.0\Source\include\timers.h"/>
          <include file="..\..\..\FreeRTOSV7.1.0\Source\include\StackMacros.h"/>
       </source>
-      <source file="..\..\..\devices\drive.c" lastModified="148d5e6f163">
-         <include file="..\..\..\devices\drive.h"/>
-         <include file="..\..\..\cmsis_boot\stm32f4xx.h"/>
-         <include file="..\..\..\cmsis_lib\include\stm32f4xx_gpio.h"/>
-         <include file="..\..\..\cmsis_lib\include\stm32f4xx_rcc.h"/>
-         <include file="..\..\..\cmsis_lib\include\stm32f4xx_pwr.h"/>
-         <include file="..\..\..\FreeRTOSV7.1.0\Source\include\FreeRTOS.h"/>
-         <include file="..\..\..\FreeRTOSV7.1.0\Source\include\task.h"/>
-         <include file="..\..\..\FreeRTOSV7.1.0\Source\include\queue.h"/>
-         <include file="..\..\..\FreeRTOSV7.1.0\Source\include\semphr.h"/>
-         <include file="..\..\..\devices\backup_sram.h"/>
-         <include file="..\..\..\devices\buzzer.h"/>
-      </source>
-      <source file="..\..\..\devices\encoder.c" lastModified="148d0aaccba">
+      <source file="..\..\..\devices\encoder.c" lastModified="148e9f1da73">
          <include file="..\..\..\devices\encoder.h"/>
          <include file="..\..\..\devices\drive.h"/>
       </source>
@@ -418,10 +421,6 @@
       </source>
       <source file="..\..\..\cmsis_lib\include\misc.h" lastModified="14125d86b69">
          <include file="..\..\..\cmsis_boot\stm32f4xx.h"/>
-      </source>
-      <source file="..\..\..\cmsis_lib\source\stm32f4xx_tim.c" lastModified="14125d83d92">
-         <include file="..\..\..\cmsis_lib\include\stm32f4xx_tim.h"/>
-         <include file="..\..\..\cmsis_lib\include\stm32f4xx_rcc.h"/>
       </source>
       <source file="..\..\..\devices\power_detector.h" lastModified="142a2da7b4e">
       </source>
@@ -564,10 +563,6 @@
    <includePath signature="/ID:\PROJECTS\GIT_REPOSITORY\STM32\STM32F2_PILORAMA /ID:\PROJECTS\GIT_REPOSITORY\STM32\SD_LOGGER\freertos_test\uso /ID:\PROJECTS\GIT_REPOSITORY\STM32\STM32F2_PILORAMA\freertos_test\FreeRTOSV7.1.0\Source\portable /ID:\PROJECTS\GIT_REPOSITORY\STM32\STM32F2_PILORAMA\freertos_test\FreeRTOSV7.1.0\Source\include /ID:\PROJECTS\GIT_REPOSITORY\STM32\STM32F2_PILORAMA\freertos_test\cmsis_boot /ID:\PROJECTS\GIT_REPOSITORY\STM32\STM32F2_PILORAMA\freertos_test\cmsis /ID:\PROJECTS\GIT_REPOSITORY\STM32\STM32F2_PILORAMA\freertos_test\cmsis_lib /ID:\PROJECTS\GIT_REPOSITORY\STM32\STM32F2_PILORAMA\freertos_test\FreeRTOSV7.1.0\Source\portable\GCC /ID:\PROJECTS\GIT_REPOSITORY\STM32\STM32F2_PILORAMA\freertos_test\FreeRTOSV7.1.0 /ID:\PROJECTS\GIT_REPOSITORY\STM32 /ID:\PROJECTS\GIT_REPOSITORY\STM32\SD_LOGGER\freertos_test /ID:\PROJECTS\GIT_REPOSITORY\STM32\STM32F2_PILORAMA\freertos_test\protocols /ID:\PROJECTS\GIT_REPOSITORY\STM32\SD_LOGGER /ID:\PROJECTS\GIT_REPOSITORY\STM32\STM32F2_PILORAMA\freertos_test /ID:\PROJECTS\GIT_REPOSITORY\STM32\STM32F2_PILORAMA\freertos_test\FreeRTOSV7.1.0\Source\portable\GCC\ARM_CM4F /ID:\PROJECTS\GIT_REPOSITORY\STM32\STM32F2_PILORAMA\freertos_test\cmsis_lib\include /ID:\PROJECTS\GIT_REPOSITORY\STM32\STM32F2_PILORAMA\freertos_test\devices /ID:\PROJECTS\GIT_REPOSITORY\STM32\STM32F2_PILORAMA\freertos_test\FreeRTOSV7.1.0\Source">
       <source file="..\..\..\cmsis_lib\include\misc.h" lastModified="14125d86b69">
          <include file="..\..\..\cmsis_boot\stm32f4xx.h"/>
-      </source>
-      <source file="..\..\..\cmsis_lib\source\stm32f4xx_tim.c" lastModified="14125d83d92">
-         <include file="..\..\..\cmsis_lib\include\stm32f4xx_tim.h"/>
-         <include file="..\..\..\cmsis_lib\include\stm32f4xx_rcc.h"/>
       </source>
       <source file="..\..\..\devices\power_detector.h" lastModified="142a2da7b4e">
       </source>

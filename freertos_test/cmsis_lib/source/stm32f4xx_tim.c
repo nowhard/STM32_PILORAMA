@@ -3062,10 +3062,10 @@ void TIM_EncoderInterfaceConfig(TIM_TypeDef* TIMx, uint16_t TIM_EncoderMode,
   uint16_t tmpccer = 0;
     
   /* Check the parameters */
-  assert_param(IS_TIM_LIST2_PERIPH(TIMx));
-  assert_param(IS_TIM_ENCODER_MODE(TIM_EncoderMode));
-  assert_param(IS_TIM_IC_POLARITY(TIM_IC1Polarity));
-  assert_param(IS_TIM_IC_POLARITY(TIM_IC2Polarity));
+//  assert_param(IS_TIM_LIST2_PERIPH(TIMx));
+//  assert_param(IS_TIM_ENCODER_MODE(TIM_EncoderMode));
+//  assert_param(IS_TIM_IC_POLARITY(TIM_IC1Polarity));
+//  assert_param(IS_TIM_IC_POLARITY(TIM_IC2Polarity));
 
   /* Get the TIMx SMCR register value */
   tmpsmcr = TIMx->SMCR;

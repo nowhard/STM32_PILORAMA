@@ -31,7 +31,6 @@ void TIM1_UP_TIM10_IRQHandler(void)
     		Drive_Stop(STOP_END_OF_OPERATION);
     	}
     }
- //   drv.current_position=TIM1->CNT;
   }
 }
 
@@ -49,9 +48,13 @@ void Encoder_Init(void)//инициализация таймера дола
 	    timer_base.TIM_CounterMode = TIM_CounterMode_Down | TIM_CounterMode_Up;
 	    TIM_TimeBaseInit(TIM1, &timer_base);
 
-	    TIM_EncoderInterfaceConfig(TIM1, TIM_EncoderMode_TI12,TIM_ICPolarity_Rising, TIM_ICPolarity_Rising);
+	    TIM_EncoderInterfaceConfig(TIM1, TIM_EncoderMode_TI12,TIM_ICPolarity_Falling, TIM_ICPolarity_Falling);
 	    TIM_ITConfig(TIM1, TIM_IT_Update, ENABLE);
 	    TIM_Cmd(TIM1, ENABLE);
+
+	//    TIM1->CCMR1 = TIM_CCMR1_CC1S_0 | TIM_CCMR1_CC2S_0;
+	    //TIM1->CCER = TIM_CCER_CC1P | TIM_CCER_CC2P;
+	  //  TIM1->SMCR = TIM_SMCR_SMS_0 | TIM_SMCR_SMS_1;
 
 	    //настройка прерывания дола
 	    NVIC_InitTypeDef NVIC_InitStructure;
@@ -70,7 +73,7 @@ void Encoder_Init(void)//инициализация таймера дола
 
 	    GPIO_InitStructure.GPIO_Pin = GPIO_Pin_8|GPIO_Pin_9;
 	    GPIO_InitStructure.GPIO_Mode  = GPIO_Mode_AF;;
-	    GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;
+	    GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_UP;
 	    GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
 	    GPIO_InitStructure.GPIO_Speed = GPIO_Speed_2MHz;
 	    GPIO_Init(GPIOA, &GPIO_InitStructure);

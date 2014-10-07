@@ -17,6 +17,11 @@
 <part id="4"/>
 <part id="5"/>
 <part id="6"/>
+<part id="7"/>
+<part id="8"/>
+<part id="9"/>
+<part id="10"/>
+<part id="11"/>
 </presentation>
 </folder>
 </info>
@@ -27,7 +32,7 @@
 </editor>
 <editor id="org.eclipse.cdt.ui.editor.CEditor" name="menu.c" partName="menu.c" path="D:/PROJECTS/GIT_REPOSITORY/STM32/STM32F2_PILORAMA/freertos_test/menu/menu.c" title="menu.c" tooltip="D:/PROJECTS/GIT_REPOSITORY/STM32/STM32F2_PILORAMA/freertos_test/menu/menu.c" workbook="DefaultEditorWorkbook">
 <input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/pilorama/menu/menu.c"/>
-<editorState selectionHorizontalPixel="0" selectionLength="27" selectionOffset="24" selectionTopPixel="0"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="15895" selectionTopPixel="10936"/>
 </editor>
 <editor id="org.eclipse.cdt.ui.editor.CEditor" name="main.c" partName="main.c" path="D:/PROJECTS/GIT_REPOSITORY/STM32/STM32F2_PILORAMA/freertos_test/main.c" title="main.c" tooltip="D:/PROJECTS/GIT_REPOSITORY/STM32/STM32F2_PILORAMA/freertos_test/main.c" workbook="DefaultEditorWorkbook">
 <input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/pilorama/main.c"/>
@@ -37,17 +42,37 @@
 <input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/pilorama/menu/menu.h"/>
 <editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="36" selectionTopPixel="0"/>
 </editor>
+<editor id="org.eclipse.cdt.ui.editor.CEditor" name="keyboard.c" partName="keyboard.c" path="D:/PROJECTS/GIT_REPOSITORY/STM32/STM32F2_PILORAMA/freertos_test/devices/keyboard.c" title="keyboard.c" tooltip="D:/PROJECTS/GIT_REPOSITORY/STM32/STM32F2_PILORAMA/freertos_test/devices/keyboard.c" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/pilorama/devices/keyboard.c"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="2922" selectionTopPixel="1675"/>
+</editor>
+<editor id="org.eclipse.cdt.ui.editor.CEditor" name="encoder.c" partName="encoder.c" path="D:/PROJECTS/GIT_REPOSITORY/STM32/STM32F2_PILORAMA/freertos_test/devices/encoder.c" title="encoder.c" tooltip="D:/PROJECTS/GIT_REPOSITORY/STM32/STM32F2_PILORAMA/freertos_test/devices/encoder.c" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/pilorama/devices/encoder.c"/>
+<editorState selectionHorizontalPixel="0" selectionLength="26" selectionOffset="407" selectionTopPixel="0"/>
+</editor>
+<editor id="org.eclipse.cdt.ui.editor.CEditor" name="backup_sram.h" partName="backup_sram.h" path="D:/PROJECTS/GIT_REPOSITORY/STM32/STM32F2_PILORAMA/freertos_test/devices/backup_sram.h" title="backup_sram.h" tooltip="D:/PROJECTS/GIT_REPOSITORY/STM32/STM32F2_PILORAMA/freertos_test/devices/backup_sram.h" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/pilorama/devices/backup_sram.h"/>
+<editorState selectionHorizontalPixel="0" selectionLength="21" selectionOffset="323" selectionTopPixel="0"/>
+</editor>
+<editor id="org.eclipse.cdt.ui.editor.CEditor" name="external_events.c" partName="external_events.c" path="D:/PROJECTS/GIT_REPOSITORY/STM32/STM32F2_PILORAMA/freertos_test/devices/external_events.c" title="external_events.c" tooltip="D:/PROJECTS/GIT_REPOSITORY/STM32/STM32F2_PILORAMA/freertos_test/devices/external_events.c" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/pilorama/devices/external_events.c"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="2329" selectionTopPixel="763"/>
+</editor>
+<editor id="org.eclipse.cdt.ui.editor.CEditor" name="startup_stm32f4xx.c" partName="startup_stm32f4xx.c" path="D:/PROJECTS/GIT_REPOSITORY/STM32/STM32F2_PILORAMA/freertos_test/cmsis_boot/startup/startup_stm32f4xx.c" title="startup_stm32f4xx.c" tooltip="D:/PROJECTS/GIT_REPOSITORY/STM32/STM32F2_PILORAMA/freertos_test/cmsis_boot/startup/startup_stm32f4xx.c" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/pilorama/cmsis_boot/startup/startup_stm32f4xx.c"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="14756" selectionTopPixel="4318"/>
+</editor>
+<editor id="org.eclipse.cdt.ui.editor.CEditor" name="keyboard.h" partName="keyboard.h" path="D:/PROJECTS/GIT_REPOSITORY/STM32/STM32F2_PILORAMA/freertos_test/devices/keyboard.h" title="keyboard.h" tooltip="D:/PROJECTS/GIT_REPOSITORY/STM32/STM32F2_PILORAMA/freertos_test/devices/keyboard.h" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/pilorama/devices/keyboard.h"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="0" selectionTopPixel="690"/>
+</editor>
 <editor activePart="true" focus="true" id="org.eclipse.cdt.ui.editor.CEditor" name="drive.c" partName="drive.c" path="D:/PROJECTS/GIT_REPOSITORY/STM32/STM32F2_PILORAMA/freertos_test/devices/drive.c" title="drive.c" tooltip="D:/PROJECTS/GIT_REPOSITORY/STM32/STM32F2_PILORAMA/freertos_test/devices/drive.c" workbook="DefaultEditorWorkbook">
 <input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/pilorama/devices/drive.c"/>
-<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="854" selectionTopPixel="1409"/>
+<editorState selectionHorizontalPixel="0" selectionLength="59" selectionOffset="5450" selectionTopPixel="651"/>
 </editor>
 <editor id="org.eclipse.cdt.ui.editor.CEditor" name="drive.h" partName="drive.h" path="D:/PROJECTS/GIT_REPOSITORY/STM32/STM32F2_PILORAMA/freertos_test/devices/drive.h" title="drive.h" tooltip="D:/PROJECTS/GIT_REPOSITORY/STM32/STM32F2_PILORAMA/freertos_test/devices/drive.h" workbook="DefaultEditorWorkbook">
 <input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/pilorama/devices/drive.h"/>
-<editorState selectionHorizontalPixel="0" selectionLength="13" selectionOffset="942" selectionTopPixel="450"/>
-</editor>
-<editor id="org.eclipse.cdt.ui.editor.CEditor" name="keyboard.c" partName="keyboard.c" path="D:/PROJECTS/GIT_REPOSITORY/STM32/STM32F2_PILORAMA/freertos_test/devices/keyboard.c" title="keyboard.c" tooltip="D:/PROJECTS/GIT_REPOSITORY/STM32/STM32F2_PILORAMA/freertos_test/devices/keyboard.c" workbook="DefaultEditorWorkbook">
-<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/pilorama/devices/keyboard.c"/>
-<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="496" selectionTopPixel="180"/>
+<editorState selectionHorizontalPixel="0" selectionLength="29" selectionOffset="1738" selectionTopPixel="967"/>
 </editor>
 </editors>
 <views>
@@ -56,7 +81,7 @@
 </view>
 <view id="org.eclipse.debug.ui.ExpressionView" partName="Expressions">
 <viewState>
-<ExpressionKeySet ExpKeys="tim1_cnt,ADC_result,str_buf,str_buf[0],TIM1-&gt;CNT,dev_reg,"/>
+<ExpressionKeySet ExpKeys="ADCResult,&amp;ADCResult,"/>
 </viewState>
 </view>
 <view id="org.eclipse.ui.views.ProgressView" partName="Progress">
@@ -75,7 +100,7 @@
 <element path="/pilorama/stdio"/>
 </expanded>
 <selection>
-<element path="/pilorama/devices/keyboard.c"/>
+<element path="/pilorama/devices/drive.h"/>
 </selection>
 </viewState>
 </view>
@@ -129,12 +154,12 @@
 <hide_toolbar_item_id id="org.eclipse.cdt.debug.internal.ui.actions.ToggleInstructionStepModeAction"/>
 <hide_toolbar_item_id id="org.eclipse.ui.edit.text.toggleShowSelectedElementOnly"/>
 <hide_toolbar_item_id id="org.eclipse.debug.ui.commands.TerminateAndRelaunch"/>
+<view id="org.coocox.component.ui.ComponentView"/>
+<view id="org.coocox.builder.ui.views.ProjectView"/>
 <view id="org.eclipse.ui.console.ConsoleView"/>
 <view id="org.eclipse.ui.views.ProgressView"/>
 <view id="org.eclipse.debug.ui.ExpressionView"/>
 <view id="org.eclipse.ui.navigator.ProjectExplorer"/>
-<view id="org.coocox.component.ui.ComponentView"/>
-<view id="org.coocox.builder.ui.views.ProjectView"/>
 <fastViewBars/>
 <layout>
 <mainWindow>
@@ -150,20 +175,6 @@
 <folder appearance="2" expanded="2">
 <page content="org.eclipse.help.ui.HelpView" label="LabelNotFound"/>
 <page content="org.eclipse.ui.internal.introview" label="LabelNotFound"/>
-</folder>
-</info>
-<info folder="true" part="org.eclipse.ui.internal.ViewStack@125c9a4" ratio="0.8294314" ratioLeft="744" ratioRight="153" relationship="4" relative="org.eclipse.ui.internal.ViewStack@ca9a2d">
-<folder activePageID="org.eclipse.ui.console.ConsoleView" appearance="2" expanded="2">
-<page content="org.eclipse.ui.console.ConsoleView" label="Console"/>
-<page content="org.eclipse.ui.views.ProgressView" label="Progress"/>
-<page content="org.eclipse.debug.ui.ExpressionView" label="Expressions"/>
-<page content="org.eclipse.ui.navigator.ProjectExplorer" label="Project Explorer"/>
-<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
-<part id="0"/>
-<part id="1"/>
-<part id="2"/>
-<part id="3"/>
-</presentation>
 </folder>
 </info>
 <info folder="true" part="org.eclipse.ui.internal.ViewStack@157488a" ratio="0.13475177" ratioLeft="171" ratioRight="1098" relationship="2" relative="org.eclipse.ui.internal.ViewStack@ca9a2d">
@@ -183,6 +194,20 @@
 </folder>
 </info>
 <info part="org.eclipse.ui.editorss" ratio="0.44859812" ratioLeft="288" ratioRight="354" relationship="4" relative="org.eclipse.ui.internal.ViewStack@157488a"/>
+<info folder="true" part="org.eclipse.ui.internal.ViewStack@14c466d" ratio="0.87068003" ratioLeft="781" ratioRight="116" relationship="4" relative="org.eclipse.ui.editorss">
+<folder activePageID="org.eclipse.ui.console.ConsoleView" appearance="2" expanded="2">
+<page content="org.eclipse.ui.console.ConsoleView" label="Console"/>
+<page content="org.eclipse.ui.views.ProgressView" label="Progress"/>
+<page content="org.eclipse.debug.ui.ExpressionView" label="Expressions"/>
+<page content="org.eclipse.ui.navigator.ProjectExplorer" label="Project Explorer"/>
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
+<part id="0"/>
+<part id="1"/>
+<part id="2"/>
+<part id="3"/>
+</presentation>
+</folder>
+</info>
 <info folder="true" part="org.eclipse.ui.internal.ViewStack@15004dd" ratio="0.36915886" ratioLeft="237" ratioRight="405" relationship="4" relative="org.eclipse.ui.internal.ViewStack@ca9a2d">
 <folder activePageID="org.coocox.builder.ui.views.ProjectView" appearance="2" expanded="2">
 <page content="org.coocox.builder.ui.views.ProjectView" label="Project"/>
@@ -218,8 +243,8 @@
 <hide_menu_item_id id="org.coocox.builder.rcp.flashMenu"/>
 <hide_menu_item_id id="org.coocox.builder.ui.debug"/>
 <hide_menu_item_id id="org.coocox.builder.ui.showHelpViewAction"/>
-<hide_menu_item_id id="org.coocox.builder.ui.newFile"/>
 <hide_menu_item_id id="org.coocox.builder.ui.showHelpViewAction1"/>
+<hide_menu_item_id id="org.coocox.builder.ui.newFile"/>
 <hide_menu_item_id id="org.coocox.builder.ui.actions.ConfigurationAction"/>
 <hide_menu_item_id id="org.coocox.builder.ui.builderDefaultLayout"/>
 <hide_menu_item_id id="org.eclipse.jdt.ui.source.menu"/>
@@ -240,8 +265,8 @@
 <hide_toolbar_item_id id="org.eclipse.ui.edit.text.toggleShowSelectedElementOnly"/>
 <hide_toolbar_item_id id="org.coocox.builder.ui.build"/>
 <hide_toolbar_item_id id="org.coocox.welcome.ui.action.welcome"/>
-<hide_toolbar_item_id id="org.coocox.component.ui.ShowRepositoryAction"/>
 <hide_toolbar_item_id id="org.coocox.codebugger.configuration.coideProgramDownloadAction"/>
+<hide_toolbar_item_id id="org.coocox.component.ui.ShowRepositoryAction"/>
 <view id="org.coocox.codebugger.trace.ui.traceview"/>
 <view id="org.eclipse.debug.ui.VariableView"/>
 <view id="org.eclipse.ui.views.ProgressView"/>
@@ -251,31 +276,20 @@
 <view id="org.coocox.builder.ui.views.ProjectView"/>
 <fastViewBars/>
 <viewLayoutRec closeable="false" id="org.eclipse.debug.ui.DebugView"/>
-<layout>
-<mainWindow>
-<info folder="true" part="org.eclipse.ui.internal.ViewStack@11d77b9">
-<folder activePageID="org.coocox.builder.ui.views.ProjectView" appearance="2" expanded="2">
-<page content="org.coocox.builder.ui.views.ProjectView" label="Project"/>
-<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
-<part id="0"/>
+<layout>&#x0A;<mainWindow>&#x0A;<info folder="true" part="org.eclipse.ui.internal.ViewStack@11d77b9">&#x0A;<folder activePageID="org.coocox.builder.ui.views.ProjectView" appearance="2" expanded="2">&#x0A;<page content="org.coocox.builder.ui.views.ProjectView" label="Project"/>
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">&#x0A;<part id="0"/>
 </presentation>
 </folder>
 </info>
-<info folder="true" part="stickyFolderRight" ratio="0.75" ratioLeft="954" ratioRight="318" relationship="2" relative="org.eclipse.ui.internal.ViewStack@11d77b9">
-<folder appearance="2" expanded="2">
-<page content="org.eclipse.help.ui.HelpView" label="LabelNotFound"/>
+<info folder="true" part="stickyFolderRight" ratio="0.75" ratioLeft="954" ratioRight="318" relationship="2" relative="org.eclipse.ui.internal.ViewStack@11d77b9">&#x0A;<folder appearance="2" expanded="2">&#x0A;<page content="org.eclipse.help.ui.HelpView" label="LabelNotFound"/>
 <page content="org.eclipse.ui.internal.introview" label="LabelNotFound"/>
 </folder>
 </info>
-<info folder="true" part="org.eclipse.ui.internal.ViewStack@16bbc66" ratio="0.7212932" ratioLeft="647" ratioRight="250" relationship="4" relative="org.eclipse.ui.internal.ViewStack@11d77b9">
-<folder appearance="2" expanded="0">
-<page content="org.eclipse.debug.ui.BreakpointView" label="LabelNotFound"/>
+<info folder="true" part="org.eclipse.ui.internal.ViewStack@16bbc66" ratio="0.7212932" ratioLeft="647" ratioRight="250" relationship="4" relative="org.eclipse.ui.internal.ViewStack@11d77b9">&#x0A;<folder appearance="2" expanded="0">&#x0A;<page content="org.eclipse.debug.ui.BreakpointView" label="LabelNotFound"/>
 <presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory"/>
 </folder>
 </info>
-<info folder="true" part="org.eclipse.ui.internal.ViewStack@1de1c8" ratio="0.5" ratioLeft="636" ratioRight="636" relationship="2" relative="org.eclipse.ui.internal.ViewStack@16bbc66">
-<folder activePageID="org.eclipse.ui.console.ConsoleView" appearance="2" expanded="2">
-<page content="org.coocox.codebugger.trace.ui.traceview" label="Semihosting"/>
+<info folder="true" part="org.eclipse.ui.internal.ViewStack@1de1c8" ratio="0.5" ratioLeft="636" ratioRight="636" relationship="2" relative="org.eclipse.ui.internal.ViewStack@16bbc66">&#x0A;<folder activePageID="org.eclipse.ui.console.ConsoleView" appearance="2" expanded="2">&#x0A;<page content="org.coocox.codebugger.trace.ui.traceview" label="Semihosting"/>
 <page content="org.eclipse.debug.ui.VariableView" label="Variables"/>
 <page content="org.eclipse.ui.views.ProgressView" label="Progress"/>
 <page content="org.eclipse.debug.ui.ExpressionView" label="Expressions"/>
@@ -283,8 +297,7 @@
 <page content="org.eclipse.debug.ui.DebugView" label="Debug"/>
 <page content="org.eclipse.debug.ui.MemoryView" label="LabelNotFound"/>
 <page content="org.eclipse.cdt.debug.ui.memory.memorybrowser.MemoryBrowser" label="LabelNotFound"/>
-<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
-<part id="0"/>
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">&#x0A;<part id="0"/>
 <part id="1"/>
 <part id="2"/>
 <part id="3"/>
@@ -293,9 +306,7 @@
 </presentation>
 </folder>
 </info>
-<info folder="true" part="org.eclipse.ui.internal.ViewStack@1d242c4" ratio="0.75" ratioLeft="954" ratioRight="318" relationship="2" relative="org.eclipse.ui.internal.ViewStack@11d77b9">
-<folder appearance="2" expanded="2">
-<page content="org.eclipse.cdt.dsf.debug.ui.disassembly.view" label="LabelNotFound"/>
+<info folder="true" part="org.eclipse.ui.internal.ViewStack@1d242c4" ratio="0.75" ratioLeft="954" ratioRight="318" relationship="2" relative="org.eclipse.ui.internal.ViewStack@11d77b9">&#x0A;<folder appearance="2" expanded="2">&#x0A;<page content="org.eclipse.cdt.dsf.debug.ui.disassembly.view" label="LabelNotFound"/>
 <page content="org.eclipse.ui.views.ContentOutline" label="LabelNotFound"/>
 <page content="org.eclipse.debug.ui.RegisterView" label="LabelNotFound"/>
 <page content="org.coocox.coassistant.view.CoAssistantView_debug" label="LabelNotFound"/>
@@ -310,166 +321,165 @@
 <workingSets/>
 <navigationHistory>
 <editors>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/pilorama/devices/drive.c"/>
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/pilorama/devices/drive.h"/>
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/pilorama/menu/menu.c"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/pilorama/devices/drive.c"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/pilorama/devices/keyboard.c"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/pilorama/devices/keyboard.h"/>
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/pilorama/cmsis_boot/startup/startup_stm32f4xx.c"/>
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/pilorama/main.c"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/pilorama/devices/encoder.c"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/pilorama/protocols/tablo_parser.h"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/pilorama/devices/encoder.c"/>
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/pilorama/devices/drive.c"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/pilorama/devices/keyboard.c"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/pilorama/devices/keyboard.h"/>
 </editors>
-<item historyLabel="drive.h" index="0">
-<position info="not_deleted" x="1120" y="34"/>
-</item>
-<item historyLabel="drive.c" index="2">
-<position info="not_deleted" x="1238" y="0"/>
-</item>
-<item historyLabel="drive.c" index="2">
-<position info="not_deleted" x="880" y="0"/>
-</item>
-<item historyLabel="drive.h" index="0">
-<position info="not_deleted" x="70" y="14"/>
-</item>
-<item historyLabel="drive.c" index="2">
-<position info="not_deleted" x="880" y="0"/>
-</item>
-<item historyLabel="drive.h" index="0">
-<position info="not_deleted" x="92" y="21"/>
-</item>
-<item historyLabel="drive.c" index="2">
-<position info="not_deleted" x="880" y="0"/>
-</item>
-<item historyLabel="drive.h" index="0">
-<position info="not_deleted" x="117" y="23"/>
-</item>
-<item historyLabel="drive.c" index="2">
-<position info="not_deleted" x="880" y="0"/>
-</item>
-<item historyLabel="drive.h" index="0">
-<position info="not_deleted" x="144" y="21"/>
-</item>
-<item historyLabel="drive.c" index="2">
-<position info="not_deleted" x="880" y="0"/>
-</item>
-<item historyLabel="drive.h" index="0">
-<position info="not_deleted" x="225" y="11"/>
-</item>
-<item historyLabel="drive.c" index="2">
-<position info="not_deleted" x="880" y="0"/>
-</item>
-<item historyLabel="drive.h" index="0">
-<position info="not_deleted" x="225" y="11"/>
-</item>
-<item historyLabel="drive.h" index="0">
-<position/>
-</item>
-<item historyLabel="drive.h" index="0">
-<position info="not_deleted" x="1289" y="0"/>
-</item>
-<item historyLabel="drive.h" index="0">
-<position info="not_deleted" x="1342" y="0"/>
-</item>
-<item historyLabel="drive.h" index="0">
-<position info="not_deleted" x="1158" y="43"/>
-</item>
-<item historyLabel="drive.c" index="2">
-<position info="not_deleted" x="880" y="0"/>
-</item>
-<item historyLabel="drive.c" index="2">
-<position info="not_deleted" x="1163" y="0"/>
-</item>
-<item historyLabel="drive.h" index="0">
-<position info="not_deleted" x="321" y="15"/>
-</item>
-<item historyLabel="drive.c" index="2">
-<position info="not_deleted" x="1033" y="0"/>
-</item>
-<item historyLabel="drive.h" index="0">
-<position info="not_deleted" x="1245" y="99"/>
-</item>
-<item historyLabel="drive.c" index="2">
-<position info="not_deleted" x="1033" y="0"/>
-</item>
-<item historyLabel="drive.c" index="2">
-<position info="not_deleted" x="1403" y="0"/>
-</item>
-<item historyLabel="drive.c" index="2">
-<position info="not_deleted" x="1373" y="0"/>
-</item>
-<item historyLabel="menu.c" index="1">
-<position info="not_deleted" x="24" y="27"/>
-</item>
-<item historyLabel="keyboard.c" index="3">
-<position info="not_deleted" x="494" y="0"/>
-</item>
-<item historyLabel="keyboard.h" index="4">
-<position info="not_deleted" x="42" y="373"/>
-</item>
-<item historyLabel="drive.h" index="0">
-<position info="not_deleted" x="1245" y="99"/>
-</item>
-<item historyLabel="startup_stm32f4xx.c" index="5">
+<item historyLabel="startup_stm32f4xx.c" index="3">
 <position info="not_deleted" x="14756" y="0"/>
 </item>
-<item historyLabel="main.c" index="6">
+<item historyLabel="main.c" index="4">
 <position info="not_deleted" x="730" y="0"/>
 </item>
-<item historyLabel="drive.c" index="7">
-<position info="not_deleted" x="1968" y="2"/>
+<item historyLabel="drive.c" index="0">
+<position info="not_deleted" x="1287" y="0"/>
 </item>
-<item historyLabel="drive.h" index="0">
-<position info="not_deleted" x="1074" y="0"/>
+<item historyLabel="main.c" index="4">
+<position info="not_deleted" x="698" y="0"/>
 </item>
-<item historyLabel="keyboard.c" index="8">
-<position info="not_deleted" x="464" y="653"/>
+<item historyLabel="startup_stm32f4xx.c" index="3">
+<position info="not_deleted" x="14756" y="0"/>
 </item>
-<item historyLabel="drive.h" index="0">
-<position info="not_deleted" x="1074" y="0"/>
+<item historyLabel="main.c" index="4">
+<position info="not_deleted" x="730" y="0"/>
 </item>
-<item historyLabel="drive.c" index="7">
-<position info="not_deleted" x="330" y="0"/>
+<item historyLabel="encoder.c" index="5">
+<position info="not_deleted" x="691" y="0"/>
 </item>
-<item historyLabel="drive.h" index="0">
-<position info="not_deleted" x="720" y="16"/>
+<item historyLabel="encoder.c" index="5">
+<position info="not_deleted" x="361" y="0"/>
 </item>
-<item historyLabel="drive.c" index="7">
-<position info="not_deleted" x="294" y="0"/>
+<item historyLabel="encoder.c" index="5">
+<position info="not_deleted" x="691" y="0"/>
 </item>
-<item historyLabel="drive.h" index="0">
-<position info="not_deleted" x="720" y="16"/>
+<item historyLabel="drive.c" index="0">
+<position info="not_deleted" x="4433" y="10"/>
 </item>
-<item historyLabel="keyboard.c" index="8">
-<position info="not_deleted" x="464" y="653"/>
+<item historyLabel="drive.c" index="0">
+<position info="not_deleted" x="4562" y="0"/>
 </item>
-<item historyLabel="keyboard.h" index="9">
-<position info="not_deleted" x="42" y="373"/>
+<item historyLabel="drive.c" index="0">
+<position info="not_deleted" x="261" y="0"/>
 </item>
-<item historyLabel="keyboard.c" index="8">
-<position info="not_deleted" x="496" y="0"/>
+<item historyLabel="menu.c" index="2">
+<position info="not_deleted" x="7509" y="48"/>
 </item>
-<item historyLabel="drive.c" index="7">
-<position info="not_deleted" x="295" y="0"/>
+<item historyLabel="drive.c" index="0">
+<position info="not_deleted" x="4656" y="0"/>
 </item>
-<item historyLabel="drive.h" index="0">
-<position info="not_deleted" x="720" y="16"/>
+<item historyLabel="menu.c" index="2">
+<position info="not_deleted" x="7509" y="48"/>
 </item>
-<item historyLabel="drive.c" index="7">
-<position info="not_deleted" x="884" y="0"/>
+<item historyLabel="menu.c" index="2">
+<position/>
 </item>
-<item historyLabel="drive.h" index="0">
-<position info="not_deleted" x="812" y="11"/>
+<item historyLabel="encoder.c" index="5">
+<position info="not_deleted" x="407" y="26"/>
 </item>
-<item historyLabel="drive.c" index="7">
-<position info="not_deleted" x="696" y="0"/>
+<item historyLabel="drive.c" index="0">
+<position info="not_deleted" x="4656" y="0"/>
 </item>
-<item historyLabel="drive.h" index="0">
-<position info="not_deleted" x="942" y="13"/>
+<item historyLabel="menu.c" index="2">
+<position info="not_deleted" x="16061" y="0"/>
 </item>
-<item active="true" historyLabel="drive.c" index="7">
-<position info="not_deleted" x="696" y="0"/>
+<item historyLabel="drive.c" index="0">
+<position info="not_deleted" x="4656" y="0"/>
+</item>
+<item historyLabel="drive.c" index="0">
+<position info="not_deleted" x="5450" y="59"/>
+</item>
+<item historyLabel="drive.h" index="1">
+<position info="not_deleted" x="1738" y="29"/>
+</item>
+<item historyLabel="drive.c" index="0">
+<position info="not_deleted" x="5450" y="59"/>
+</item>
+<item historyLabel="menu.c" index="2">
+<position/>
+</item>
+<item historyLabel="menu.c" index="2">
+<position info="not_deleted" x="18883" y="0"/>
+</item>
+<item historyLabel="menu.c" index="2">
+<position info="not_deleted" x="16817" y="27"/>
+</item>
+<item historyLabel="menu.c" index="2">
+<position/>
+</item>
+<item historyLabel="menu.c" index="2">
+<position info="not_deleted" x="18115" y="21"/>
+</item>
+<item historyLabel="menu.c" index="2">
+<position/>
+</item>
+<item historyLabel="menu.c" index="2">
+<position info="not_deleted" x="18115" y="21"/>
+</item>
+<item historyLabel="menu.c" index="2">
+<position info="not_deleted" x="16350" y="0"/>
+</item>
+<item historyLabel="menu.c" index="2">
+<position info="not_deleted" x="18115" y="21"/>
+</item>
+<item historyLabel="menu.c" index="2">
+<position info="not_deleted" x="16345" y="0"/>
+</item>
+<item historyLabel="menu.c" index="2">
+<position info="not_deleted" x="18115" y="21"/>
+</item>
+<item historyLabel="menu.c" index="2">
+<position info="not_deleted" x="18887" y="0"/>
+</item>
+<item historyLabel="menu.c" index="2">
+<position/>
+</item>
+<item historyLabel="tablo_parser.h" index="6">
+<position info="not_deleted" x="140" y="5"/>
+</item>
+<item historyLabel="menu.c" index="2">
+<position info="not_deleted" x="16084" y="0"/>
+</item>
+<item historyLabel="menu.c" index="2">
+<position info="not_deleted" x="18115" y="21"/>
+</item>
+<item historyLabel="menu.c" index="2">
+<position/>
+</item>
+<item historyLabel="menu.c" index="2">
+<position info="not_deleted" x="1464" y="9"/>
+</item>
+<item historyLabel="menu.c" index="2">
+<position info="not_deleted" x="16488" y="0"/>
+</item>
+<item historyLabel="menu.c" index="2">
+<position info="not_deleted" x="16817" y="27"/>
+</item>
+<item historyLabel="menu.c" index="2">
+<position/>
+</item>
+<item historyLabel="menu.c" index="2">
+<position info="not_deleted" x="4516" y="53"/>
+</item>
+<item historyLabel="menu.c" index="2">
+<position info="not_deleted" x="16280" y="0"/>
+</item>
+<item historyLabel="encoder.c" index="7">
+<position info="not_deleted" x="407" y="26"/>
+</item>
+<item historyLabel="drive.c" index="8">
+<position info="not_deleted" x="5450" y="59"/>
+</item>
+<item historyLabel="menu.c" index="2">
+<position info="not_deleted" x="15895" y="0"/>
+</item>
+<item active="true" historyLabel="drive.c" index="8">
+<position info="not_deleted" x="5450" y="59"/>
 </item>
 </navigationHistory>
 <input factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/" type="8"/>
@@ -478,52 +488,51 @@
 <actionBarAdvisor/>
 </window>
 <mruList>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="stm32f4xx_flash.c" tooltip="STM32F4_ADC_TEST/cmsis_lib/source/stm32f4xx_flash.c">
-<persistable path="/STM32F4_ADC_TEST/cmsis_lib/source/stm32f4xx_flash.c"/>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="stm32f4xx_gpio.c" tooltip="pilorama/cmsis_lib/source/stm32f4xx_gpio.c">
+<persistable path="/pilorama/cmsis_lib/source/stm32f4xx_gpio.c"/>
 </file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="stm32f4xx_flash.h" tooltip="STM32F4_ADC_TEST/cmsis_lib/include/stm32f4xx_flash.h">
-<persistable path="/STM32F4_ADC_TEST/cmsis_lib/include/stm32f4xx_flash.h"/>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="stm32f4xx_gpio.h" tooltip="pilorama/cmsis_lib/include/stm32f4xx_gpio.h">
+<persistable path="/pilorama/cmsis_lib/include/stm32f4xx_gpio.h"/>
 </file>
-<file factoryID="org.coocox.component.ui.editors.repository.RepositoryElementFactory" id="org.coocox.builder.ui.editors.repository.RepositoryBrowser" name="Repository" tooltip="Repository">
-<persistable>&#x0A;<subPage/>
-</persistable>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="stm32f4xx_spi.h" tooltip="pilorama/cmsis_lib/include/stm32f4xx_spi.h">
+<persistable path="/pilorama/cmsis_lib/include/stm32f4xx_spi.h"/>
 </file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="keyboard.h" tooltip="pilorama/devices/keyboard.h">
-<persistable path="/pilorama/devices/keyboard.h"/>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="startup_stm32f4xx.c" tooltip="pilorama/cmsis_boot/startup/startup_stm32f4xx.c">
+<persistable path="/pilorama/cmsis_boot/startup/startup_stm32f4xx.c"/>
 </file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="keyboard.c" tooltip="pilorama/devices/keyboard.c">
-<persistable path="/pilorama/devices/keyboard.c"/>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="spi_bus.h" tooltip="pilorama/devices/spi_bus.h">
+<persistable path="/pilorama/devices/spi_bus.h"/>
 </file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="stm32f4xx_adc.c" tooltip="STM32F4_ADC_TEST/cmsis_lib/source/stm32f4xx_adc.c">
-<persistable path="/STM32F4_ADC_TEST/cmsis_lib/source/stm32f4xx_adc.c"/>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="stm32f4xx.h" tooltip="pilorama/cmsis_boot/stm32f4xx.h">
+<persistable path="/pilorama/cmsis_boot/stm32f4xx.h"/>
 </file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="stm32f4xx_adc.h" tooltip="STM32F4_ADC_TEST/cmsis_lib/include/stm32f4xx_adc.h">
-<persistable path="/STM32F4_ADC_TEST/cmsis_lib/include/stm32f4xx_adc.h"/>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="spi_bus.c" tooltip="pilorama/devices/spi_bus.c">
+<persistable path="/pilorama/devices/spi_bus.c"/>
 </file>
-<file factoryID="org.coocox.component.ui.editors.repository.RepositoryElementFactory" id="org.coocox.builder.ui.editors.repository.RepositoryBrowser" name="Repository" tooltip="Repository">
-<persistable>&#x0A;<subPage/>
-</persistable>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="tablo.c" tooltip="pilorama/devices/tablo.c">
+<persistable path="/pilorama/devices/tablo.c"/>
 </file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="core_cm4.h" tooltip="STM32F4_ADC_TEST/cmsis/core_cm4.h">
-<persistable path="/STM32F4_ADC_TEST/cmsis/core_cm4.h"/>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="main.c" tooltip="pilorama/main.c">
+<persistable path="/pilorama/main.c"/>
 </file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="stm32f4xx_rcc.c" tooltip="STM32F4_ADC_TEST/cmsis_lib/source/stm32f4xx_rcc.c">
-<persistable path="/STM32F4_ADC_TEST/cmsis_lib/source/stm32f4xx_rcc.c"/>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="stm32f10x_spi.h" tooltip="freertos_test_Target/stm_lib/inc/stm32f10x_spi.h">
+<persistable path="/freertos_test_Target/stm_lib/inc/stm32f10x_spi.h"/>
 </file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="startup_stm32f4xx.c" tooltip="STM32F4_ADC_TEST/cmsis_boot/startup/startup_stm32f4xx.c">
-<persistable path="/STM32F4_ADC_TEST/cmsis_boot/startup/startup_stm32f4xx.c"/>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="tablo_parser.h" tooltip="pilorama/protocols/tablo_parser.h">
+<persistable path="/pilorama/protocols/tablo_parser.h"/>
 </file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="main.c" tooltip="STM32F4_ADC_TEST/example/main.c">
-<persistable path="/STM32F4_ADC_TEST/example/main.c"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="stm32f4xx_dma.c" tooltip="STM32F4_ADC_TEST/cmsis_lib/source/stm32f4xx_dma.c">
-<persistable path="/STM32F4_ADC_TEST/cmsis_lib/source/stm32f4xx_dma.c"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="ADC3_DMA.c" tooltip="STM32F4_ADC_TEST/example/ADC3_DMA.c">
-<persistable path="/STM32F4_ADC_TEST/example/ADC3_DMA.c"/>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="drive.h" tooltip="pilorama/devices/drive.h">
+<persistable path="/pilorama/devices/drive.h"/>
 </file>
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="drive.c" tooltip="pilorama/devices/drive.c">
 <persistable path="/pilorama/devices/drive.c"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="buzzer.h" tooltip="pilorama/devices/buzzer.h">
+<persistable path="/pilorama/devices/buzzer.h"/>
+</file>
+<file factoryID="org.coocox.component.ui.editors.repository.RepositoryElementFactory" id="org.coocox.builder.ui.editors.repository.RepositoryBrowser" name="Repository" tooltip="Repository">
+<persistable>&#x0A;<subPage/>
+</persistable>
 </file>
 </mruList>
 </workbench>
