@@ -71,6 +71,10 @@ uint8_t Drive_Set_Position(uint8_t move_type,int16_t move_val)
 
 			case MOVE_TYPE_RELATIVE_DOWN:
 			{
+				if(move_val<0)
+				{
+					move_val=-move_val;
+				}
 				drv.dest_position=drv.current_position-Drive_MM_To_Impulse(move_val)+Drive_MM_To_Impulse(drv.bkp_reg->F_06_cal_stop);
 				drv.min_speed_position=drv.current_position-Drive_MM_To_Impulse(move_val)+Drive_MM_To_Impulse(drv.bkp_reg->F_05_cal_speed_down);
 				drv.stop_type=STOP_NONE;
