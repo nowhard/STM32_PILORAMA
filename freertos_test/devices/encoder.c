@@ -48,7 +48,8 @@ void Encoder_Init(void)//инициализация таймера дола
 	    timer_base.TIM_CounterMode = TIM_CounterMode_Down | TIM_CounterMode_Up;
 	    TIM_TimeBaseInit(TIM1, &timer_base);
 
-	    TIM_EncoderInterfaceConfig(TIM1, TIM_EncoderMode_TI12,TIM_ICPolarity_Falling, TIM_ICPolarity_Falling);
+	    TIM_EncoderInterfaceConfig(TIM1, TIM_EncoderMode_TI12,TIM_ICPolarity_BothEdge, TIM_ICPolarity_BothEdge);
+	    TIM1->CCER = TIM_CCER_CC1P | TIM_CCER_CC2P;
 	    TIM_ITConfig(TIM1, TIM_IT_Update, ENABLE);
 	    TIM_Cmd(TIM1, ENABLE);
 
