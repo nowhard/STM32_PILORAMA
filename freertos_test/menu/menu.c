@@ -365,6 +365,53 @@ void Menu_Handle_Key(menuItem* currentMenuItem,uint8_t current_key)
 
 					case KEY_B://функция BACK
 					{
+						switch(drv.function_back_flag)
+						{
+							case DRIVE_BACK_POS_DOWN:
+							{
+								uint32_t temp_imp_pos=Drive_MM_To_Impulse_Absolute(drv.bkp_reg->F_04_function_back);
+								if(temp_imp_pos<drv.current_position)
+								{
+									buzzer_set_buzz(BUZZER_EFFECT_3_BEEP,BUZZER_ON);
+								}
+								else
+								{
+									drv.function_back_flag=DRIVE_BACK_POS_UP;
+									drv.function_back_temp_position=drv.current_position;
+									//go to UP  position
+									if(Drive_Set_Position_Imp_Absolute(temp_imp_pos)!=DRIVE_OK)
+									{
+										buzzer_set_buzz(BUZZER_EFFECT_3_BEEP,BUZZER_ON);
+										drv.function_back_flag=DRIVE_BACK_POS_DOWN;
+									}
+									else
+									{
+										buzzer_set_buzz(BUZZER_EFFECT_1_BEEP,BUZZER_ON);
+									}
+								}
+							}
+							break;
+
+							case DRIVE_BACK_POS_UP:
+							{
+								drv.function_back_flag=DRIVE_BACK_POS_DOWN;
+								if(Drive_Set_Position_Imp_Absolute(drv.function_back_temp_position)!=DRIVE_OK)
+								{
+									buzzer_set_buzz(BUZZER_EFFECT_3_BEEP,BUZZER_ON);
+								}
+								else
+								{
+									buzzer_set_buzz(BUZZER_EFFECT_1_BEEP,BUZZER_ON);
+								}
+							}
+							break;
+
+							default:
+							{
+								drv.function_back_flag=DRIVE_BACK_POS_DOWN;
+							}
+							break;
+						}
 
 					}
 					break;
