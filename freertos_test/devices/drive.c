@@ -14,6 +14,7 @@
 #include "menu.h"
 
 struct drive drv;
+extern xQueueHandle xClrIndicatorQueue;//очередь клавиатуры
 
 void Drive_Init(void)
 {
@@ -258,6 +259,7 @@ uint8_t Drive_Start(uint8_t direction)
 
 uint8_t Drive_Stop(uint8_t stop_type)
 {
+	uint8_t clr_indicator_msg;
 	DRIVE_CONTROL_PORT->BSRRH=(DRIVE_FORWARD | DRIVE_BACKWARD | DRIVE_SPEED);
 
 	switch(stop_type)
@@ -303,7 +305,9 @@ uint8_t Drive_Stop(uint8_t stop_type)
 		}
 		break;
 	}
-	Menu_Input_Field_Down_Clear();
+	//Menu_Input_Field_Down_Clear();
+	clr_indicator_msg=MENU_MSG_CLR_INDICATOR;
+	xQueueSend( xClrIndicatorQueue,  &clr_indicator_msg, ( portTickType ) 0 );
 	drv.stop_type=stop_type;
 	drv.move_type_flag=MOVE_TYPE_NONE;
 }

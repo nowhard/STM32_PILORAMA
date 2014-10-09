@@ -34,5 +34,11 @@ enum
 	INPUT_ERR,
 };
 
+enum
+{
+	MENU_MSG_NONE=0,
+	MENU_MSG_CLR_INDICATOR,
+};
+
 
 #endif

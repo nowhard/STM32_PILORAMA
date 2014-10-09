@@ -107,6 +107,7 @@ MAKE_MENU(m_s1i6,  NULL_ENTRY,m_s1i5,      m_s0i1, 	   NULL_ENTRY,  MENU_F_06,  
 
 
 extern struct drive drv;
+xQueueHandle xClrIndicatorQueue;//очередь клавиатуры
 
 void menuChange(menuItem* NewMenu)
 {
@@ -224,7 +225,8 @@ unsigned char startMenu(void) {
 
 void Menu_Init(void)
 {
-	 xTaskCreate(MenuHandler,(signed char*)"Menu",128,NULL, tskIDLE_PRIORITY + 1, NULL);
+	xClrIndicatorQueue = xQueueCreate( 2, sizeof( uint8_t ) );
+	xTaskCreate(MenuHandler,(signed char*)"Menu",128,NULL, tskIDLE_PRIORITY + 1, NULL);
 }
 
 void Menu_Previous(void)
@@ -765,9 +767,12 @@ void Menu_Handle_Key(menuItem* currentMenuItem,uint8_t current_key)
 	}
 }
 
+
+
 void MenuHandler( void *pvParameters )
 {
 	uint16_t key;
+	uint8_t clr_indicator_msg;
     startMenu();
     while(1)
     {
@@ -776,6 +781,17 @@ void MenuHandler( void *pvParameters )
 			 if( xQueueReceive( xKeyQueue, &( key ), ( portTickType ) 10 ) )
 			 {
 				 Menu_Handle_Key(selectedMenuItem,key);
+			 }
+		 }
+
+		if( (xClrIndicatorQueue != 0)&&(uxQueueMessagesWaiting(xClrIndicatorQueue)) )
+		 {
+			 if( xQueueReceive( xClrIndicatorQueue, &( clr_indicator_msg ), ( portTickType ) 10 ) )
+			 {
+				 if(clr_indicator_msg==MENU_MSG_CLR_INDICATOR)
+				 {
+					 Menu_Input_Field_Clear(&input_buf);
+				 }
 			 }
 		 }
 
@@ -850,7 +866,7 @@ void Menu_Input_Field_Clear(struct input_buffer *inp_buf)
 {
 	inp_buf->counter=0;
 	inp_buf->sign=' ';
-	Menu_Input_Buf_To_Indicator(inp_buf,IND_2);
+	Menu_Input_Buf_To_Indicator(inp_buf,IND_2);//что то виснет
 }
 
 void Menu_Input_Field_Down_Clear(void)
