@@ -9,6 +9,8 @@ void Menu_Select(void);
 void Menu_Next(void);
 void MenuHandler( void *pvParameters );
 unsigned char startMenu(void);
+
+void Menu_Input_Field_Down_Clear(void);
 enum {
     MENU_ROOT=1,
 	MENU_F_01,

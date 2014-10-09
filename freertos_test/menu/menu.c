@@ -769,9 +769,20 @@ void MenuHandler( void *pvParameters )
 
 					case MOVE_TYPE_ABSOLUTE:
 					{
-						if(Menu_Input_Int_To_Buf(Drive_Impulse_To_MM(drv.dest_position-drv.current_position),&abs_buf, MENU_ABS_MIN_VAL,MENU_ABS_MAX_VAL)!=INPUT_ERR)
+						if(drv.dest_position>=drv.current_position)
 						{
-							Menu_Input_Buf_To_Indicator(&abs_buf,IND_2);
+							if(Menu_Input_Int_To_Buf(Drive_Impulse_To_MM(drv.dest_position-drv.current_position),&abs_buf, MENU_ABS_MIN_VAL,MENU_ABS_MAX_VAL)!=INPUT_ERR)
+							{
+								Menu_Input_Buf_To_Indicator(&abs_buf,IND_2);
+							}
+						}
+						else
+						{
+							if(Menu_Input_Int_To_Buf(Drive_Impulse_To_MM(drv.current_position-drv.dest_position),&abs_buf, MENU_ABS_MIN_VAL,MENU_ABS_MAX_VAL)!=INPUT_ERR)
+							{
+								abs_buf.sign='-';
+								Menu_Input_Buf_To_Indicator(&abs_buf,IND_2);
+							}
 						}
 					}
 					break;
@@ -798,6 +809,11 @@ void Menu_Input_Field_Clear(struct input_buffer *inp_buf)
 	inp_buf->counter=0;
 	inp_buf->sign=' ';
 	Menu_Input_Buf_To_Indicator(inp_buf,IND_2);
+}
+
+void Menu_Input_Field_Down_Clear(void)
+{
+	Menu_Input_Field_Clear(&input_buf);
 }
 
 #define POINT_POS	4

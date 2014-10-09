@@ -11,6 +11,7 @@
 
 #include "backup_sram.h"
 #include "buzzer.h"
+#include "menu.h"
 
 struct drive drv;
 
@@ -266,6 +267,7 @@ uint8_t Drive_Stop(uint8_t stop_type)
 		}
 		break;
 	}
+	Menu_Input_Field_Down_Clear();
 	drv.stop_type=stop_type;
 	drv.move_type_flag=MOVE_TYPE_NONE;
 }

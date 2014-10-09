@@ -65,7 +65,7 @@
          <include file="..\..\..\cmsis_lib\include\stm32f4xx_tim.h"/>
          <include file="..\..\..\cmsis_lib\include\stm32f4xx_rcc.h"/>
       </source>
-      <source file="..\..\..\menu\menu.h" lastModified="148b1f537ba">
+      <source file="..\..\..\menu\menu.h" lastModified="148f3f95e72">
       </source>
       <source file="..\..\..\devices\power_detector.h" lastModified="142a2da7b4e">
       </source>
@@ -275,7 +275,7 @@
          <include file="..\..\..\FreeRTOSV7.1.0\Source\include\timers.h"/>
          <include file="..\..\..\FreeRTOSV7.1.0\Source\include\StackMacros.h"/>
       </source>
-      <source file="..\..\..\devices\drive.c" lastModified="148efe0cece">
+      <source file="..\..\..\devices\drive.c" lastModified="148f3fada35">
          <include file="..\..\..\devices\drive.h"/>
          <include file="..\..\..\cmsis_boot\stm32f4xx.h"/>
          <include file="..\..\..\cmsis_lib\include\stm32f4xx_gpio.h"/>
@@ -287,8 +287,9 @@
          <include file="..\..\..\FreeRTOSV7.1.0\Source\include\semphr.h"/>
          <include file="..\..\..\devices\backup_sram.h"/>
          <include file="..\..\..\devices\buzzer.h"/>
+         <include file="..\..\..\menu\menu.h"/>
       </source>
-      <source file="..\..\..\devices\encoder.c" lastModified="148ee993227">
+      <source file="..\..\..\devices\encoder.c" lastModified="148f3fa8e76">
          <include file="..\..\..\devices\encoder.h"/>
          <include file="..\..\..\devices\drive.h"/>
       </source>
