@@ -745,6 +745,42 @@ void MenuHandler( void *pvParameters )
 				{
 					Menu_Input_Buf_To_Indicator(&abs_buf,IND_1);
 				}
+
+				switch(drv.move_type_flag)
+				{
+					case MOVE_TYPE_RELATIVE_UP:
+					{
+						if(Menu_Input_Int_To_Buf(Drive_Impulse_To_MM(drv.dest_position-drv.current_position),&abs_buf, MENU_ABS_MIN_VAL,MENU_ABS_MAX_VAL)!=INPUT_ERR)
+						{
+							Menu_Input_Buf_To_Indicator(&abs_buf,IND_2);
+						}
+					}
+					break;
+
+					case MOVE_TYPE_RELATIVE_DOWN:
+					{
+						if(Menu_Input_Int_To_Buf(Drive_Impulse_To_MM(drv.current_position-drv.dest_position),&abs_buf, MENU_ABS_MIN_VAL,MENU_ABS_MAX_VAL)!=INPUT_ERR)
+						{
+							abs_buf.sign='-';
+							Menu_Input_Buf_To_Indicator(&abs_buf,IND_2);
+						}
+					}
+					break;
+
+					case MOVE_TYPE_ABSOLUTE:
+					{
+						if(Menu_Input_Int_To_Buf(Drive_Impulse_To_MM(drv.dest_position-drv.current_position),&abs_buf, MENU_ABS_MIN_VAL,MENU_ABS_MAX_VAL)!=INPUT_ERR)
+						{
+							Menu_Input_Buf_To_Indicator(&abs_buf,IND_2);
+						}
+					}
+					break;
+
+					default:
+					{
+
+					}
+				}
 			}
 			else
 			{
