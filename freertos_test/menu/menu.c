@@ -284,6 +284,42 @@ void Menu_Handle_Key(menuItem* currentMenuItem,uint8_t current_key)
 					case KEY_C_LONG://очистим поле
 					{
 						Menu_Input_Field_Clear(&input_buf);
+						if(drv.error_flag==DRIVE_ERR)
+						{
+							switch(drv.stop_type)
+							{
+								case STOP_HI_SENSOR:
+								{
+
+								}
+								break;
+
+								case STOP_LO_SENSOR:
+								{
+
+								}
+								break;
+
+								case STOP_INVERTOR_ERROR:
+								{
+									Drive_Reset();
+								}
+								break;
+
+								case STOP_CONTROLLER_FAULT:
+								{
+									//???
+								}
+								break;
+
+								default:
+								{
+
+								}
+								break;
+							}
+						}
+						drv.error_flag=DRIVE_OK;
 						buzzer_set_buzz(BUZZER_EFFECT_1_BEEP,BUZZER_ON);
 					}
 					break;
@@ -418,17 +454,23 @@ void Menu_Handle_Key(menuItem* currentMenuItem,uint8_t current_key)
 
 					case KEY_STAR_LONG://движение вниз
 					{
-						Drive_Set_Speed(DRIVE_SPEED_HI);
-						Drive_Start(DRIVE_DIRECTION_DOWN);
-						buzzer_set_buzz(BUZZER_EFFECT_1_BEEP,BUZZER_ON);
+						if(drv.limitation_flag!=DRIVE_LIMITATION_ONLY_UP)
+						{
+							Drive_Set_Speed(DRIVE_SPEED_HI);
+							Drive_Start(DRIVE_DIRECTION_DOWN);
+							buzzer_set_buzz(BUZZER_EFFECT_1_BEEP,BUZZER_ON);
+						}
 					}
 					break;
 
 					case KEY_SHARP_LONG://движение вверх
 					{
-						Drive_Set_Speed(DRIVE_SPEED_HI);
-						Drive_Start(DRIVE_DIRECTION_UP);
-						buzzer_set_buzz(BUZZER_EFFECT_1_BEEP,BUZZER_ON);
+						if(drv.limitation_flag!=DRIVE_LIMITATION_ONLY_DOWN)
+						{
+							Drive_Set_Speed(DRIVE_SPEED_HI);
+							Drive_Start(DRIVE_DIRECTION_UP);
+							buzzer_set_buzz(BUZZER_EFFECT_1_BEEP,BUZZER_ON);
+						}
 					}
 					break;
 

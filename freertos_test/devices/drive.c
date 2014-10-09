@@ -17,7 +17,7 @@ struct drive drv;
 
 void Drive_Init(void)
 {
-	RCC_AHB1PeriphClockCmd(DRIVE_ERROR_PORT_RCC|DRIVE_CONTROL_PORT_RCC, ENABLE);
+	RCC_AHB1PeriphClockCmd(/*DRIVE_ERROR_PORT_RCC|*/DRIVE_CONTROL_PORT_RCC, ENABLE);
 
 	GPIO_InitTypeDef init_pin;
 	init_pin.GPIO_Pin  = DRIVE_FORWARD | DRIVE_BACKWARD | DRIVE_RESET | DRIVE_SPEED;
@@ -27,11 +27,11 @@ void Drive_Init(void)
 	init_pin.GPIO_PuPd = GPIO_PuPd_NOPULL;
 	GPIO_Init (DRIVE_CONTROL_PORT, &init_pin);
 
-	init_pin.GPIO_Pin  = DRIVE_ERROR;//подт€гиваем вверх, дл€ уменьшени€ помех
-	init_pin.GPIO_Speed = GPIO_Speed_2MHz;
-	init_pin.GPIO_Mode  = GPIO_Mode_IN;
-	init_pin.GPIO_PuPd = GPIO_PuPd_UP;
-	GPIO_Init (DRIVE_ERROR_PORT, &init_pin);
+//	init_pin.GPIO_Pin  = DRIVE_ERROR;//подт€гиваем вверх, дл€ уменьшени€ помех
+//	init_pin.GPIO_Speed = GPIO_Speed_2MHz;
+//	init_pin.GPIO_Mode  = GPIO_Mode_IN;
+//	init_pin.GPIO_PuPd = GPIO_PuPd_UP;
+//	GPIO_Init (DRIVE_ERROR_PORT, &init_pin);
 
 	DRIVE_CONTROL_PORT->BSRRH=(DRIVE_FORWARD | DRIVE_BACKWARD | DRIVE_RESET | DRIVE_SPEED);
 
@@ -43,6 +43,7 @@ void Drive_Init(void)
 	drv.current_position=0x80008000;//temp!
 	drv.function_back_flag=DRIVE_BACK_POS_DOWN;
 	drv.function_back_temp_position=0x0;
+	drv.limitation_flag=DRIVE_LIMITATION_NONE;
 	//проверить данные?
 }
 
@@ -56,12 +57,22 @@ uint8_t Drive_Set_Position_Imp_Absolute(uint32_t move_val_imp)
 
 		if(move_val_imp<drv.current_position)
 		{
+			if(drv.limitation_flag==DRIVE_LIMITATION_ONLY_DOWN)
+			{
+				return DRIVE_ERR;
+			}
+
 			drv.dest_position=move_val_imp-Drive_MM_To_Impulse(drv.bkp_reg->F_06_cal_stop);
 			drv.min_speed_position=move_val_imp-Drive_MM_To_Impulse(drv.bkp_reg->F_05_cal_speed_down);
 			Drive_Start(DRIVE_DIRECTION_UP);
 		}
 		else
 		{
+			if(drv.limitation_flag==DRIVE_LIMITATION_ONLY_UP)
+			{
+				return DRIVE_ERR;
+			}
+
 			drv.dest_position=move_val_imp+Drive_MM_To_Impulse(drv.bkp_reg->F_06_cal_stop);
 			drv.min_speed_position=move_val_imp+Drive_MM_To_Impulse(drv.bkp_reg->F_05_cal_speed_down);
 			Drive_Start(DRIVE_DIRECTION_DOWN);
@@ -93,6 +104,11 @@ uint8_t Drive_Set_Position(uint8_t move_type,int16_t move_val)
 
 			case MOVE_TYPE_RELATIVE_UP:
 			{
+				if(drv.limitation_flag==DRIVE_LIMITATION_ONLY_DOWN)
+				{
+					return DRIVE_ERR;
+				}
+
 				drv.dest_position=drv.current_position+Drive_MM_To_Impulse(move_val)-Drive_MM_To_Impulse(drv.bkp_reg->F_06_cal_stop);
 				drv.min_speed_position=drv.current_position+Drive_MM_To_Impulse(move_val)-Drive_MM_To_Impulse(drv.bkp_reg->F_05_cal_speed_down);
 				drv.stop_type=STOP_NONE;
@@ -105,6 +121,11 @@ uint8_t Drive_Set_Position(uint8_t move_type,int16_t move_val)
 
 			case MOVE_TYPE_RELATIVE_DOWN:
 			{
+				if(drv.limitation_flag==DRIVE_LIMITATION_ONLY_UP)
+				{
+					return DRIVE_ERR;
+				}
+
 				if(move_val<0)
 				{
 					move_val=-move_val;
@@ -126,32 +147,42 @@ uint8_t Drive_Set_Position(uint8_t move_type,int16_t move_val)
 
 				if(temp>=0)
 				{
+					if(drv.limitation_flag==DRIVE_LIMITATION_ONLY_DOWN)
+					{
+						return DRIVE_ERR;
+					}
+
 					drv.dest_position=drv.bkp_reg->F_03_cal_syncro.imp+Drive_MM_To_Impulse((uint16_t)temp);//-Drive_MM_To_Impulse(drv.bkp_reg->F_06_cal_stop);
 				}
 				else
 				{
+					if(drv.limitation_flag==DRIVE_LIMITATION_ONLY_UP)
+					{
+						return DRIVE_ERR;
+					}
+
 					drv.dest_position=drv.bkp_reg->F_03_cal_syncro.imp-Drive_MM_To_Impulse((uint16_t)(-temp));//+Drive_MM_To_Impulse(drv.bkp_reg->F_06_cal_stop);
 				}
 
 				if(drv.dest_position>=drv.current_position)
 				{
 					drv.min_speed_position=drv.dest_position-Drive_MM_To_Impulse(drv.bkp_reg->F_05_cal_speed_down);
-					Drive_Start(DRIVE_DIRECTION_UP);
 				}
 				else
 				{
 					drv.min_speed_position=drv.dest_position+Drive_MM_To_Impulse(drv.bkp_reg->F_05_cal_speed_down);
-					Drive_Start(DRIVE_DIRECTION_DOWN);
 				}
 
 
 				if(temp>=0)
 				{
 					drv.dest_position=drv.dest_position-Drive_MM_To_Impulse(drv.bkp_reg->F_06_cal_stop);
+					Drive_Start(DRIVE_DIRECTION_UP);
 				}
 				else
 				{
 					drv.dest_position=drv.dest_position+Drive_MM_To_Impulse(drv.bkp_reg->F_06_cal_stop);
+					Drive_Start(DRIVE_DIRECTION_DOWN);
 				}
 
 				drv.stop_type=STOP_NONE;
@@ -234,36 +265,41 @@ uint8_t Drive_Stop(uint8_t stop_type)
 		case STOP_END_OF_OPERATION:
 		{
 			buzzer_set_buzz(BUZZER_EFFECT_3_BEEP,BUZZER_ON);
+			drv.error_flag=DRIVE_OK;
 		}
 		break;
 
 		case STOP_HI_SENSOR:
 		{
-
+			buzzer_set_buzz(BUZZER_EFFECT_LONG_BEEP,BUZZER_ON);
+			drv.error_flag=DRIVE_ERR;
 		}
 		break;
 
 		case STOP_LO_SENSOR:
 		{
-
+			buzzer_set_buzz(BUZZER_EFFECT_LONG_BEEP,BUZZER_ON);
+			drv.error_flag=DRIVE_ERR;
 		}
 		break;
 
 		case STOP_INVERTOR_ERROR:
 		{
-
+			buzzer_set_buzz(BUZZER_EFFECT_LONG_BEEP,BUZZER_ON);
+			drv.error_flag=DRIVE_ERR;
 		}
 		break;
 
 		case STOP_CONTROLLER_FAULT:
 		{
-
+			buzzer_set_buzz(BUZZER_EFFECT_LONG_BEEP,BUZZER_ON);
+			drv.error_flag=DRIVE_ERR;
 		}
 		break;
 
 		default:
 		{
-
+			drv.error_flag=DRIVE_ERR;
 		}
 		break;
 	}
@@ -272,9 +308,13 @@ uint8_t Drive_Stop(uint8_t stop_type)
 	drv.move_type_flag=MOVE_TYPE_NONE;
 }
 
-
-//#define MAGIC_IMPULSE 	240000
-//#define MAGIC_MM		785
+void Drive_Reset(void)
+{
+	uint32_t delay=10000;
+	DRIVE_CONTROL_PORT->BSRRL= DRIVE_RESET ;
+	while(delay--);
+	DRIVE_CONTROL_PORT->BSRRH= DRIVE_RESET ;
+}
 
 uint32_t Drive_MM_To_Impulse(uint16_t val_mm)
 {

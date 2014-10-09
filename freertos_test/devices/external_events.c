@@ -9,6 +9,19 @@
 #include "tablo_parser.h"
 #include "drive.h"
 
+//»нклуды от FreeRTOS:
+
+#include "FreeRTOS.h"
+#include "task.h"
+#include "queue.h"
+#include "semphr.h"
+
+#include "drive.h"
+
+void ExtEventsHandler( void *pvParameters );
+extern struct drive drv;
+
+
 void External_Events_Init(void)
 {
 	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOA, ENABLE);//тактируем портј
@@ -16,10 +29,10 @@ void External_Events_Init(void)
 
 	GPIO_InitTypeDef  GPIO_InitStructure;
 
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_0|GPIO_Pin_6|GPIO_Pin_7;
+	GPIO_InitStructure.GPIO_Pin = DRIVE_ERROR|DRIVE_LIMIT_UP|DRIVE_LIMIT_DOWN;
 	GPIO_InitStructure.GPIO_Mode  = GPIO_Mode_IN;;
 	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_UP;
-	GPIO_Init(GPIOA, &GPIO_InitStructure);
+	GPIO_Init(DRIVE_EXT_EVENTS_PORT, &GPIO_InitStructure);
 
 	EXTI_InitTypeDef EXTI_InitStructure;
 
@@ -58,6 +71,36 @@ void External_Events_Init(void)
 	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
 	NVIC_Init(&NVIC_InitStructure);
 
+	 xTaskCreate(ExtEventsHandler,(signed char*)"Ext_Events",64,NULL, tskIDLE_PRIORITY + 1, NULL);
+}
+
+void ExtEventsHandler( void *pvParameters )
+{
+	while(1)
+	{
+		if(GPIO_ReadInputDataBit(DRIVE_EXT_EVENTS_PORT,DRIVE_ERROR)==Bit_RESET)
+		{
+			Drive_Stop(STOP_INVERTOR_ERROR);
+		}
+
+		if(GPIO_ReadInputDataBit(DRIVE_EXT_EVENTS_PORT,DRIVE_LIMIT_UP)==Bit_RESET)
+		{
+			drv.limitation_flag=DRIVE_LIMITATION_ONLY_DOWN;
+		}
+		else
+		{
+			if(GPIO_ReadInputDataBit(DRIVE_EXT_EVENTS_PORT,DRIVE_LIMIT_DOWN)==Bit_RESET)
+			{
+				drv.limitation_flag=DRIVE_LIMITATION_ONLY_UP;
+			}
+			else
+			{
+				drv.limitation_flag=DRIVE_LIMITATION_NONE;
+			}
+		}
+
+		vTaskDelay(100);
+	}
 }
 
 void EXTI0_IRQHandler(void)

@@ -42,6 +42,13 @@ enum
 
 enum
 {
+	DRIVE_LIMITATION_NONE=0,
+	DRIVE_LIMITATION_ONLY_UP,
+	DRIVE_LIMITATION_ONLY_DOWN,
+};
+
+enum
+{
 	DRIVE_BACK_POS_DOWN=0,
 	DRIVE_BACK_POS_UP,
 };
@@ -76,6 +83,7 @@ struct drive
 	uint8_t 	move_type_flag;
 	uint8_t 	error_flag;
 	uint8_t 	stop_type;
+	uint8_t		limitation_flag;
 };
 
 
@@ -99,6 +107,7 @@ uint8_t Drive_Set_Position(uint8_t move_type,int16_t move_val);
 uint8_t Drive_Set_Speed(uint8_t val_speed);
 uint8_t Drive_Start(uint8_t direction);
 uint8_t Drive_Stop(uint8_t stop_type);
+void 	Drive_Reset(void);
 
 uint32_t Drive_MM_To_Impulse(uint16_t val_mm);
 uint16_t Drive_Impulse_To_MM(uint32_t val_impulse);
