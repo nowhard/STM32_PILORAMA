@@ -7,8 +7,8 @@
       <target file="syscalls.o" lastModified="1488d77c67c">
          <source file="..\..\..\syscalls\syscalls.c" lastModified="1476293bc68"/>
       </target>
-      <target file="menu.o" lastModified="148f9385120">
-         <source file="..\..\..\menu\menu.c" lastModified="148f93318d2"/>
+      <target file="menu.o" lastModified="148f9a9587d">
+         <source file="..\..\..\menu\menu.c" lastModified="148f9a947b4"/>
       </target>
       <target file="misc.o" lastModified="1488d77cddf">
          <source file="..\..\..\cmsis_lib\source\misc.c" lastModified="14125d86b88"/>
@@ -28,11 +28,11 @@
       <target file="indicator.o" lastModified="148ac3afe84">
          <source file="..\..\..\devices\indicator.c" lastModified="148ac3ada14"/>
       </target>
-      <target file="external_events.o" lastModified="148f9430cbe">
-         <source file="..\..\..\devices\external_events.c" lastModified="148f9430368"/>
-      </target>
       <target file="stm32f4xx_iwdg.o" lastModified="1488d77b769">
          <source file="..\..\..\cmsis_lib\source\stm32f4xx_iwdg.c" lastModified="1428e61eab6"/>
+      </target>
+      <target file="external_events.o" lastModified="148f9430cbe">
+         <source file="..\..\..\devices\external_events.c" lastModified="148f9430368"/>
       </target>
       <target file="tasks.o" lastModified="1488d92cbd8">
          <source file="..\..\..\FreeRTOSV7.1.0\Source\tasks.c" lastModified="13e3b1eb910"/>

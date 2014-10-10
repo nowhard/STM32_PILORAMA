@@ -768,11 +768,11 @@ void Menu_Handle_Key(menuItem* currentMenuItem,uint8_t current_key)
 }
 
 
-
+#define DISPLAY_DELAY	10
 void MenuHandler( void *pvParameters )
 {
 	uint16_t key;
-	uint8_t clr_indicator_msg;
+	uint8_t clr_indicator_msg, display_counter=0;
     startMenu();
     while(1)
     {
@@ -794,15 +794,17 @@ void MenuHandler( void *pvParameters )
 				 }
 			 }
 		 }
-
-		if(selectedMenuItem->Select==MENU_ROOT)
+		display_counter++;
+		if((selectedMenuItem->Select==MENU_ROOT)&&(display_counter>=DISPLAY_DELAY))
 		{
+			display_counter=0x0;
 			if(drv.error_flag==DRIVE_OK)
 			{
 				if(Menu_Input_Int_To_Buf(Drive_Impulse_To_MM_Absolute(drv.current_position),&abs_buf, MENU_ABS_MIN_VAL,MENU_ABS_MAX_VAL)!=INPUT_ERR)
 				{
-					Menu_Input_Buf_To_Indicator(&abs_buf,IND_1);
+					//Menu_Input_Buf_To_Indicator(&abs_buf,IND_1);
 				}
+				Menu_Input_Buf_To_Indicator(&abs_buf,IND_1);
 
 				switch(drv.move_type_flag)
 				{
@@ -810,8 +812,9 @@ void MenuHandler( void *pvParameters )
 					{
 						if(Menu_Input_Int_To_Buf(Drive_Impulse_To_MM(drv.dest_position-drv.current_position),&abs_buf, MENU_ABS_MIN_VAL,MENU_ABS_MAX_VAL)!=INPUT_ERR)
 						{
-							Menu_Input_Buf_To_Indicator(&abs_buf,IND_2);
+//							Menu_Input_Buf_To_Indicator(&abs_buf,IND_2);
 						}
+						Menu_Input_Buf_To_Indicator(&abs_buf,IND_2);
 					}
 					break;
 
@@ -819,9 +822,11 @@ void MenuHandler( void *pvParameters )
 					{
 						if(Menu_Input_Int_To_Buf(Drive_Impulse_To_MM(drv.current_position-drv.dest_position),&abs_buf, MENU_ABS_MIN_VAL,MENU_ABS_MAX_VAL)!=INPUT_ERR)
 						{
-							abs_buf.sign='-';
-							Menu_Input_Buf_To_Indicator(&abs_buf,IND_2);
+//							abs_buf.sign='-';
+//							Menu_Input_Buf_To_Indicator(&abs_buf,IND_2);
 						}
+						abs_buf.sign='-';
+						Menu_Input_Buf_To_Indicator(&abs_buf,IND_2);
 					}
 					break;
 
@@ -831,16 +836,19 @@ void MenuHandler( void *pvParameters )
 						{
 							if(Menu_Input_Int_To_Buf(Drive_Impulse_To_MM(drv.dest_position-drv.current_position),&abs_buf, MENU_ABS_MIN_VAL,MENU_ABS_MAX_VAL)!=INPUT_ERR)
 							{
-								Menu_Input_Buf_To_Indicator(&abs_buf,IND_2);
+								//Menu_Input_Buf_To_Indicator(&abs_buf,IND_2);
 							}
+							Menu_Input_Buf_To_Indicator(&abs_buf,IND_2);
 						}
 						else
 						{
 							if(Menu_Input_Int_To_Buf(Drive_Impulse_To_MM(drv.current_position-drv.dest_position),&abs_buf, MENU_ABS_MIN_VAL,MENU_ABS_MAX_VAL)!=INPUT_ERR)
 							{
-								abs_buf.sign='-';
-								Menu_Input_Buf_To_Indicator(&abs_buf,IND_2);
+//								abs_buf.sign='-';
+//								Menu_Input_Buf_To_Indicator(&abs_buf,IND_2);
 							}
+							abs_buf.sign='-';
+							Menu_Input_Buf_To_Indicator(&abs_buf,IND_2);
 						}
 					}
 					break;
@@ -962,15 +970,26 @@ uint8_t Menu_Input_Buf_To_Int(struct input_buffer *inp_buf,int16_t *val,int16_t 
 
 uint8_t Menu_Input_Int_To_Buf(int16_t val,struct input_buffer *inp_buf,int16_t min_value, int16_t max_value)
 {
-	uint8_t tmp_val;
+	uint8_t tmp_val,error_flag=0;
 
 	if((val>max_value)||(val<min_value))
 	{
-		Menu_Input_Field_Clear(inp_buf);
-		return INPUT_ERR;
+		//Menu_Input_Field_Clear(inp_buf);
+
+		if(val>max_value)//заполнить буфер
+		{
+			val=max_value;
+		}
+		else
+		{
+			val=min_value;
+		}
+
+		//return INPUT_ERR;
+		error_flag=0x1;
 	}
-	else
-	{
+	//else
+//	{
 		if(val<0)
 		{
 			inp_buf->sign='-';
@@ -1004,9 +1023,17 @@ uint8_t Menu_Input_Int_To_Buf(int16_t val,struct input_buffer *inp_buf,int16_t m
 			val=val%divider;
 			divider=divider/10;
 		}
-	}
+//	}
 	//Menu_Input_Buf_To_Indicator(inp_buf,IND_2);
-	return INPUT_OK;
+		if(error_flag)
+		{
+			return INPUT_ERR;
+		}
+		else
+		{
+			return INPUT_OK;
+		}
+
 }
 
 void Menu_Input_Field(uint8_t current_key,uint8_t attributes,struct input_buffer *inp_buf,int16_t min_value, int16_t max_value)
