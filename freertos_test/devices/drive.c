@@ -257,7 +257,7 @@ uint8_t Drive_Start(uint8_t direction)
 	}
 }
 
-uint8_t Drive_Stop(uint8_t stop_type)
+uint8_t Drive_Stop(uint8_t stop_type,uint8_t function_start_type)
 {
 	uint8_t clr_indicator_msg;
 	DRIVE_CONTROL_PORT->BSRRH=(DRIVE_FORWARD | DRIVE_BACKWARD | DRIVE_SPEED);
@@ -266,35 +266,35 @@ uint8_t Drive_Stop(uint8_t stop_type)
 	{
 		case STOP_END_OF_OPERATION:
 		{
-			buzzer_set_buzz(BUZZER_EFFECT_3_BEEP,BUZZER_ON);
+			buzzer_set_buzz(BUZZER_EFFECT_3_BEEP,BUZZER_ON,function_start_type);
 			drv.error_flag=DRIVE_OK;
 		}
 		break;
 
 		case STOP_HI_SENSOR:
 		{
-			buzzer_set_buzz(BUZZER_EFFECT_LONG_BEEP,BUZZER_ON);
+			buzzer_set_buzz(BUZZER_EFFECT_LONG_BEEP,BUZZER_ON,function_start_type);
 			drv.error_flag=DRIVE_ERR;
 		}
 		break;
 
 		case STOP_LO_SENSOR:
 		{
-			buzzer_set_buzz(BUZZER_EFFECT_LONG_BEEP,BUZZER_ON);
+			buzzer_set_buzz(BUZZER_EFFECT_LONG_BEEP,BUZZER_ON,function_start_type);
 			drv.error_flag=DRIVE_ERR;
 		}
 		break;
 
 		case STOP_INVERTOR_ERROR:
 		{
-			buzzer_set_buzz(BUZZER_EFFECT_LONG_BEEP,BUZZER_ON);
+			buzzer_set_buzz(BUZZER_EFFECT_LONG_BEEP,BUZZER_ON,function_start_type);
 			drv.error_flag=DRIVE_ERR;
 		}
 		break;
 
 		case STOP_CONTROLLER_FAULT:
 		{
-			buzzer_set_buzz(BUZZER_EFFECT_LONG_BEEP,BUZZER_ON);
+			buzzer_set_buzz(BUZZER_EFFECT_LONG_BEEP,BUZZER_ON,function_start_type);
 			drv.error_flag=DRIVE_ERR;
 		}
 		break;
@@ -307,7 +307,17 @@ uint8_t Drive_Stop(uint8_t stop_type)
 	}
 	//Menu_Input_Field_Down_Clear();
 	clr_indicator_msg=MENU_MSG_CLR_INDICATOR;
-	xQueueSend( xClrIndicatorQueue,  &clr_indicator_msg, ( portTickType ) 0 );
+	if(function_start_type==FROM_TASK)
+	{
+		xQueueSend( xClrIndicatorQueue,  &clr_indicator_msg, ( portTickType ) 0 );
+	}
+	else
+	{
+		portBASE_TYPE *xHigherPriorityTaskWoken ;
+		    /* We have not woken a task at the start of the ISR. */
+		xHigherPriorityTaskWoken = pdFALSE;
+		xQueueSendFromISR( xClrIndicatorQueue,  &clr_indicator_msg,/* ( portTickType ) 0*/&xHigherPriorityTaskWoken );
+	}
 	drv.stop_type=stop_type;
 	drv.move_type_flag=MOVE_TYPE_NONE;
 }

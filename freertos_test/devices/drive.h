@@ -106,7 +106,7 @@ uint8_t Drive_Set_Position_Imp_Absolute(uint32_t move_val_imp);
 uint8_t Drive_Set_Position(uint8_t move_type,int16_t move_val);
 uint8_t Drive_Set_Speed(uint8_t val_speed);
 uint8_t Drive_Start(uint8_t direction);
-uint8_t Drive_Stop(uint8_t stop_type);
+uint8_t Drive_Stop(uint8_t stop_type,uint8_t function_start_type);
 void 	Drive_Reset(void);
 
 uint32_t Drive_MM_To_Impulse(uint16_t val_mm);

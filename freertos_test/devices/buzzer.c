@@ -119,13 +119,21 @@ void buzzer_task(void *pvParameters )
 }
 
 
-void buzzer_set_buzz(uint8_t effect, uint8_t enable)
+
+void buzzer_set_buzz(uint8_t effect, uint8_t enable,uint8_t function_start_type)
 {
 	if(enable&0x1)
 	{
 		if( buz.buzzer_enable==BUZZER_OFF)
 		{
-			vTaskResume(xBuzzer_Handle);
+			if(function_start_type==FROM_TASK)
+			{
+				vTaskResume(xBuzzer_Handle);
+			}
+			else
+			{
+				xTaskResumeFromISR(xBuzzer_Handle);
+			}
 			 buz.buzzer_enable=BUZZER_ON;
 		}
 		task_watches[BUZZER_TASK].task_status=TASK_ACTIVE;
@@ -134,7 +142,7 @@ void buzzer_set_buzz(uint8_t effect, uint8_t enable)
 	{
 		if( buz.buzzer_enable==BUZZER_ON)
 		{
-			vTaskSuspend (xBuzzer_Handle);
+			 vTaskSuspend (xBuzzer_Handle);
 			 buz.buzzer_enable=BUZZER_OFF;
 		}
 		task_watches[BUZZER_TASK].task_status=TASK_IDLE;

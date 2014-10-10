@@ -1,5 +1,6 @@
 #include "encoder.h"
 #include "drive.h"
+#include "buzzer.h"
 
 extern struct drive drv;
 
@@ -28,7 +29,7 @@ void TIM1_UP_TIM10_IRQHandler(void)
 
     	if(drv.current_position==drv.dest_position)
     	{
-    		Drive_Stop(STOP_END_OF_OPERATION);
+    		Drive_Stop(STOP_END_OF_OPERATION,FROM_ISR);
     	}
     }
   }

@@ -7,7 +7,7 @@
 #include <misc.h>
 
 #include "tablo_parser.h"
-#include "drive.h"
+#include "buzzer.h"
 
 //Инклуды от FreeRTOS:
 
@@ -80,7 +80,11 @@ void ExtEventsHandler( void *pvParameters )
 	{
 		if(GPIO_ReadInputDataBit(DRIVE_EXT_EVENTS_PORT,DRIVE_ERROR)==Bit_RESET)
 		{
-			Drive_Stop(STOP_INVERTOR_ERROR);
+			Drive_Stop(STOP_INVERTOR_ERROR,FROM_TASK);
+		}
+		else
+		{
+			EXTI->IMR |= EXTI_Line0;
 		}
 
 		if(GPIO_ReadInputDataBit(DRIVE_EXT_EVENTS_PORT,DRIVE_LIMIT_UP)==Bit_RESET)
@@ -96,6 +100,7 @@ void ExtEventsHandler( void *pvParameters )
 			else
 			{
 				drv.limitation_flag=DRIVE_LIMITATION_NONE;
+				EXTI->IMR |= (EXTI_Line6|EXTI_Line7);
 			}
 		}
 
@@ -108,7 +113,8 @@ void EXTI0_IRQHandler(void)
     if(EXTI_GetITStatus(EXTI_Line0) != RESET)
     {
         EXTI_ClearITPendingBit(EXTI_Line0);
-        Drive_Stop(STOP_INVERTOR_ERROR);
+        Drive_Stop(STOP_INVERTOR_ERROR,FROM_ISR);
+        EXTI->IMR &= ~EXTI_Line0;
     }
 }
 
@@ -117,12 +123,14 @@ void EXTI9_5_IRQHandler(void)
     if(EXTI_GetITStatus(EXTI_Line6) != RESET)
     {
         EXTI_ClearITPendingBit(EXTI_Line6);
-        Drive_Stop(STOP_HI_SENSOR);
+        Drive_Stop(STOP_HI_SENSOR,FROM_ISR);
+        EXTI->IMR &= ~EXTI_Line6;
     }
 
     if(EXTI_GetITStatus(EXTI_Line7) != RESET)
     {
         EXTI_ClearITPendingBit(EXTI_Line7);
-        Drive_Stop(STOP_LO_SENSOR);
+        Drive_Stop(STOP_LO_SENSOR,FROM_ISR);
+        EXTI->IMR &= ~EXTI_Line7;
     }
 }

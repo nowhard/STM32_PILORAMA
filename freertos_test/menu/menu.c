@@ -158,7 +158,7 @@ unsigned char dispMenu(void)
 				{
 					Menu_Input_Field_Clear(&input_buf);
 					Indicator_Blink_Set(IND_2,0xFF,2);
-					buzzer_set_buzz(BUZZER_EFFECT_3_BEEP,BUZZER_ON);
+					buzzer_set_buzz(BUZZER_EFFECT_3_BEEP,BUZZER_ON,FROM_TASK);
 					Indicator_Blink_Set(IND_2,0xFF,2);
 					//error
 				}
@@ -175,7 +175,7 @@ unsigned char dispMenu(void)
 				{
 					Menu_Input_Field_Clear(&input_buf);
 					Indicator_Blink_Set(IND_2,0xFF,2);
-					buzzer_set_buzz(BUZZER_EFFECT_3_BEEP,BUZZER_ON);
+					buzzer_set_buzz(BUZZER_EFFECT_3_BEEP,BUZZER_ON,FROM_TASK);
 					Indicator_Blink_Set(IND_2,0xFF,2);
 					//error
 				}
@@ -192,7 +192,7 @@ unsigned char dispMenu(void)
 				{
 					Menu_Input_Field_Clear(&input_buf);
 					Indicator_Blink_Set(IND_2,0xFF,2);
-					buzzer_set_buzz(BUZZER_EFFECT_3_BEEP,BUZZER_ON);
+					buzzer_set_buzz(BUZZER_EFFECT_3_BEEP,BUZZER_ON,FROM_TASK);
 					Indicator_Blink_Set(IND_2,0xFF,2);
 					//error
 				}
@@ -264,8 +264,8 @@ void Menu_Handle_Key(menuItem* currentMenuItem,uint8_t current_key)
 	{
 		if(current_key==KEY_C)
 		{
-			Drive_Stop(STOP_USER);
-			buzzer_set_buzz(BUZZER_EFFECT_LONG_BEEP,BUZZER_ON);
+			Drive_Stop(STOP_USER,FROM_TASK);
+			buzzer_set_buzz(BUZZER_EFFECT_LONG_BEEP,BUZZER_ON,FROM_TASK);
 		}
 	}
 	else
@@ -279,7 +279,7 @@ void Menu_Handle_Key(menuItem* currentMenuItem,uint8_t current_key)
 					case KEY_A_LONG:
 					{
 						Menu_Child();
-						buzzer_set_buzz(BUZZER_EFFECT_LONG_BEEP,BUZZER_ON);
+						buzzer_set_buzz(BUZZER_EFFECT_LONG_BEEP,BUZZER_ON,FROM_TASK);
 					}
 					break;
 
@@ -322,7 +322,7 @@ void Menu_Handle_Key(menuItem* currentMenuItem,uint8_t current_key)
 							}
 						}
 						drv.error_flag=DRIVE_OK;
-						buzzer_set_buzz(BUZZER_EFFECT_1_BEEP,BUZZER_ON);
+						buzzer_set_buzz(BUZZER_EFFECT_1_BEEP,BUZZER_ON,FROM_TASK);
 					}
 					break;
 
@@ -337,17 +337,17 @@ void Menu_Handle_Key(menuItem* currentMenuItem,uint8_t current_key)
 								{
 									if(Drive_Set_Position(MOVE_TYPE_RELATIVE_UP, move_val)!=DRIVE_OK)
 									{
-										Drive_Stop(STOP_CONTROLLER_FAULT);
-										buzzer_set_buzz(BUZZER_EFFECT_3_BEEP,BUZZER_ON);
+										Drive_Stop(STOP_CONTROLLER_FAULT,FROM_TASK);
+										buzzer_set_buzz(BUZZER_EFFECT_3_BEEP,BUZZER_ON,FROM_TASK);
 									}
 									else
 									{
-										buzzer_set_buzz(BUZZER_EFFECT_1_BEEP,BUZZER_ON);
+										buzzer_set_buzz(BUZZER_EFFECT_1_BEEP,BUZZER_ON,FROM_TASK);
 									}
 								}
 								else
 								{
-									buzzer_set_buzz(BUZZER_EFFECT_3_BEEP,BUZZER_ON);
+									buzzer_set_buzz(BUZZER_EFFECT_3_BEEP,BUZZER_ON,FROM_TASK);
 								}
 							}
 							break;
@@ -358,16 +358,16 @@ void Menu_Handle_Key(menuItem* currentMenuItem,uint8_t current_key)
 								{
 									if(Drive_Set_Position(MOVE_TYPE_RELATIVE_DOWN, move_val)!=DRIVE_OK)
 									{
-										Drive_Stop(STOP_CONTROLLER_FAULT);
+										Drive_Stop(STOP_CONTROLLER_FAULT,FROM_TASK);
 									}
 									else
 									{
-										buzzer_set_buzz(BUZZER_EFFECT_1_BEEP,BUZZER_ON);
+										buzzer_set_buzz(BUZZER_EFFECT_1_BEEP,BUZZER_ON,FROM_TASK);
 									}
 								}
 								else
 								{
-									buzzer_set_buzz(BUZZER_EFFECT_3_BEEP,BUZZER_ON);
+									buzzer_set_buzz(BUZZER_EFFECT_3_BEEP,BUZZER_ON,FROM_TASK);
 								}
 							}
 							break;
@@ -378,16 +378,16 @@ void Menu_Handle_Key(menuItem* currentMenuItem,uint8_t current_key)
 								{
 									if(Drive_Set_Position(MOVE_TYPE_ABSOLUTE, move_val)!=DRIVE_OK)
 									{
-										Drive_Stop(STOP_CONTROLLER_FAULT);
+										Drive_Stop(STOP_CONTROLLER_FAULT,FROM_TASK);
 									}
 									else
 									{
-										buzzer_set_buzz(BUZZER_EFFECT_1_BEEP,BUZZER_ON);
+										buzzer_set_buzz(BUZZER_EFFECT_1_BEEP,BUZZER_ON,FROM_TASK);
 									}
 								}
 								else
 								{
-									buzzer_set_buzz(BUZZER_EFFECT_3_BEEP,BUZZER_ON);
+									buzzer_set_buzz(BUZZER_EFFECT_3_BEEP,BUZZER_ON,FROM_TASK);
 								}
 							}
 							break;
@@ -410,7 +410,7 @@ void Menu_Handle_Key(menuItem* currentMenuItem,uint8_t current_key)
 								uint32_t temp_imp_pos=Drive_MM_To_Impulse_Absolute(drv.bkp_reg->F_04_function_back);
 								if(temp_imp_pos<drv.current_position)
 								{
-									buzzer_set_buzz(BUZZER_EFFECT_3_BEEP,BUZZER_ON);
+									buzzer_set_buzz(BUZZER_EFFECT_3_BEEP,BUZZER_ON,FROM_TASK);
 								}
 								else
 								{
@@ -419,12 +419,12 @@ void Menu_Handle_Key(menuItem* currentMenuItem,uint8_t current_key)
 									//go to UP  position
 									if(Drive_Set_Position_Imp_Absolute(temp_imp_pos)!=DRIVE_OK)
 									{
-										buzzer_set_buzz(BUZZER_EFFECT_3_BEEP,BUZZER_ON);
+										buzzer_set_buzz(BUZZER_EFFECT_3_BEEP,BUZZER_ON,FROM_TASK);
 										drv.function_back_flag=DRIVE_BACK_POS_DOWN;
 									}
 									else
 									{
-										buzzer_set_buzz(BUZZER_EFFECT_1_BEEP,BUZZER_ON);
+										buzzer_set_buzz(BUZZER_EFFECT_1_BEEP,BUZZER_ON,FROM_TASK);
 									}
 								}
 							}
@@ -435,11 +435,11 @@ void Menu_Handle_Key(menuItem* currentMenuItem,uint8_t current_key)
 								drv.function_back_flag=DRIVE_BACK_POS_DOWN;
 								if(Drive_Set_Position_Imp_Absolute(drv.function_back_temp_position)!=DRIVE_OK)
 								{
-									buzzer_set_buzz(BUZZER_EFFECT_3_BEEP,BUZZER_ON);
+									buzzer_set_buzz(BUZZER_EFFECT_3_BEEP,BUZZER_ON,FROM_TASK);
 								}
 								else
 								{
-									buzzer_set_buzz(BUZZER_EFFECT_1_BEEP,BUZZER_ON);
+									buzzer_set_buzz(BUZZER_EFFECT_1_BEEP,BUZZER_ON,FROM_TASK);
 								}
 							}
 							break;
@@ -460,7 +460,7 @@ void Menu_Handle_Key(menuItem* currentMenuItem,uint8_t current_key)
 						{
 							Drive_Set_Speed(DRIVE_SPEED_HI);
 							Drive_Start(DRIVE_DIRECTION_DOWN);
-							buzzer_set_buzz(BUZZER_EFFECT_1_BEEP,BUZZER_ON);
+							buzzer_set_buzz(BUZZER_EFFECT_1_BEEP,BUZZER_ON,FROM_TASK);
 						}
 					}
 					break;
@@ -471,22 +471,22 @@ void Menu_Handle_Key(menuItem* currentMenuItem,uint8_t current_key)
 						{
 							Drive_Set_Speed(DRIVE_SPEED_HI);
 							Drive_Start(DRIVE_DIRECTION_UP);
-							buzzer_set_buzz(BUZZER_EFFECT_1_BEEP,BUZZER_ON);
+							buzzer_set_buzz(BUZZER_EFFECT_1_BEEP,BUZZER_ON,FROM_TASK);
 						}
 					}
 					break;
 
 					case KEY_STAR_LONG_RELEASE://стоп движение вниз
 					{
-						Drive_Stop(STOP_USER);
-						buzzer_set_buzz(BUZZER_EFFECT_2_BEEP,BUZZER_ON);
+						Drive_Stop(STOP_USER,FROM_TASK);
+						buzzer_set_buzz(BUZZER_EFFECT_2_BEEP,BUZZER_ON,FROM_TASK);
 					}
 					break;
 
 					case KEY_SHARP_LONG_RELEASE://стоп движение вверх
 					{
-						Drive_Stop(STOP_USER);
-						buzzer_set_buzz(BUZZER_EFFECT_2_BEEP,BUZZER_ON);
+						Drive_Stop(STOP_USER,FROM_TASK);
+						buzzer_set_buzz(BUZZER_EFFECT_2_BEEP,BUZZER_ON,FROM_TASK);
 					}
 					break;
 
@@ -506,14 +506,14 @@ void Menu_Handle_Key(menuItem* currentMenuItem,uint8_t current_key)
 					case KEY_C_LONG:
 					{
 						Menu_Parent();
-						buzzer_set_buzz(BUZZER_EFFECT_LONG_BEEP,BUZZER_ON);
+						buzzer_set_buzz(BUZZER_EFFECT_LONG_BEEP,BUZZER_ON,FROM_TASK);
 					}
 					break;
 
 					case KEY_A:
 					{
 						Menu_Next();
-						buzzer_set_buzz(BUZZER_EFFECT_1_BEEP,BUZZER_ON);
+						buzzer_set_buzz(BUZZER_EFFECT_1_BEEP,BUZZER_ON,FROM_TASK);
 					}
 					break;
 
@@ -524,11 +524,11 @@ void Menu_Handle_Key(menuItem* currentMenuItem,uint8_t current_key)
 						{
 							temp_mm_imp.imp=drv.current_position;
 							Backup_SRAM_Write_Reg(&drv.bkp_reg->F_01_cal_up,&temp_mm_imp,sizeof(struct mm_imp));
-							buzzer_set_buzz(BUZZER_EFFECT_2_BEEP,BUZZER_ON);
+							buzzer_set_buzz(BUZZER_EFFECT_2_BEEP,BUZZER_ON,FROM_TASK);
 						}
 						else
 						{
-							buzzer_set_buzz(BUZZER_EFFECT_3_BEEP,BUZZER_ON);
+							buzzer_set_buzz(BUZZER_EFFECT_3_BEEP,BUZZER_ON,FROM_TASK);
 							Indicator_Blink_Set(IND_2,0xFF,2);
 						}
 					}
@@ -550,14 +550,14 @@ void Menu_Handle_Key(menuItem* currentMenuItem,uint8_t current_key)
 					case KEY_C_LONG:
 					{
 						Menu_Parent();
-						buzzer_set_buzz(BUZZER_EFFECT_LONG_BEEP,BUZZER_ON);
+						buzzer_set_buzz(BUZZER_EFFECT_LONG_BEEP,BUZZER_ON,FROM_TASK);
 					}
 					break;
 
 					case KEY_A:
 					{
 						Menu_Next();
-						buzzer_set_buzz(BUZZER_EFFECT_1_BEEP,BUZZER_ON);
+						buzzer_set_buzz(BUZZER_EFFECT_1_BEEP,BUZZER_ON,FROM_TASK);
 					}
 					break;
 
@@ -568,11 +568,11 @@ void Menu_Handle_Key(menuItem* currentMenuItem,uint8_t current_key)
 						{
 							temp_mm_imp.imp=drv.current_position;
 							Backup_SRAM_Write_Reg(&drv.bkp_reg->F_02_cal_down,&temp_mm_imp,sizeof(struct mm_imp));
-							buzzer_set_buzz(BUZZER_EFFECT_2_BEEP,BUZZER_ON);
+							buzzer_set_buzz(BUZZER_EFFECT_2_BEEP,BUZZER_ON,FROM_TASK);
 						}
 						else
 						{
-							buzzer_set_buzz(BUZZER_EFFECT_3_BEEP,BUZZER_ON);
+							buzzer_set_buzz(BUZZER_EFFECT_3_BEEP,BUZZER_ON,FROM_TASK);
 							Indicator_Blink_Set(IND_2,0xFF,2);
 							//input error
 						}
@@ -595,14 +595,14 @@ void Menu_Handle_Key(menuItem* currentMenuItem,uint8_t current_key)
 					case KEY_C_LONG:
 					{
 						Menu_Parent();
-						buzzer_set_buzz(BUZZER_EFFECT_LONG_BEEP,BUZZER_ON);
+						buzzer_set_buzz(BUZZER_EFFECT_LONG_BEEP,BUZZER_ON,FROM_TASK);
 					}
 					break;
 
 					case KEY_A:
 					{
 						Menu_Next();
-						buzzer_set_buzz(BUZZER_EFFECT_1_BEEP,BUZZER_ON);
+						buzzer_set_buzz(BUZZER_EFFECT_1_BEEP,BUZZER_ON,FROM_TASK);
 					}
 					break;
 
@@ -612,11 +612,11 @@ void Menu_Handle_Key(menuItem* currentMenuItem,uint8_t current_key)
 						{
 							temp_mm_imp.imp=drv.current_position;
 							Backup_SRAM_Write_Reg(&drv.bkp_reg->F_03_cal_syncro,&temp_mm_imp,sizeof(struct mm_imp));
-							buzzer_set_buzz(BUZZER_EFFECT_2_BEEP,BUZZER_ON);
+							buzzer_set_buzz(BUZZER_EFFECT_2_BEEP,BUZZER_ON,FROM_TASK);
 						}
 						else
 						{
-							buzzer_set_buzz(BUZZER_EFFECT_3_BEEP,BUZZER_ON);
+							buzzer_set_buzz(BUZZER_EFFECT_3_BEEP,BUZZER_ON,FROM_TASK);
 							Indicator_Blink_Set(IND_2,0xFF,2);
 							//input error
 						}
@@ -639,14 +639,14 @@ void Menu_Handle_Key(menuItem* currentMenuItem,uint8_t current_key)
 					case KEY_C_LONG:
 					{
 						Menu_Parent();
-						buzzer_set_buzz(BUZZER_EFFECT_LONG_BEEP,BUZZER_ON);
+						buzzer_set_buzz(BUZZER_EFFECT_LONG_BEEP,BUZZER_ON,FROM_TASK);
 					}
 					break;
 
 					case KEY_A:
 					{
 						Menu_Next();
-						buzzer_set_buzz(BUZZER_EFFECT_1_BEEP,BUZZER_ON);
+						buzzer_set_buzz(BUZZER_EFFECT_1_BEEP,BUZZER_ON,FROM_TASK);
 					}
 					break;
 
@@ -655,11 +655,11 @@ void Menu_Handle_Key(menuItem* currentMenuItem,uint8_t current_key)
 						if(Menu_Input_Buf_To_Int(&input_buf,&temp_val,MENU_F04_MIN_VAL,MENU_F04_MAX_VAL)==INPUT_OK)
 						{
 							Backup_SRAM_Write_Reg(&drv.bkp_reg->F_04_function_back,&temp_val,sizeof(uint16_t));
-							buzzer_set_buzz(BUZZER_EFFECT_2_BEEP,BUZZER_ON);
+							buzzer_set_buzz(BUZZER_EFFECT_2_BEEP,BUZZER_ON,FROM_TASK);
 						}
 						else
 						{
-							buzzer_set_buzz(BUZZER_EFFECT_3_BEEP,BUZZER_ON);
+							buzzer_set_buzz(BUZZER_EFFECT_3_BEEP,BUZZER_ON,FROM_TASK);
 							Indicator_Blink_Set(IND_2,0xFF,2);
 							//input error
 						}
@@ -682,14 +682,14 @@ void Menu_Handle_Key(menuItem* currentMenuItem,uint8_t current_key)
 					case KEY_C_LONG:
 					{
 						Menu_Parent();
-						buzzer_set_buzz(BUZZER_EFFECT_LONG_BEEP,BUZZER_ON);
+						buzzer_set_buzz(BUZZER_EFFECT_LONG_BEEP,BUZZER_ON,FROM_TASK);
 					}
 					break;
 
 					case KEY_A:
 					{
 						Menu_Next();
-						buzzer_set_buzz(BUZZER_EFFECT_1_BEEP,BUZZER_ON);
+						buzzer_set_buzz(BUZZER_EFFECT_1_BEEP,BUZZER_ON,FROM_TASK);
 					}
 					break;
 
@@ -698,11 +698,11 @@ void Menu_Handle_Key(menuItem* currentMenuItem,uint8_t current_key)
 						if(Menu_Input_Buf_To_Int(&input_buf,&temp_val,MENU_F05_MIN_VAL,MENU_F05_MAX_VAL)==INPUT_OK)
 						{
 							Backup_SRAM_Write_Reg(&drv.bkp_reg->F_05_cal_speed_down,&temp_val,sizeof(uint16_t));
-							buzzer_set_buzz(BUZZER_EFFECT_2_BEEP,BUZZER_ON);
+							buzzer_set_buzz(BUZZER_EFFECT_2_BEEP,BUZZER_ON,FROM_TASK);
 						}
 						else
 						{
-							buzzer_set_buzz(BUZZER_EFFECT_3_BEEP,BUZZER_ON);
+							buzzer_set_buzz(BUZZER_EFFECT_3_BEEP,BUZZER_ON,FROM_TASK);
 							Indicator_Blink_Set(IND_2,0xFF,2);
 							//input error
 						}
@@ -725,7 +725,7 @@ void Menu_Handle_Key(menuItem* currentMenuItem,uint8_t current_key)
 					case KEY_C_LONG:
 					{
 						Menu_Parent();
-						buzzer_set_buzz(BUZZER_EFFECT_LONG_BEEP,BUZZER_ON);
+						buzzer_set_buzz(BUZZER_EFFECT_LONG_BEEP,BUZZER_ON,FROM_TASK);
 					}
 					break;
 
@@ -733,7 +733,7 @@ void Menu_Handle_Key(menuItem* currentMenuItem,uint8_t current_key)
 					{
 						selectedMenuItem = (menuItem*)&m_s1i1;
 						dispMenu();
-						buzzer_set_buzz(BUZZER_EFFECT_1_BEEP,BUZZER_ON);
+						buzzer_set_buzz(BUZZER_EFFECT_1_BEEP,BUZZER_ON,FROM_TASK);
 					}
 					break;
 
@@ -743,11 +743,11 @@ void Menu_Handle_Key(menuItem* currentMenuItem,uint8_t current_key)
 						if(Menu_Input_Buf_To_Int(&input_buf,&temp_val,MENU_F06_MIN_VAL,MENU_F06_MAX_VAL)==INPUT_OK)
 						{
 							Backup_SRAM_Write_Reg(&drv.bkp_reg->F_06_cal_stop,&temp_val,sizeof(uint16_t));
-							buzzer_set_buzz(BUZZER_EFFECT_2_BEEP,BUZZER_ON);
+							buzzer_set_buzz(BUZZER_EFFECT_2_BEEP,BUZZER_ON,FROM_TASK);
 						}
 						else
 						{
-							buzzer_set_buzz(BUZZER_EFFECT_3_BEEP,BUZZER_ON);
+							buzzer_set_buzz(BUZZER_EFFECT_3_BEEP,BUZZER_ON,FROM_TASK);
 							Indicator_Blink_Set(IND_2,0xFF,2);
 							//input error
 						}
@@ -1027,7 +1027,7 @@ void Menu_Input_Field(uint8_t current_key,uint8_t attributes,struct input_buffer
 			}
 
 			Menu_Input_Buf_To_Indicator(inp_buf,IND_2);
-			buzzer_set_buzz(BUZZER_EFFECT_1_BEEP,BUZZER_ON);
+			buzzer_set_buzz(BUZZER_EFFECT_1_BEEP,BUZZER_ON,FROM_TASK);
 		}
 
 		return;
@@ -1042,7 +1042,7 @@ void Menu_Input_Field(uint8_t current_key,uint8_t attributes,struct input_buffer
 			{
 				inp_buf->sign='-';
 				Menu_Input_Buf_To_Indicator(inp_buf,IND_2);
-				buzzer_set_buzz(BUZZER_EFFECT_1_BEEP,BUZZER_ON);
+				buzzer_set_buzz(BUZZER_EFFECT_1_BEEP,BUZZER_ON,FROM_TASK);
 			}
 			return;
 		}
@@ -1054,7 +1054,7 @@ void Menu_Input_Field(uint8_t current_key,uint8_t attributes,struct input_buffer
 			{
 				inp_buf->sign='+';
 				Menu_Input_Buf_To_Indicator(inp_buf,IND_2);
-				buzzer_set_buzz(BUZZER_EFFECT_1_BEEP,BUZZER_ON);
+				buzzer_set_buzz(BUZZER_EFFECT_1_BEEP,BUZZER_ON,FROM_TASK);
 			}
 			return;
 		}
@@ -1064,7 +1064,7 @@ void Menu_Input_Field(uint8_t current_key,uint8_t attributes,struct input_buffer
 
 	if(inp_buf->counter>=INPUT_STRING_MAX)
 	{
-		buzzer_set_buzz(BUZZER_EFFECT_3_BEEP,BUZZER_ON);
+		buzzer_set_buzz(BUZZER_EFFECT_3_BEEP,BUZZER_ON,FROM_TASK);
 		Indicator_Blink_Set(IND_2,0xFF,2);
 		return;
 	}
@@ -1079,70 +1079,70 @@ void Menu_Input_Field(uint8_t current_key,uint8_t attributes,struct input_buffer
 			}
 
 			inp_buf->buf[inp_buf->counter]='0';
-			buzzer_set_buzz(BUZZER_EFFECT_1_BEEP,BUZZER_ON);
+			buzzer_set_buzz(BUZZER_EFFECT_1_BEEP,BUZZER_ON,FROM_TASK);
 		}
 		break;
 
 		case KEY_1:
 		{
 			inp_buf->buf[inp_buf->counter]='1';
-			buzzer_set_buzz(BUZZER_EFFECT_1_BEEP,BUZZER_ON);
+			buzzer_set_buzz(BUZZER_EFFECT_1_BEEP,BUZZER_ON,FROM_TASK);
 		}
 		break;
 
 		case KEY_2:
 		{
 			inp_buf->buf[inp_buf->counter]='2';
-			buzzer_set_buzz(BUZZER_EFFECT_1_BEEP,BUZZER_ON);
+			buzzer_set_buzz(BUZZER_EFFECT_1_BEEP,BUZZER_ON,FROM_TASK);
 		}
 		break;
 
 		case KEY_3:
 		{
 			inp_buf->buf[inp_buf->counter]='3';
-			buzzer_set_buzz(BUZZER_EFFECT_1_BEEP,BUZZER_ON);
+			buzzer_set_buzz(BUZZER_EFFECT_1_BEEP,BUZZER_ON,FROM_TASK);
 		}
 		break;
 
 		case KEY_4:
 		{
 			inp_buf->buf[inp_buf->counter]='4';
-			buzzer_set_buzz(BUZZER_EFFECT_1_BEEP,BUZZER_ON);
+			buzzer_set_buzz(BUZZER_EFFECT_1_BEEP,BUZZER_ON,FROM_TASK);
 		}
 		break;
 
 		case KEY_5:
 		{
 			inp_buf->buf[inp_buf->counter]='5';
-			buzzer_set_buzz(BUZZER_EFFECT_1_BEEP,BUZZER_ON);
+			buzzer_set_buzz(BUZZER_EFFECT_1_BEEP,BUZZER_ON,FROM_TASK);
 		}
 		break;
 
 		case KEY_6:
 		{
 			inp_buf->buf[inp_buf->counter]='6';
-			buzzer_set_buzz(BUZZER_EFFECT_1_BEEP,BUZZER_ON);
+			buzzer_set_buzz(BUZZER_EFFECT_1_BEEP,BUZZER_ON,FROM_TASK);
 		}
 		break;
 
 		case KEY_7:
 		{
 			inp_buf->buf[inp_buf->counter]='7';
-			buzzer_set_buzz(BUZZER_EFFECT_1_BEEP,BUZZER_ON);
+			buzzer_set_buzz(BUZZER_EFFECT_1_BEEP,BUZZER_ON,FROM_TASK);
 		}
 		break;
 
 		case KEY_8:
 		{
 			inp_buf->buf[inp_buf->counter]='8';
-			buzzer_set_buzz(BUZZER_EFFECT_1_BEEP,BUZZER_ON);
+			buzzer_set_buzz(BUZZER_EFFECT_1_BEEP,BUZZER_ON,FROM_TASK);
 		}
 		break;
 
 		case KEY_9:
 		{
 			inp_buf->buf[inp_buf->counter]='9';
-			buzzer_set_buzz(BUZZER_EFFECT_1_BEEP,BUZZER_ON);
+			buzzer_set_buzz(BUZZER_EFFECT_1_BEEP,BUZZER_ON,FROM_TASK);
 		}
 		break;
 
@@ -1159,7 +1159,7 @@ void Menu_Input_Field(uint8_t current_key,uint8_t attributes,struct input_buffer
 	if(Menu_Input_Buf_To_Int(inp_buf,&temp_val,min_value,max_value)==INPUT_ERR)//выход за диапазон-удаляем последний введенный символ
 	{
 		inp_buf->counter--;
-		buzzer_set_buzz(BUZZER_EFFECT_3_BEEP,BUZZER_ON);
+		buzzer_set_buzz(BUZZER_EFFECT_3_BEEP,BUZZER_ON,FROM_TASK);
 		Indicator_Blink_Set(IND_2,0xFF,2);
 	}
 
