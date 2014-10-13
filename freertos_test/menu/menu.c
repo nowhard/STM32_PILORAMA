@@ -341,6 +341,7 @@ void Menu_Handle_Key(menuItem* currentMenuItem,uint8_t current_key)
 									if((Drive_Impulse_To_MM_Absolute(drv.current_position)+move_val)>MENU_ABS_MAX_VAL)
 									{
 										buzzer_set_buzz(BUZZER_EFFECT_3_BEEP,BUZZER_ON,FROM_TASK);
+										Indicator_Blink_Set(IND_2,0xFF,2);
 										break;
 									}
 
@@ -370,6 +371,7 @@ void Menu_Handle_Key(menuItem* currentMenuItem,uint8_t current_key)
 									if(((int16_t)Drive_Impulse_To_MM_Absolute(drv.current_position)+move_val)<MENU_ABS_MIN_VAL)
 									{
 										buzzer_set_buzz(BUZZER_EFFECT_3_BEEP,BUZZER_ON,FROM_TASK);
+										Indicator_Blink_Set(IND_2,0xFF,2);
 										break;
 									}
 
