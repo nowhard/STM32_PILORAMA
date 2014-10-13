@@ -335,6 +335,15 @@ void Menu_Handle_Key(menuItem* currentMenuItem,uint8_t current_key)
 							{
 								if(Menu_Input_Buf_To_Int(&input_buf,&move_val,MENU_ROOT_MIN_VAL,MENU_ROOT_MAX_VAL)==INPUT_OK)
 								{
+
+									//исправить ввод значения больше максимума и меньше минимума
+
+									if((Drive_Impulse_To_MM_Absolute(drv.current_position)+move_val)>MENU_ABS_MAX_VAL)
+									{
+										buzzer_set_buzz(BUZZER_EFFECT_3_BEEP,BUZZER_ON,FROM_TASK);
+										break;
+									}
+
 									if(Drive_Set_Position(MOVE_TYPE_RELATIVE_UP, move_val)!=DRIVE_OK)
 									{
 										Drive_Stop(STOP_CONTROLLER_FAULT,FROM_TASK);
@@ -356,6 +365,14 @@ void Menu_Handle_Key(menuItem* currentMenuItem,uint8_t current_key)
 							{
 								if(Menu_Input_Buf_To_Int(&input_buf,&move_val,MENU_ROOT_MIN_VAL,MENU_ROOT_MAX_VAL)==INPUT_OK)
 								{
+									//исправить ввод значения больше максимума и меньше минимума
+
+									if(((int16_t)Drive_Impulse_To_MM_Absolute(drv.current_position)+move_val)<MENU_ABS_MIN_VAL)
+									{
+										buzzer_set_buzz(BUZZER_EFFECT_3_BEEP,BUZZER_ON,FROM_TASK);
+										break;
+									}
+
 									if(Drive_Set_Position(MOVE_TYPE_RELATIVE_DOWN, move_val)!=DRIVE_OK)
 									{
 										Drive_Stop(STOP_CONTROLLER_FAULT,FROM_TASK);
@@ -478,14 +495,14 @@ void Menu_Handle_Key(menuItem* currentMenuItem,uint8_t current_key)
 
 					case KEY_STAR_LONG_RELEASE://стоп движение вниз
 					{
-						Drive_Stop(STOP_USER,FROM_TASK);
+						Drive_Stop(STOP_END_OF_OPERATION,FROM_TASK);
 						buzzer_set_buzz(BUZZER_EFFECT_2_BEEP,BUZZER_ON,FROM_TASK);
 					}
 					break;
 
 					case KEY_SHARP_LONG_RELEASE://стоп движение вверх
 					{
-						Drive_Stop(STOP_USER,FROM_TASK);
+						Drive_Stop(STOP_END_OF_OPERATION,FROM_TASK);
 						buzzer_set_buzz(BUZZER_EFFECT_2_BEEP,BUZZER_ON,FROM_TASK);
 					}
 					break;

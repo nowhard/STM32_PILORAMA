@@ -80,11 +80,11 @@ void ExtEventsHandler( void *pvParameters )
 	{
 		if(GPIO_ReadInputDataBit(DRIVE_EXT_EVENTS_PORT,DRIVE_ERROR)==Bit_RESET)
 		{
-			Drive_Stop(STOP_INVERTOR_ERROR,FROM_TASK);
+			//Drive_Stop(STOP_INVERTOR_ERROR,FROM_TASK);
 		}
 		else
 		{
-			EXTI->IMR |= EXTI_Line0;
+			//EXTI->IMR |= EXTI_Line0;
 		}
 
 		if(GPIO_ReadInputDataBit(DRIVE_EXT_EVENTS_PORT,DRIVE_LIMIT_UP)==Bit_RESET)

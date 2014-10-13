@@ -299,6 +299,13 @@ uint8_t Drive_Stop(uint8_t stop_type,uint8_t function_start_type)
 		}
 		break;
 
+		case STOP_USER:
+		{
+			buzzer_set_buzz(BUZZER_EFFECT_LONG_BEEP,BUZZER_ON,function_start_type);
+			drv.error_flag=DRIVE_ERR;
+		}
+		break;
+
 		default:
 		{
 			drv.error_flag=DRIVE_ERR;
