@@ -59,11 +59,11 @@ void External_Events_Init(void)
 
 	NVIC_InitTypeDef NVIC_InitStructure;
 
-	NVIC_InitStructure.NVIC_IRQChannel = EXTI0_IRQn;
-	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0x01;
-	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0x01;
-	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
-	NVIC_Init(&NVIC_InitStructure);
+//	NVIC_InitStructure.NVIC_IRQChannel = EXTI0_IRQn;
+//	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0x01;
+//	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0x01;
+//	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
+//	NVIC_Init(&NVIC_InitStructure);
 
 	NVIC_InitStructure.NVIC_IRQChannel = EXTI9_5_IRQn;
 	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0x01;
@@ -80,11 +80,11 @@ void ExtEventsHandler( void *pvParameters )
 	{
 		if(GPIO_ReadInputDataBit(DRIVE_EXT_EVENTS_PORT,DRIVE_ERROR)==Bit_RESET)
 		{
-			//Drive_Stop(STOP_INVERTOR_ERROR,FROM_TASK);
+			Drive_Stop(STOP_INVERTOR_ERROR,FROM_TASK);
 		}
 		else
 		{
-			//EXTI->IMR |= EXTI_Line0;
+			EXTI->IMR |= EXTI_Line0;
 		}
 
 		if(GPIO_ReadInputDataBit(DRIVE_EXT_EVENTS_PORT,DRIVE_LIMIT_UP)==Bit_RESET)
@@ -108,15 +108,15 @@ void ExtEventsHandler( void *pvParameters )
 	}
 }
 
-void EXTI0_IRQHandler(void)
-{
-    if(EXTI_GetITStatus(EXTI_Line0) != RESET)
-    {
-        EXTI_ClearITPendingBit(EXTI_Line0);
-        Drive_Stop(STOP_INVERTOR_ERROR,FROM_ISR);
-        EXTI->IMR &= ~EXTI_Line0;
-    }
-}
+//void EXTI0_IRQHandler(void)
+//{
+//    if(EXTI_GetITStatus(EXTI_Line0) != RESET)
+//    {
+//        EXTI_ClearITPendingBit(EXTI_Line0);
+//       // Drive_Stop(STOP_INVERTOR_ERROR,FROM_ISR);
+//        EXTI->IMR &= ~EXTI_Line0;
+//    }
+//}
 
 void EXTI9_5_IRQHandler(void)
 {

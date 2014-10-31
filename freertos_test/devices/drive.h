@@ -61,8 +61,8 @@ struct mm_imp
 
 struct backup_registers
 {
-	struct mm_imp F_01_cal_up;
-	struct mm_imp F_02_cal_down;
+	struct mm_imp F_01_cal_down;
+	struct mm_imp F_02_cal_up;
 	struct mm_imp F_03_cal_syncro;
 	uint16_t F_04_function_back;
 	uint16_t F_05_cal_speed_down;

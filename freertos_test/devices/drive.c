@@ -336,7 +336,7 @@ uint8_t Drive_Stop(uint8_t stop_type,uint8_t function_start_type)
 
 void Drive_Reset(void)
 {
-	uint32_t delay=10000;
+	uint32_t delay=1000000;
 	DRIVE_CONTROL_PORT->BSRRL= DRIVE_RESET ;
 	while(delay--);
 	DRIVE_CONTROL_PORT->BSRRH= DRIVE_RESET ;
@@ -344,12 +344,12 @@ void Drive_Reset(void)
 
 uint32_t Drive_MM_To_Impulse(uint16_t val_mm)
 {
-	return (val_mm*(drv.bkp_reg->F_01_cal_up.imp-drv.bkp_reg->F_02_cal_down.imp))/(drv.bkp_reg->F_01_cal_up.mm-drv.bkp_reg->F_02_cal_down.mm);
+	return (val_mm*(drv.bkp_reg->F_02_cal_up.imp-drv.bkp_reg->F_01_cal_down.imp))/(drv.bkp_reg->F_02_cal_up.mm-drv.bkp_reg->F_01_cal_down.mm);
 }
 
 uint16_t Drive_Impulse_To_MM(uint32_t val_impulse)
 {
-	return (val_impulse*(drv.bkp_reg->F_01_cal_up.mm-drv.bkp_reg->F_02_cal_down.mm))/(drv.bkp_reg->F_01_cal_up.imp-drv.bkp_reg->F_02_cal_down.imp);
+	return (val_impulse*(drv.bkp_reg->F_02_cal_up.mm-drv.bkp_reg->F_01_cal_down.mm))/(drv.bkp_reg->F_02_cal_up.imp-drv.bkp_reg->F_01_cal_down.imp);
 }
 
 uint16_t Drive_Impulse_To_MM_Absolute(uint32_t val_impulse)

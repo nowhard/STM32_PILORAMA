@@ -542,7 +542,7 @@ void Menu_Handle_Key(menuItem* currentMenuItem,uint8_t current_key)
 						if(Menu_Input_Buf_To_Int(&input_buf,&temp_mm_imp.mm,MENU_F01_MIN_VAL,MENU_F01_MAX_VAL)==INPUT_OK)
 						{
 							temp_mm_imp.imp=drv.current_position;
-							Backup_SRAM_Write_Reg(&drv.bkp_reg->F_01_cal_up,&temp_mm_imp,sizeof(struct mm_imp));
+							Backup_SRAM_Write_Reg(&drv.bkp_reg->F_01_cal_down,&temp_mm_imp,sizeof(struct mm_imp));
 							buzzer_set_buzz(BUZZER_EFFECT_2_BEEP,BUZZER_ON,FROM_TASK);
 						}
 						else
@@ -586,7 +586,7 @@ void Menu_Handle_Key(menuItem* currentMenuItem,uint8_t current_key)
 						if(Menu_Input_Buf_To_Int(&input_buf,&temp_mm_imp.mm,MENU_F02_MIN_VAL,MENU_F02_MAX_VAL)==INPUT_OK)
 						{
 							temp_mm_imp.imp=drv.current_position;
-							Backup_SRAM_Write_Reg(&drv.bkp_reg->F_02_cal_down,&temp_mm_imp,sizeof(struct mm_imp));
+							Backup_SRAM_Write_Reg(&drv.bkp_reg->F_02_cal_up,&temp_mm_imp,sizeof(struct mm_imp));
 							buzzer_set_buzz(BUZZER_EFFECT_2_BEEP,BUZZER_ON,FROM_TASK);
 						}
 						else
