@@ -76,6 +76,7 @@ struct drive
 	uint32_t 	current_position;
 	uint32_t 	dest_position;//расчетные позиции
 	uint32_t	min_speed_position;
+	uint32_t	stop_position;
 
 	uint8_t		function_back_flag;
 	uint32_t	function_back_temp_position;

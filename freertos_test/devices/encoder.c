@@ -27,7 +27,7 @@ void TIM1_UP_TIM10_IRQHandler(void)
     		Drive_Set_Speed(DRIVE_SPEED_LOW);
     	}
 
-    	if(drv.current_position==drv.dest_position)
+    	if(drv.current_position==drv.stop_position)
     	{
     		Drive_Stop(STOP_END_OF_OPERATION,FROM_ISR);
     	}
