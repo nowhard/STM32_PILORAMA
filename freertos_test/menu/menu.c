@@ -919,7 +919,14 @@ void MenuHandler( void *pvParameters )
 			}
 			else
 			{
-				str_to_ind(IND_1,"Err0r");
+				if(drv.error_flag==DRIVE_STOP_SENSOR)
+				{
+					str_to_ind(IND_1," 5t0P");
+				}
+				else
+				{
+					str_to_ind(IND_1,"Err0r");
+				}
 			}
 		}
 

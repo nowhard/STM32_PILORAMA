@@ -15,6 +15,7 @@ enum
 	DRIVE_OK=0,
 	DRIVE_BUSY,
 	DRIVE_ERR,
+	DRIVE_STOP_SENSOR,
 };
 
 enum

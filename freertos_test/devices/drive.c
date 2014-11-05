@@ -95,9 +95,6 @@ uint8_t Drive_Set_Position(uint8_t move_type,int16_t move_val)
 {
 	Drive_Set_Speed(DRIVE_SPEED_LOW);
 
-
-
-
 	if((drv.move_type_flag==MOVE_TYPE_NONE)&&(drv.error_flag==DRIVE_OK))
 	{
 		switch(move_type)
@@ -149,7 +146,7 @@ uint8_t Drive_Set_Position(uint8_t move_type,int16_t move_val)
 
 			case MOVE_TYPE_ABSOLUTE:
 			{
-				int16_t temp=move_val-drv.bkp_reg->F_03_cal_syncro.mm;
+				int16_t temp=move_val-Drive_Impulse_To_MM_Absolute(drv.current_position);//drv.bkp_reg->F_03_cal_syncro.mm;
 
 				Drive_Set_Speed(DRIVE_SPEED_HI);
 
@@ -160,8 +157,8 @@ uint8_t Drive_Set_Position(uint8_t move_type,int16_t move_val)
 						return DRIVE_ERR;
 					}
 
-					drv.dest_position=drv.bkp_reg->F_03_cal_syncro.imp+Drive_MM_To_Impulse((uint16_t)temp);//-Drive_MM_To_Impulse(drv.bkp_reg->F_06_cal_stop);
-					drv.stop_position=drv.bkp_reg->F_03_cal_syncro.imp+Drive_MM_To_Impulse((uint16_t)temp)-Drive_MM_To_Impulse(drv.bkp_reg->F_06_cal_stop);
+					drv.dest_position=drv.current_position+Drive_MM_To_Impulse((uint16_t)temp);//-Drive_MM_To_Impulse(drv.bkp_reg->F_06_cal_stop);
+					drv.stop_position=drv.current_position+Drive_MM_To_Impulse((uint16_t)temp)-Drive_MM_To_Impulse(drv.bkp_reg->F_06_cal_stop);
 				}
 				else
 				{
@@ -170,8 +167,8 @@ uint8_t Drive_Set_Position(uint8_t move_type,int16_t move_val)
 						return DRIVE_ERR;
 					}
 
-					drv.dest_position=drv.bkp_reg->F_03_cal_syncro.imp-Drive_MM_To_Impulse((uint16_t)(-temp));//+Drive_MM_To_Impulse(drv.bkp_reg->F_06_cal_stop);
-					drv.stop_position=drv.bkp_reg->F_03_cal_syncro.imp-Drive_MM_To_Impulse((uint16_t)(-temp))+Drive_MM_To_Impulse(drv.bkp_reg->F_06_cal_stop);
+					drv.dest_position=drv.current_position-Drive_MM_To_Impulse((uint16_t)(-temp));//+Drive_MM_To_Impulse(drv.bkp_reg->F_06_cal_stop);
+					drv.stop_position=drv.current_position-Drive_MM_To_Impulse((uint16_t)(-temp))+Drive_MM_To_Impulse(drv.bkp_reg->F_06_cal_stop);
 				}
 
 				if(drv.dest_position>=drv.current_position)
@@ -283,14 +280,14 @@ uint8_t Drive_Stop(uint8_t stop_type,uint8_t function_start_type)
 		case STOP_HI_SENSOR:
 		{
 			buzzer_set_buzz(BUZZER_EFFECT_LONG_BEEP,BUZZER_ON,function_start_type);
-			drv.error_flag=DRIVE_ERR;
+			drv.error_flag=DRIVE_STOP_SENSOR;
 		}
 		break;
 
 		case STOP_LO_SENSOR:
 		{
 			buzzer_set_buzz(BUZZER_EFFECT_LONG_BEEP,BUZZER_ON,function_start_type);
-			drv.error_flag=DRIVE_ERR;
+			drv.error_flag=DRIVE_STOP_SENSOR;
 		}
 		break;
 
