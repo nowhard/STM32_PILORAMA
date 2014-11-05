@@ -67,6 +67,22 @@
       </source>
       <source file="..\..\..\menu\menu.h" lastModified="148f4f9622e">
       </source>
+      <source file="..\..\..\menu\menu.c" lastModified="1497fa82d16">
+         <include file="..\..\..\cmsis_boot\stm32f4xx.h"/>
+         <include file="..\..\..\cmsis_lib\include\stm32f4xx_gpio.h"/>
+         <include file="..\..\..\cmsis_lib\include\stm32f4xx_rcc.h"/>
+         <include file="..\..\..\cmsis_lib\include\stm32f4xx_tim.h"/>
+         <include file="..\..\..\devices\keyboard.h"/>
+         <include file="..\..\..\menu\menu.h"/>
+         <include file="..\..\..\protocols\tablo_parser.h"/>
+         <include file="..\..\..\devices\backup_sram.h"/>
+         <include file="..\..\..\devices\drive.h"/>
+         <include file="..\..\..\devices\buzzer.h"/>
+         <include file="..\..\..\FreeRTOSV7.1.0\Source\include\FreeRTOS.h"/>
+         <include file="..\..\..\FreeRTOSV7.1.0\Source\include\task.h"/>
+         <include file="..\..\..\FreeRTOSV7.1.0\Source\include\queue.h"/>
+         <include file="..\..\..\FreeRTOSV7.1.0\Source\include\semphr.h"/>
+      </source>
       <source file="..\..\..\devices\power_detector.h" lastModified="142a2da7b4e">
       </source>
       <source file="..\..\..\devices\power_detector.c" lastModified="142a337107a">
@@ -280,6 +296,20 @@
          <include file="..\..\..\FreeRTOSV7.1.0\Source\include\task.h"/>
          <include file="..\..\..\FreeRTOSV7.1.0\Source\include\timers.h"/>
          <include file="..\..\..\FreeRTOSV7.1.0\Source\include\StackMacros.h"/>
+      </source>
+      <source file="..\..\..\devices\drive.c" lastModified="1497f52179c">
+         <include file="..\..\..\devices\drive.h"/>
+         <include file="..\..\..\cmsis_boot\stm32f4xx.h"/>
+         <include file="..\..\..\cmsis_lib\include\stm32f4xx_gpio.h"/>
+         <include file="..\..\..\cmsis_lib\include\stm32f4xx_rcc.h"/>
+         <include file="..\..\..\cmsis_lib\include\stm32f4xx_pwr.h"/>
+         <include file="..\..\..\FreeRTOSV7.1.0\Source\include\FreeRTOS.h"/>
+         <include file="..\..\..\FreeRTOSV7.1.0\Source\include\task.h"/>
+         <include file="..\..\..\FreeRTOSV7.1.0\Source\include\queue.h"/>
+         <include file="..\..\..\FreeRTOSV7.1.0\Source\include\semphr.h"/>
+         <include file="..\..\..\devices\backup_sram.h"/>
+         <include file="..\..\..\devices\buzzer.h"/>
+         <include file="..\..\..\menu\menu.h"/>
       </source>
       <source file="..\..\..\devices\encoder.c" lastModified="14965b78815">
          <include file="..\..\..\devices\encoder.h"/>

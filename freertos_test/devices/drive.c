@@ -95,6 +95,9 @@ uint8_t Drive_Set_Position(uint8_t move_type,int16_t move_val)
 {
 	Drive_Set_Speed(DRIVE_SPEED_LOW);
 
+
+
+
 	if((drv.move_type_flag==MOVE_TYPE_NONE)&&(drv.error_flag==DRIVE_OK))
 	{
 		switch(move_type)
@@ -147,6 +150,7 @@ uint8_t Drive_Set_Position(uint8_t move_type,int16_t move_val)
 			case MOVE_TYPE_ABSOLUTE:
 			{
 				int16_t temp=move_val-drv.bkp_reg->F_03_cal_syncro.mm;
+
 				Drive_Set_Speed(DRIVE_SPEED_HI);
 
 				if(temp>=0)

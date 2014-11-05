@@ -345,6 +345,14 @@ void Menu_Handle_Key(menuItem* currentMenuItem,uint8_t current_key)
 										break;
 									}
 
+									//test move val for correct
+									if((drv.bkp_reg->F_06_cal_stop>move_val) || (drv.bkp_reg->F_05_cal_speed_down>move_val))
+									{
+										buzzer_set_buzz(BUZZER_EFFECT_3_BEEP,BUZZER_ON,FROM_TASK);
+										Indicator_Blink_Set(IND_2,0xFF,2);
+										break;
+									}
+
 									if(Drive_Set_Position(MOVE_TYPE_RELATIVE_UP, move_val)!=DRIVE_OK)
 									{
 										Drive_Stop(STOP_CONTROLLER_FAULT,FROM_TASK);
@@ -375,6 +383,15 @@ void Menu_Handle_Key(menuItem* currentMenuItem,uint8_t current_key)
 										break;
 									}
 
+									//test move val for correct
+
+									if((drv.bkp_reg->F_06_cal_stop>(-move_val)) || (drv.bkp_reg->F_05_cal_speed_down>(-move_val)))
+									{
+										buzzer_set_buzz(BUZZER_EFFECT_3_BEEP,BUZZER_ON,FROM_TASK);
+										Indicator_Blink_Set(IND_2,0xFF,2);
+										break;
+									}
+
 									if(Drive_Set_Position(MOVE_TYPE_RELATIVE_DOWN, move_val)!=DRIVE_OK)
 									{
 										Drive_Stop(STOP_CONTROLLER_FAULT,FROM_TASK);
@@ -395,6 +412,28 @@ void Menu_Handle_Key(menuItem* currentMenuItem,uint8_t current_key)
 							{
 								if(Menu_Input_Buf_To_Int(&input_buf,&move_val,MENU_ROOT_MIN_VAL,MENU_ROOT_MAX_VAL)==INPUT_OK)
 								{
+									int16_t temp=move_val-Drive_Impulse_To_MM_Absolute(drv.current_position);
+
+									if(temp>=0)
+									{
+										if((drv.bkp_reg->F_06_cal_stop>temp) || (drv.bkp_reg->F_05_cal_speed_down>temp))
+										{
+											buzzer_set_buzz(BUZZER_EFFECT_3_BEEP,BUZZER_ON,FROM_TASK);
+											Indicator_Blink_Set(IND_2,0xFF,2);
+											break;
+										}
+									}
+									else
+									{
+										if((drv.bkp_reg->F_06_cal_stop>(-temp)) || (drv.bkp_reg->F_05_cal_speed_down>(-temp)))
+										{
+											buzzer_set_buzz(BUZZER_EFFECT_3_BEEP,BUZZER_ON,FROM_TASK);
+											Indicator_Blink_Set(IND_2,0xFF,2);
+											break;
+										}
+									}
+
+
 									if(Drive_Set_Position(MOVE_TYPE_ABSOLUTE, move_val)!=DRIVE_OK)
 									{
 										Drive_Stop(STOP_CONTROLLER_FAULT,FROM_TASK);

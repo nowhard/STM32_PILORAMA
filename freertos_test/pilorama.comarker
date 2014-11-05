@@ -16,8 +16,8 @@
 <attrib name="registered" value="true"/>
 <attrib name="path" value="/pilorama/menu/menu.c"/>
 <attrib name="org.eclipse.cdt.debug.core.sourceHandle" value="D:\PROJECTS\GIT_REPOSITORY\STM32\STM32F2_PILORAMA\freertos_test\menu\menu.c"/>
-<attrib name="org.eclipse.cdt.debug.core.ignoreCount" value="0"/>
 <attrib name="org.eclipse.debug.core.enabled" value="true"/>
+<attrib name="org.eclipse.cdt.debug.core.ignoreCount" value="0"/>
 </marker>
 </breakpoint>
 </breakpoints>
