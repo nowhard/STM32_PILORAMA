@@ -297,10 +297,11 @@
          <include file="..\..\..\FreeRTOSV7.1.0\Source\include\timers.h"/>
          <include file="..\..\..\FreeRTOSV7.1.0\Source\include\StackMacros.h"/>
       </source>
-      <source file="..\..\..\devices\encoder.c" lastModified="14965b78815">
+      <source file="..\..\..\devices\encoder.c" lastModified="149841479cc">
          <include file="..\..\..\devices\encoder.h"/>
          <include file="..\..\..\devices\drive.h"/>
          <include file="..\..\..\devices\buzzer.h"/>
+         <include file="..\..\..\devices\backup_sram.h"/>
       </source>
       <source file="..\..\..\cmsis_lib\source\stm32f4xx_gpio.c" lastModified="14125d809a2">
          <include file="..\..\..\cmsis_lib\include\stm32f4xx_gpio.h"/>

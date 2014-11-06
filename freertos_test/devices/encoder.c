@@ -1,15 +1,13 @@
 #include "encoder.h"
 #include "drive.h"
 #include "buzzer.h"
+#include "backup_sram.h"
 
 extern struct drive drv;
 
 void TIM1_UP_TIM10_IRQHandler(void)
 {
-//  if (TIM_GetITStatus(TIM1, TIM_IT_Update) != RESET)
-  {
-	  TIM1->SR = (uint16_t)~TIM_IT_Update;
-//    TIM_ClearITPendingBit(TIM1, TIM_IT_Update);
+	TIM1->SR = (uint16_t)~TIM_IT_Update;
 
     if(TIM1->CR1 & TIM_CR1_DIR)
     {
@@ -29,10 +27,16 @@ void TIM1_UP_TIM10_IRQHandler(void)
 
     	if(drv.current_position==drv.stop_position)
     	{
+    		DRIVE_CONTROL_PORT->BSRRH=(DRIVE_FORWARD | DRIVE_BACKWARD | DRIVE_SPEED);//останавливаем двигатель
+    	}
+
+    	if(drv.current_position==drv.dest_position)//достижение точки и сигнализация
+    	{
     		Drive_Stop(STOP_END_OF_OPERATION,FROM_ISR);
+    		//сохраним положение
+    		Backup_SRAM_Write_Reg(&drv.bkp_reg->backup_current_position,&drv.current_position,sizeof(uint32_t));
     	}
     }
-  }
 }
 
 void Encoder_Init(void)//инициализация таймера дола

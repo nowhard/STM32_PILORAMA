@@ -41,7 +41,7 @@ void Drive_Init(void)
 	drv.stop_type=STOP_NONE;
 	drv.error_flag=DRIVE_OK;
 	drv.current_position=drv.bkp_reg->backup_current_position;
-	drv.current_position=0x80008000;//temp!
+	//drv.current_position=0x80008000;//temp!
 	drv.function_back_flag=DRIVE_BACK_POS_DOWN;
 	drv.function_back_temp_position=0x0;
 	drv.limitation_flag=DRIVE_LIMITATION_NONE;
@@ -95,6 +95,9 @@ uint8_t Drive_Set_Position(uint8_t move_type,int16_t move_val)
 {
 	Drive_Set_Speed(DRIVE_SPEED_LOW);
 
+
+
+
 	if((drv.move_type_flag==MOVE_TYPE_NONE)&&(drv.error_flag==DRIVE_OK))
 	{
 		switch(move_type)
@@ -146,7 +149,7 @@ uint8_t Drive_Set_Position(uint8_t move_type,int16_t move_val)
 
 			case MOVE_TYPE_ABSOLUTE:
 			{
-				int16_t temp=move_val-Drive_Impulse_To_MM_Absolute(drv.current_position);//drv.bkp_reg->F_03_cal_syncro.mm;
+				int16_t temp=move_val-drv.bkp_reg->F_03_cal_syncro.mm;
 
 				Drive_Set_Speed(DRIVE_SPEED_HI);
 
@@ -157,8 +160,8 @@ uint8_t Drive_Set_Position(uint8_t move_type,int16_t move_val)
 						return DRIVE_ERR;
 					}
 
-					drv.dest_position=drv.current_position+Drive_MM_To_Impulse((uint16_t)temp);//-Drive_MM_To_Impulse(drv.bkp_reg->F_06_cal_stop);
-					drv.stop_position=drv.current_position+Drive_MM_To_Impulse((uint16_t)temp)-Drive_MM_To_Impulse(drv.bkp_reg->F_06_cal_stop);
+					drv.dest_position=drv.bkp_reg->F_03_cal_syncro.imp+Drive_MM_To_Impulse((uint16_t)temp);//-Drive_MM_To_Impulse(drv.bkp_reg->F_06_cal_stop);
+					drv.stop_position=drv.bkp_reg->F_03_cal_syncro.imp+Drive_MM_To_Impulse((uint16_t)temp)-Drive_MM_To_Impulse(drv.bkp_reg->F_06_cal_stop);
 				}
 				else
 				{
@@ -167,8 +170,8 @@ uint8_t Drive_Set_Position(uint8_t move_type,int16_t move_val)
 						return DRIVE_ERR;
 					}
 
-					drv.dest_position=drv.current_position-Drive_MM_To_Impulse((uint16_t)(-temp));//+Drive_MM_To_Impulse(drv.bkp_reg->F_06_cal_stop);
-					drv.stop_position=drv.current_position-Drive_MM_To_Impulse((uint16_t)(-temp))+Drive_MM_To_Impulse(drv.bkp_reg->F_06_cal_stop);
+					drv.dest_position=drv.bkp_reg->F_03_cal_syncro.imp-Drive_MM_To_Impulse((uint16_t)(-temp));//+Drive_MM_To_Impulse(drv.bkp_reg->F_06_cal_stop);
+					drv.stop_position=drv.bkp_reg->F_03_cal_syncro.imp-Drive_MM_To_Impulse((uint16_t)(-temp))+Drive_MM_To_Impulse(drv.bkp_reg->F_06_cal_stop);
 				}
 
 				if(drv.dest_position>=drv.current_position)
@@ -266,12 +269,13 @@ uint8_t Drive_Start(uint8_t direction)
 uint8_t Drive_Stop(uint8_t stop_type,uint8_t function_start_type)
 {
 	uint8_t clr_indicator_msg;
-	DRIVE_CONTROL_PORT->BSRRH=(DRIVE_FORWARD | DRIVE_BACKWARD | DRIVE_SPEED);
+	//DRIVE_CONTROL_PORT->BSRRH=(DRIVE_FORWARD | DRIVE_BACKWARD | DRIVE_SPEED);
 
 	switch(stop_type)
 	{
 		case STOP_END_OF_OPERATION:
 		{
+
 			buzzer_set_buzz(BUZZER_EFFECT_3_BEEP,BUZZER_ON,function_start_type);
 			drv.error_flag=DRIVE_OK;
 		}
@@ -279,15 +283,17 @@ uint8_t Drive_Stop(uint8_t stop_type,uint8_t function_start_type)
 
 		case STOP_HI_SENSOR:
 		{
+			DRIVE_CONTROL_PORT->BSRRH=(DRIVE_FORWARD | DRIVE_BACKWARD | DRIVE_SPEED);
 			buzzer_set_buzz(BUZZER_EFFECT_LONG_BEEP,BUZZER_ON,function_start_type);
-			drv.error_flag=DRIVE_STOP_SENSOR;
+			drv.error_flag=DRIVE_ERR;
 		}
 		break;
 
 		case STOP_LO_SENSOR:
 		{
+			DRIVE_CONTROL_PORT->BSRRH=(DRIVE_FORWARD | DRIVE_BACKWARD | DRIVE_SPEED);
 			buzzer_set_buzz(BUZZER_EFFECT_LONG_BEEP,BUZZER_ON,function_start_type);
-			drv.error_flag=DRIVE_STOP_SENSOR;
+			drv.error_flag=DRIVE_ERR;
 		}
 		break;
 
@@ -300,6 +306,7 @@ uint8_t Drive_Stop(uint8_t stop_type,uint8_t function_start_type)
 
 		case STOP_CONTROLLER_FAULT:
 		{
+			DRIVE_CONTROL_PORT->BSRRH=(DRIVE_FORWARD | DRIVE_BACKWARD | DRIVE_SPEED);
 			buzzer_set_buzz(BUZZER_EFFECT_LONG_BEEP,BUZZER_ON,function_start_type);
 			drv.error_flag=DRIVE_ERR;
 		}
@@ -307,6 +314,7 @@ uint8_t Drive_Stop(uint8_t stop_type,uint8_t function_start_type)
 
 		case STOP_USER:
 		{
+			DRIVE_CONTROL_PORT->BSRRH=(DRIVE_FORWARD | DRIVE_BACKWARD | DRIVE_SPEED);
 			buzzer_set_buzz(BUZZER_EFFECT_LONG_BEEP,BUZZER_ON,function_start_type);
 			drv.error_flag=DRIVE_ERR;
 		}
@@ -314,11 +322,12 @@ uint8_t Drive_Stop(uint8_t stop_type,uint8_t function_start_type)
 
 		default:
 		{
+			DRIVE_CONTROL_PORT->BSRRH=(DRIVE_FORWARD | DRIVE_BACKWARD | DRIVE_SPEED);
 			drv.error_flag=DRIVE_ERR;
 		}
 		break;
 	}
-	//Menu_Input_Field_Down_Clear();
+
 	clr_indicator_msg=MENU_MSG_CLR_INDICATOR;
 	if(function_start_type==FROM_TASK)
 	{
