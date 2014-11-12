@@ -54,9 +54,21 @@ uint8_t Drive_Set_Position_Imp_Absolute(uint32_t move_val_imp)
 
 	if((drv.move_type_flag==MOVE_TYPE_NONE)&&(drv.error_flag==DRIVE_OK))
 	{
-		Drive_Set_Speed(DRIVE_SPEED_HI);
+		int32_t temp=move_val_imp-drv.current_position;
 
-		/////////////////
+		if(temp<0)
+		{
+			temp=-temp;
+		}
+
+		if(Drive_Impulse_To_MM(temp)>drv.bkp_reg->F_05_cal_speed_down)
+		{
+			Drive_Set_Speed(DRIVE_SPEED_HI);
+		}
+		else
+		{
+			Drive_Set_Speed(DRIVE_SPEED_LOW);
+		}
 
 		if(move_val_imp<drv.current_position)
 		{
@@ -68,7 +80,7 @@ uint8_t Drive_Set_Position_Imp_Absolute(uint32_t move_val_imp)
 			drv.dest_position=move_val_imp;
 			drv.stop_position=move_val_imp+Drive_MM_To_Impulse(drv.bkp_reg->F_06_cal_stop);
 			drv.min_speed_position=move_val_imp+Drive_MM_To_Impulse(drv.bkp_reg->F_05_cal_speed_down);
-			Drive_Start(DRIVE_DIRECTION_UP);
+			Drive_Start(DRIVE_DIRECTION_DOWN);
 		}
 		else
 		{
@@ -80,7 +92,7 @@ uint8_t Drive_Set_Position_Imp_Absolute(uint32_t move_val_imp)
 			drv.dest_position=move_val_imp;
 			drv.stop_position=move_val_imp-Drive_MM_To_Impulse(drv.bkp_reg->F_06_cal_stop);
 			drv.min_speed_position=move_val_imp-Drive_MM_To_Impulse(drv.bkp_reg->F_05_cal_speed_down);
-			Drive_Start(DRIVE_DIRECTION_DOWN);
+			Drive_Start(DRIVE_DIRECTION_UP);
 		}
 
 		drv.stop_type=STOP_NONE;
