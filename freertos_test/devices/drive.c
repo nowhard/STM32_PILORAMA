@@ -56,6 +56,8 @@ uint8_t Drive_Set_Position_Imp_Absolute(uint32_t move_val_imp)
 	{
 		Drive_Set_Speed(DRIVE_SPEED_HI);
 
+		/////////////////
+
 		if(move_val_imp<drv.current_position)
 		{
 			if(drv.limitation_flag==DRIVE_LIMITATION_ONLY_DOWN)
@@ -95,9 +97,6 @@ uint8_t Drive_Set_Position(uint8_t move_type,int16_t move_val)
 {
 	Drive_Set_Speed(DRIVE_SPEED_LOW);
 
-
-
-
 	if((drv.move_type_flag==MOVE_TYPE_NONE)&&(drv.error_flag==DRIVE_OK))
 	{
 		switch(move_type)
@@ -119,7 +118,16 @@ uint8_t Drive_Set_Position(uint8_t move_type,int16_t move_val)
 				drv.min_speed_position=drv.current_position+Drive_MM_To_Impulse(move_val)-Drive_MM_To_Impulse(drv.bkp_reg->F_05_cal_speed_down);
 				drv.stop_type=STOP_NONE;
 				drv.move_type_flag=MOVE_TYPE_RELATIVE_UP;
-				Drive_Set_Speed(DRIVE_SPEED_HI);
+
+				if(move_val>drv.bkp_reg->F_05_cal_speed_down)
+				{
+					Drive_Set_Speed(DRIVE_SPEED_HI);
+				}
+				else
+				{
+					Drive_Set_Speed(DRIVE_SPEED_LOW);
+				}
+
 				Drive_Start(DRIVE_DIRECTION_UP);
 				return DRIVE_OK;
 			}
@@ -141,7 +149,16 @@ uint8_t Drive_Set_Position(uint8_t move_type,int16_t move_val)
 				drv.min_speed_position=drv.current_position-Drive_MM_To_Impulse(move_val)+Drive_MM_To_Impulse(drv.bkp_reg->F_05_cal_speed_down);
 				drv.stop_type=STOP_NONE;
 				drv.move_type_flag=MOVE_TYPE_RELATIVE_DOWN;
-				Drive_Set_Speed(DRIVE_SPEED_HI);
+
+				if(move_val>drv.bkp_reg->F_05_cal_speed_down)
+				{
+					Drive_Set_Speed(DRIVE_SPEED_HI);
+				}
+				else
+				{
+					Drive_Set_Speed(DRIVE_SPEED_LOW);
+				}
+
 				Drive_Start(DRIVE_DIRECTION_DOWN);
 				return DRIVE_OK;
 			}
@@ -149,9 +166,12 @@ uint8_t Drive_Set_Position(uint8_t move_type,int16_t move_val)
 
 			case MOVE_TYPE_ABSOLUTE:
 			{
-				int16_t temp=move_val-drv.bkp_reg->F_03_cal_syncro.mm;
+				//int16_t temp=move_val-drv.bkp_reg->F_03_cal_syncro.mm;
 
-				Drive_Set_Speed(DRIVE_SPEED_HI);
+				int16_t temp=move_val-Drive_Impulse_To_MM_Absolute(drv.current_position);
+
+				//Drive_Set_Speed(DRIVE_SPEED_HI);
+				/////////////////////////////////////////////////
 
 				if(temp>=0)
 				{
@@ -160,8 +180,23 @@ uint8_t Drive_Set_Position(uint8_t move_type,int16_t move_val)
 						return DRIVE_ERR;
 					}
 
-					drv.dest_position=drv.bkp_reg->F_03_cal_syncro.imp+Drive_MM_To_Impulse((uint16_t)temp);//-Drive_MM_To_Impulse(drv.bkp_reg->F_06_cal_stop);
-					drv.stop_position=drv.bkp_reg->F_03_cal_syncro.imp+Drive_MM_To_Impulse((uint16_t)temp)-Drive_MM_To_Impulse(drv.bkp_reg->F_06_cal_stop);
+//					drv.dest_position=drv.bkp_reg->F_03_cal_syncro.imp+Drive_MM_To_Impulse((uint16_t)temp);//-Drive_MM_To_Impulse(drv.bkp_reg->F_06_cal_stop);
+//					drv.stop_position=drv.bkp_reg->F_03_cal_syncro.imp+Drive_MM_To_Impulse((uint16_t)temp)-Drive_MM_To_Impulse(drv.bkp_reg->F_06_cal_stop);
+
+					drv.dest_position=Drive_MM_To_Impulse_Absolute(move_val);
+					drv.stop_position=drv.dest_position-Drive_MM_To_Impulse(drv.bkp_reg->F_06_cal_stop);
+					drv.min_speed_position=drv.dest_position-Drive_MM_To_Impulse(drv.bkp_reg->F_05_cal_speed_down);
+
+					if(temp>drv.bkp_reg->F_05_cal_speed_down)
+					{
+						Drive_Set_Speed(DRIVE_SPEED_HI);
+					}
+					else
+					{
+						Drive_Set_Speed(DRIVE_SPEED_LOW);
+					}
+
+					Drive_Start(DRIVE_DIRECTION_UP);
 				}
 				else
 				{
@@ -170,30 +205,42 @@ uint8_t Drive_Set_Position(uint8_t move_type,int16_t move_val)
 						return DRIVE_ERR;
 					}
 
-					drv.dest_position=drv.bkp_reg->F_03_cal_syncro.imp-Drive_MM_To_Impulse((uint16_t)(-temp));//+Drive_MM_To_Impulse(drv.bkp_reg->F_06_cal_stop);
-					drv.stop_position=drv.bkp_reg->F_03_cal_syncro.imp-Drive_MM_To_Impulse((uint16_t)(-temp))+Drive_MM_To_Impulse(drv.bkp_reg->F_06_cal_stop);
-				}
-
-				if(drv.dest_position>=drv.current_position)
-				{
-					drv.min_speed_position=drv.dest_position-Drive_MM_To_Impulse(drv.bkp_reg->F_05_cal_speed_down);
-				}
-				else
-				{
+					drv.dest_position=Drive_MM_To_Impulse_Absolute(move_val);
+					drv.stop_position=drv.dest_position+Drive_MM_To_Impulse(drv.bkp_reg->F_06_cal_stop);
 					drv.min_speed_position=drv.dest_position+Drive_MM_To_Impulse(drv.bkp_reg->F_05_cal_speed_down);
-				}
 
+					if((-temp)>drv.bkp_reg->F_05_cal_speed_down)
+					{
+						Drive_Set_Speed(DRIVE_SPEED_HI);
+					}
+					else
+					{
+						Drive_Set_Speed(DRIVE_SPEED_LOW);
+					}
 
-				if(temp>=0)
-				{
-					//drv.dest_position=drv.dest_position-Drive_MM_To_Impulse(drv.bkp_reg->F_06_cal_stop);
-					Drive_Start(DRIVE_DIRECTION_UP);
-				}
-				else
-				{
-					//drv.dest_position=drv.dest_position+Drive_MM_To_Impulse(drv.bkp_reg->F_06_cal_stop);
 					Drive_Start(DRIVE_DIRECTION_DOWN);
 				}
+
+//				if(drv.dest_position>=drv.current_position)
+//				{
+//					//drv.min_speed_position=drv.dest_position-Drive_MM_To_Impulse(drv.bkp_reg->F_05_cal_speed_down);
+//				}
+//				else
+//				{
+//					//drv.min_speed_position=drv.dest_position+Drive_MM_To_Impulse(drv.bkp_reg->F_05_cal_speed_down);
+//				}
+
+
+//				if(temp>=0)
+//				{
+//					//drv.dest_position=drv.dest_position-Drive_MM_To_Impulse(drv.bkp_reg->F_06_cal_stop);
+//					Drive_Start(DRIVE_DIRECTION_UP);
+//				}
+//				else
+//				{
+//					//drv.dest_position=drv.dest_position+Drive_MM_To_Impulse(drv.bkp_reg->F_06_cal_stop);
+//					Drive_Start(DRIVE_DIRECTION_DOWN);
+//				}
 
 				drv.stop_type=STOP_NONE;
 				drv.move_type_flag=MOVE_TYPE_ABSOLUTE;

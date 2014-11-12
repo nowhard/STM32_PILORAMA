@@ -346,7 +346,7 @@ void Menu_Handle_Key(menuItem* currentMenuItem,uint8_t current_key)
 									}
 
 									//test move val for correct
-									if((drv.bkp_reg->F_06_cal_stop>move_val) || (drv.bkp_reg->F_05_cal_speed_down>move_val))
+									if(drv.bkp_reg->F_06_cal_stop>move_val)
 									{
 										buzzer_set_buzz(BUZZER_EFFECT_3_BEEP,BUZZER_ON,FROM_TASK);
 										Indicator_Blink_Set(IND_2,0xFF,2);
@@ -385,7 +385,7 @@ void Menu_Handle_Key(menuItem* currentMenuItem,uint8_t current_key)
 
 									//test move val for correct
 
-									if((drv.bkp_reg->F_06_cal_stop>(-move_val)) || (drv.bkp_reg->F_05_cal_speed_down>(-move_val)))
+									if(drv.bkp_reg->F_06_cal_stop>(-move_val))
 									{
 										buzzer_set_buzz(BUZZER_EFFECT_3_BEEP,BUZZER_ON,FROM_TASK);
 										Indicator_Blink_Set(IND_2,0xFF,2);
@@ -416,7 +416,7 @@ void Menu_Handle_Key(menuItem* currentMenuItem,uint8_t current_key)
 
 									if(temp>=0)
 									{
-										if((drv.bkp_reg->F_06_cal_stop>temp) || (drv.bkp_reg->F_05_cal_speed_down>temp))
+										if(drv.bkp_reg->F_06_cal_stop>temp)
 										{
 											buzzer_set_buzz(BUZZER_EFFECT_3_BEEP,BUZZER_ON,FROM_TASK);
 											Indicator_Blink_Set(IND_2,0xFF,2);
@@ -425,7 +425,7 @@ void Menu_Handle_Key(menuItem* currentMenuItem,uint8_t current_key)
 									}
 									else
 									{
-										if((drv.bkp_reg->F_06_cal_stop>(-temp)) || (drv.bkp_reg->F_05_cal_speed_down>(-temp)))
+										if(drv.bkp_reg->F_06_cal_stop>(-temp))
 										{
 											buzzer_set_buzz(BUZZER_EFFECT_3_BEEP,BUZZER_ON,FROM_TASK);
 											Indicator_Blink_Set(IND_2,0xFF,2);

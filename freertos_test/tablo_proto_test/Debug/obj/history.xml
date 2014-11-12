@@ -7,8 +7,8 @@
       <target file="syscalls.o" lastModified="1488d77c67c">
          <source file="..\..\..\syscalls\syscalls.c" lastModified="1476293bc68"/>
       </target>
-      <target file="menu.o" lastModified="149a3ae4ebf">
-         <source file="..\..\..\menu\menu.c" lastModified="149a3acf104"/>
+      <target file="menu.o" lastModified="149a3fe27f8">
+         <source file="..\..\..\menu\menu.c" lastModified="149a3fe1ac9"/>
       </target>
       <target file="misc.o" lastModified="1488d77cddf">
          <source file="..\..\..\cmsis_lib\source\misc.c" lastModified="14125d86b88"/>
@@ -100,8 +100,8 @@
       <target file="main.o" lastModified="149a3ae4ad7">
          <source file="..\..\..\main.c" lastModified="148aba9084e"/>
       </target>
-      <target file="drive.o" lastModified="149a3d8cb36">
-         <source file="..\..\..\devices\drive.c" lastModified="149a3d8c182"/>
+      <target file="drive.o" lastModified="149a415caff">
+         <source file="..\..\..\devices\drive.c" lastModified="149a415ba46"/>
       </target>
       <target file="system_stm32f4xx.o" lastModified="1488d77c582">
          <source file="..\..\..\cmsis_boot\system_stm32f4xx.c" lastModified="1428e3c1104"/>

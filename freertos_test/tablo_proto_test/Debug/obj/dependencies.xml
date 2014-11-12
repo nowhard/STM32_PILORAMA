@@ -67,7 +67,7 @@
       </source>
       <source file="..\..\..\menu\menu.h" lastModified="148f4f9622e">
       </source>
-      <source file="..\..\..\menu\menu.c" lastModified="149a3acf4ec">
+      <source file="..\..\..\menu\menu.c" lastModified="149a3fe1eb1">
          <include file="..\..\..\cmsis_boot\stm32f4xx.h"/>
          <include file="..\..\..\cmsis_lib\include\stm32f4xx_gpio.h"/>
          <include file="..\..\..\cmsis_lib\include\stm32f4xx_rcc.h"/>
