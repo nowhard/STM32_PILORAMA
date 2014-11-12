@@ -262,7 +262,7 @@ void Menu_Handle_Key(menuItem* currentMenuItem,uint8_t current_key)
 
 	if(drv.move_type_flag!=MOVE_TYPE_NONE)//аварийная остановка привода при движении
 	{
-		if(current_key==KEY_C)
+		if((current_key==KEY_C)||(current_key==KEY_C_LONG))
 		{
 			Drive_Stop(STOP_USER,FROM_TASK);
 			buzzer_set_buzz(BUZZER_EFFECT_LONG_BEEP,BUZZER_ON,FROM_TASK);
@@ -536,14 +536,14 @@ void Menu_Handle_Key(menuItem* currentMenuItem,uint8_t current_key)
 
 					case KEY_STAR_LONG_RELEASE://стоп движение вниз
 					{
-						Drive_Stop(STOP_END_OF_OPERATION,FROM_TASK);
+						Drive_Stop(STOP_MANUAL_CONTROL,FROM_TASK);
 						buzzer_set_buzz(BUZZER_EFFECT_2_BEEP,BUZZER_ON,FROM_TASK);
 					}
 					break;
 
 					case KEY_SHARP_LONG_RELEASE://стоп движение вверх
 					{
-						Drive_Stop(STOP_END_OF_OPERATION,FROM_TASK);
+						Drive_Stop(STOP_MANUAL_CONTROL,FROM_TASK);
 						buzzer_set_buzz(BUZZER_EFFECT_2_BEEP,BUZZER_ON,FROM_TASK);
 					}
 					break;

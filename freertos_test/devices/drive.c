@@ -24,8 +24,8 @@ void Drive_Init(void)
 	init_pin.GPIO_Pin  = DRIVE_FORWARD | DRIVE_BACKWARD | DRIVE_RESET | DRIVE_SPEED;
 	init_pin.GPIO_Speed = GPIO_Speed_2MHz;
 	init_pin.GPIO_Mode  = GPIO_Mode_OUT;
-	init_pin.GPIO_OType = GPIO_OType_OD;
-	init_pin.GPIO_PuPd = GPIO_PuPd_NOPULL;
+	init_pin.GPIO_OType = GPIO_OType_PP;
+	init_pin.GPIO_PuPd = GPIO_PuPd_DOWN;
 	GPIO_Init (DRIVE_CONTROL_PORT, &init_pin);
 
 //	init_pin.GPIO_Pin  = DRIVE_ERROR;//подт€гиваем вверх, дл€ уменьшени€ помех
@@ -220,14 +220,14 @@ uint8_t Drive_Set_Speed(uint8_t val_speed)
 	{
 		case DRIVE_SPEED_LOW:
 		{
-			DRIVE_CONTROL_PORT->BSRRH=DRIVE_SPEED;
+			DRIVE_CONTROL_PORT->BSRRL=DRIVE_SPEED;
 			return DRIVE_OK;
 		}
 		break;
 
 		case DRIVE_SPEED_HI:
 		{
-			DRIVE_CONTROL_PORT->BSRRL=DRIVE_SPEED;
+			DRIVE_CONTROL_PORT->BSRRH=DRIVE_SPEED;
 			return DRIVE_OK;
 		}
 		break;
@@ -299,6 +299,8 @@ uint8_t Drive_Stop(uint8_t stop_type,uint8_t function_start_type)
 
 		case STOP_INVERTOR_ERROR:
 		{
+
+			DRIVE_CONTROL_PORT->BSRRH=(DRIVE_FORWARD | DRIVE_BACKWARD | DRIVE_SPEED);
 			buzzer_set_buzz(BUZZER_EFFECT_LONG_BEEP,BUZZER_ON,function_start_type);
 			drv.error_flag=DRIVE_ERR;
 		}
@@ -317,6 +319,14 @@ uint8_t Drive_Stop(uint8_t stop_type,uint8_t function_start_type)
 			DRIVE_CONTROL_PORT->BSRRH=(DRIVE_FORWARD | DRIVE_BACKWARD | DRIVE_SPEED);
 			buzzer_set_buzz(BUZZER_EFFECT_LONG_BEEP,BUZZER_ON,function_start_type);
 			drv.error_flag=DRIVE_ERR;
+		}
+		break;
+
+		case STOP_MANUAL_CONTROL:
+		{
+			DRIVE_CONTROL_PORT->BSRRH=(DRIVE_FORWARD | DRIVE_BACKWARD | DRIVE_SPEED);
+			//buzzer_set_buzz(BUZZER_EFFECT_LONG_BEEP,BUZZER_ON,function_start_type);
+			drv.error_flag=DRIVE_OK;
 		}
 		break;
 
