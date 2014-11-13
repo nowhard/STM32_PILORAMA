@@ -75,22 +75,30 @@ uint8_t str_to_ind(uint8_t ind_num,uint8_t *str)
 
 				if(str[i]=='.')
 				{
-					if(i<(str_len-1))
+					if(i==0)
 					{
-						if(str[i+1]=='.')
+						tab.buses[ind->bus].bus_buf[ind->number_in_bus][buf_count]|=0x80;
+						buf_count++;
+					}
+					else
+					{
+						if(i<(str_len-1))
 						{
-							tab.buses[ind->bus].bus_buf[ind->number_in_bus][buf_count]|=0x80;
-							tab.buses[ind->bus].bus_buf[ind->number_in_bus][buf_count-1]|=0x80;
-							buf_count++;
+							if(str[i+1]=='.')
+							{
+								tab.buses[ind->bus].bus_buf[ind->number_in_bus][buf_count]|=0x80;
+								tab.buses[ind->bus].bus_buf[ind->number_in_bus][buf_count-1]|=0x80;
+								buf_count++;
+							}
+							else
+							{
+								tab.buses[ind->bus].bus_buf[ind->number_in_bus][buf_count-1]|=0x80;
+							}
 						}
 						else
 						{
 							tab.buses[ind->bus].bus_buf[ind->number_in_bus][buf_count-1]|=0x80;
 						}
-					}
-					else
-					{
-						tab.buses[ind->bus].bus_buf[ind->number_in_bus][buf_count-1]|=0x80;
 					}
 					continue;
 				}

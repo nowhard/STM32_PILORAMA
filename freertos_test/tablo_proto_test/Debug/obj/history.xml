@@ -7,8 +7,8 @@
       <target file="syscalls.o" lastModified="1488d77c67c">
          <source file="..\..\..\syscalls\syscalls.c" lastModified="1476293bc68"/>
       </target>
-      <target file="menu.o" lastModified="149a3fe27f8">
-         <source file="..\..\..\menu\menu.c" lastModified="149a3fe1ac9"/>
+      <target file="menu.o" lastModified="149a81c968a">
+         <source file="..\..\..\menu\menu.c" lastModified="149a81c8787"/>
       </target>
       <target file="misc.o" lastModified="1488d77cddf">
          <source file="..\..\..\cmsis_lib\source\misc.c" lastModified="14125d86b88"/>
@@ -55,8 +55,8 @@
       <target file="croutine.o" lastModified="1488d92d260">
          <source file="..\..\..\FreeRTOSV7.1.0\Source\croutine.c" lastModified="13438131cf3"/>
       </target>
-      <target file="tablo_parser.o" lastModified="148a7c7792b">
-         <source file="..\..\..\protocols\tablo_parser.c" lastModified="1488375ded4"/>
+      <target file="tablo_parser.o" lastModified="149a882b165">
+         <source file="..\..\..\protocols\tablo_parser.c" lastModified="149a882a995"/>
       </target>
       <target file="list.o" lastModified="1488d92cfa1">
          <source file="..\..\..\FreeRTOSV7.1.0\Source\list.c" lastModified="13e3b1eb900"/>

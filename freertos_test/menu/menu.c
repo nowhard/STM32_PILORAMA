@@ -346,7 +346,7 @@ void Menu_Handle_Key(menuItem* currentMenuItem,uint8_t current_key)
 									}
 
 									//test move val for correct
-									if(drv.bkp_reg->F_06_cal_stop>move_val)
+									if(drv.bkp_reg->F_06_cal_stop>=move_val)
 									{
 										buzzer_set_buzz(BUZZER_EFFECT_3_BEEP,BUZZER_ON,FROM_TASK);
 										Indicator_Blink_Set(IND_2,0xFF,2);
@@ -385,7 +385,7 @@ void Menu_Handle_Key(menuItem* currentMenuItem,uint8_t current_key)
 
 									//test move val for correct
 
-									if(drv.bkp_reg->F_06_cal_stop>(-move_val))
+									if(drv.bkp_reg->F_06_cal_stop>=(-move_val))
 									{
 										buzzer_set_buzz(BUZZER_EFFECT_3_BEEP,BUZZER_ON,FROM_TASK);
 										Indicator_Blink_Set(IND_2,0xFF,2);
@@ -416,7 +416,7 @@ void Menu_Handle_Key(menuItem* currentMenuItem,uint8_t current_key)
 
 									if(temp>=0)
 									{
-										if(drv.bkp_reg->F_06_cal_stop>temp)
+										if(drv.bkp_reg->F_06_cal_stop>=temp)
 										{
 											buzzer_set_buzz(BUZZER_EFFECT_3_BEEP,BUZZER_ON,FROM_TASK);
 											Indicator_Blink_Set(IND_2,0xFF,2);
@@ -425,7 +425,7 @@ void Menu_Handle_Key(menuItem* currentMenuItem,uint8_t current_key)
 									}
 									else
 									{
-										if(drv.bkp_reg->F_06_cal_stop>(-temp))
+										if(drv.bkp_reg->F_06_cal_stop>=(-temp))
 										{
 											buzzer_set_buzz(BUZZER_EFFECT_3_BEEP,BUZZER_ON,FROM_TASK);
 											Indicator_Blink_Set(IND_2,0xFF,2);
@@ -964,7 +964,15 @@ uint8_t Menu_Input_Buf_To_Indicator(struct input_buffer *inp_buf,uint8_t indicat
 		}
 		else
 		{
-			str_to_ind(indicator,"   0.0");
+			if(inp_buf->sign=='+')
+			{
+				str_to_ind(indicator,".  0.0");
+			}
+			else
+			{
+				str_to_ind(indicator,"   0.0");
+			}
+
 		}
 		return INPUT_OK;
 	}
@@ -985,6 +993,13 @@ uint8_t Menu_Input_Buf_To_Indicator(struct input_buffer *inp_buf,uint8_t indicat
 		if(inp_buf->sign=='-')
 		{
 			temp_buf[0]='-';
+		}
+		else
+		{
+			if(inp_buf->sign=='+')
+			{
+				temp_buf[0]='.';
+			}
 		}
 
 		str_to_ind(indicator,temp_buf);
