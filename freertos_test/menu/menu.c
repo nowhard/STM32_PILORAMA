@@ -548,6 +548,23 @@ void Menu_Handle_Key(menuItem* currentMenuItem,uint8_t current_key)
 					}
 					break;
 
+					case KEY_B_LONG://функция BACK запомнить значение
+					{
+						uint16_t temp=Drive_Impulse_To_MM_Absolute(drv.current_position);
+						if((temp>=MENU_F04_MIN_VAL)&&(temp<=MENU_F04_MAX_VAL))
+						{
+							Backup_SRAM_Write_Reg(&drv.bkp_reg->F_04_function_back,&temp,sizeof(uint16_t));
+							buzzer_set_buzz(BUZZER_EFFECT_2_BEEP,BUZZER_ON,FROM_TASK);
+						}
+						else
+						{
+							buzzer_set_buzz(BUZZER_EFFECT_3_BEEP,BUZZER_ON,FROM_TASK);
+							Indicator_Blink_Set(IND_2,0xFF,2);
+							//input error
+						}
+					}
+					break;
+
 					default:
 					{
 						Menu_Input_Field(current_key,INPUT_WITH_POINT|INPUT_WITH_SIGN,&input_buf,MENU_ROOT_MIN_VAL,MENU_ROOT_MAX_VAL);
