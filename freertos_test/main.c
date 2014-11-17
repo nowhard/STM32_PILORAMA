@@ -30,22 +30,6 @@
 #include "drive.h"
 
 
-
-
-//static void Init_Task(void *pvParameters)
-//{
-//
-//	//Power_Detector_Init();
-
-//
-//
-//
-//	//Watchdog_Init();
-
-
-//}
-
-
 int main(void)
 {
 	SystemInit();

@@ -466,7 +466,7 @@ void Menu_Handle_Key(menuItem* currentMenuItem,uint8_t current_key)
 							case DRIVE_BACK_POS_DOWN:
 							{
 								uint32_t temp_imp_pos=Drive_MM_To_Impulse_Absolute(drv.bkp_reg->F_04_function_back);
-								if(temp_imp_pos<drv.current_position)
+								if(temp_imp_pos<=drv.current_position)
 								{
 									buzzer_set_buzz(BUZZER_EFFECT_3_BEEP,BUZZER_ON,FROM_TASK);
 								}
