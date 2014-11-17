@@ -28,15 +28,15 @@ void TIM1_UP_TIM10_IRQHandler(void)
     	if(drv.current_position==drv.stop_position)
     	{
     		DRIVE_CONTROL_PORT->BSRRH=(DRIVE_FORWARD | DRIVE_BACKWARD);//останавливаем двигатель
-    		Drive_Stop(STOP_END_OF_OPERATION,FROM_ISR);
+    		//Drive_Stop(STOP_END_OF_OPERATION,FROM_ISR);
     	}
 
-//    	if(drv.current_position==drv.dest_position)//достижение точки и сигнализация
-//    	{
-//    		Drive_Stop(STOP_END_OF_OPERATION,FROM_ISR);
-//    		//сохраним положение
-//    		Backup_SRAM_Write_Reg(&drv.bkp_reg->backup_current_position,&drv.current_position,sizeof(uint32_t));
-//    	}
+    	if(drv.current_position==drv.dest_position)//достижение точки и сигнализация
+    	{
+    		Drive_Stop(STOP_END_OF_OPERATION,FROM_ISR);
+    		//сохраним положение
+    		Backup_SRAM_Write_Reg(&drv.bkp_reg->backup_current_position,&drv.current_position,sizeof(uint32_t));
+    	}
     }
 }
 
@@ -74,6 +74,16 @@ void Encoder_Init(void)//инициализация таймера дола
 
 	    NVIC_InitStructure.NVIC_IRQChannel = TIM1_UP_TIM10_IRQn;
 	    NVIC_Init(&NVIC_InitStructure);
+
+		TIM_ICInitTypeDef TIM_ICInitStruct;
+
+		TIM_ICInitStruct.TIM_Channel=TIM_Channel_1;
+		TIM_ICInitStruct.TIM_ICFilter=0x7;
+		TIM_ICInit(TIM1, &TIM_ICInitStruct);
+		TIM_ICInit(TIM3, &TIM_ICInitStruct);
+		TIM_ICInitStruct.TIM_Channel=TIM_Channel_2;
+		TIM_ICInitStruct.TIM_ICFilter=0x7;
+		TIM_ICInit(TIM1, &TIM_ICInitStruct);
 
 	    //настройка пинов микроконтроллера
 	    GPIO_InitTypeDef  GPIO_InitStructure;
