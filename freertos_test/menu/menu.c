@@ -62,6 +62,9 @@ void Menu_Handle_Key(menuItem* currentMenuItem,uint8_t current_key);
 #define MENU_F06_MAX_VAL	 6000
 #define MENU_F06_MIN_VAL		0
 
+#define MENU_F07_MAX_VAL	 6000
+#define MENU_F07_MIN_VAL		0
+
 struct input_buffer
 {
 	uint8_t buf[INPUT_BUF_LEN];
@@ -103,8 +106,8 @@ MAKE_MENU(m_s1i2,  m_s1i3,	  m_s1i1,      m_s0i1, 	   NULL_ENTRY,  MENU_F_02,	"F
 MAKE_MENU(m_s1i3,  m_s1i4,	  m_s1i2,      m_s0i1, 	   NULL_ENTRY,  MENU_F_03,  "F-03");
 MAKE_MENU(m_s1i4,  m_s1i5,    m_s1i3,      m_s0i1, 	   NULL_ENTRY,  MENU_F_04,  "F-04");
 MAKE_MENU(m_s1i5,  m_s1i6,    m_s1i4,      m_s0i1, 	   NULL_ENTRY,  MENU_F_05,  "F-05");
-MAKE_MENU(m_s1i6,  NULL_ENTRY,m_s1i5,      m_s0i1, 	   NULL_ENTRY,  MENU_F_06,  "F-06");
-
+MAKE_MENU(m_s1i6,  m_s1i7,	  m_s1i5,      m_s0i1, 	   NULL_ENTRY,  MENU_F_06,  "F-06");
+MAKE_MENU(m_s1i7,  NULL_ENTRY,m_s1i6,      m_s0i1, 	   NULL_ENTRY,  MENU_F_07,  "F-07");
 
 extern struct drive drv;
 xQueueHandle xClrIndicatorQueue;//очередь клавиатуры
@@ -188,7 +191,24 @@ unsigned char dispMenu(void)
 
 			case MENU_F_06:
 			{
-				if(Menu_Input_Int_To_Buf(drv.bkp_reg->F_06_cal_stop,&input_buf,MENU_F06_MIN_VAL,MENU_F06_MAX_VAL)==INPUT_ERR)
+				if(Menu_Input_Int_To_Buf(drv.bkp_reg->F_06_cal_stop_down,&input_buf,MENU_F06_MIN_VAL,MENU_F06_MAX_VAL)==INPUT_ERR)
+				{
+					Menu_Input_Field_Clear(&input_buf);
+					Indicator_Blink_Set(IND_2,0xFF,2);
+					buzzer_set_buzz(BUZZER_EFFECT_3_BEEP,BUZZER_ON,FROM_TASK);
+					Indicator_Blink_Set(IND_2,0xFF,2);
+					//error
+				}
+				else
+				{
+					Menu_Input_Buf_To_Indicator(&input_buf,IND_2);
+				}
+			}
+			break;
+
+			case MENU_F_07:
+			{
+				if(Menu_Input_Int_To_Buf(drv.bkp_reg->F_07_cal_stop_up,&input_buf,MENU_F07_MIN_VAL,MENU_F07_MAX_VAL)==INPUT_ERR)
 				{
 					Menu_Input_Field_Clear(&input_buf);
 					Indicator_Blink_Set(IND_2,0xFF,2);
@@ -346,7 +366,7 @@ void Menu_Handle_Key(menuItem* currentMenuItem,uint8_t current_key)
 									}
 
 									//test move val for correct
-									if(drv.bkp_reg->F_06_cal_stop>=move_val)
+									if(drv.bkp_reg->F_07_cal_stop_up>=move_val)
 									{
 										buzzer_set_buzz(BUZZER_EFFECT_3_BEEP,BUZZER_ON,FROM_TASK);
 										Indicator_Blink_Set(IND_2,0xFF,2);
@@ -385,7 +405,7 @@ void Menu_Handle_Key(menuItem* currentMenuItem,uint8_t current_key)
 
 									//test move val for correct
 
-									if(drv.bkp_reg->F_06_cal_stop>=(-move_val))
+									if(drv.bkp_reg->F_06_cal_stop_down>=(-move_val))
 									{
 										buzzer_set_buzz(BUZZER_EFFECT_3_BEEP,BUZZER_ON,FROM_TASK);
 										Indicator_Blink_Set(IND_2,0xFF,2);
@@ -416,7 +436,7 @@ void Menu_Handle_Key(menuItem* currentMenuItem,uint8_t current_key)
 
 									if(temp>=0)
 									{
-										if(drv.bkp_reg->F_06_cal_stop>=temp)
+										if(drv.bkp_reg->F_07_cal_stop_up>=temp)
 										{
 											buzzer_set_buzz(BUZZER_EFFECT_3_BEEP,BUZZER_ON,FROM_TASK);
 											Indicator_Blink_Set(IND_2,0xFF,2);
@@ -425,7 +445,7 @@ void Menu_Handle_Key(menuItem* currentMenuItem,uint8_t current_key)
 									}
 									else
 									{
-										if(drv.bkp_reg->F_06_cal_stop>=(-temp))
+										if(drv.bkp_reg->F_06_cal_stop_down>=(-temp))
 										{
 											buzzer_set_buzz(BUZZER_EFFECT_3_BEEP,BUZZER_ON,FROM_TASK);
 											Indicator_Blink_Set(IND_2,0xFF,2);
@@ -806,8 +826,7 @@ void Menu_Handle_Key(menuItem* currentMenuItem,uint8_t current_key)
 
 					case KEY_A:
 					{
-						selectedMenuItem = (menuItem*)&m_s1i1;
-						dispMenu();
+						Menu_Next();
 						buzzer_set_buzz(BUZZER_EFFECT_1_BEEP,BUZZER_ON,FROM_TASK);
 					}
 					break;
@@ -817,7 +836,7 @@ void Menu_Handle_Key(menuItem* currentMenuItem,uint8_t current_key)
 						int16_t temp_val;
 						if(Menu_Input_Buf_To_Int(&input_buf,&temp_val,MENU_F06_MIN_VAL,MENU_F06_MAX_VAL)==INPUT_OK)
 						{
-							Backup_SRAM_Write_Reg(&drv.bkp_reg->F_06_cal_stop,&temp_val,sizeof(uint16_t));
+							Backup_SRAM_Write_Reg(&drv.bkp_reg->F_06_cal_stop_down,&temp_val,sizeof(uint16_t));
 							buzzer_set_buzz(BUZZER_EFFECT_2_BEEP,BUZZER_ON,FROM_TASK);
 						}
 						else
@@ -837,6 +856,53 @@ void Menu_Handle_Key(menuItem* currentMenuItem,uint8_t current_key)
 				}
 			}
 			break;
+
+
+			case MENU_F_07:
+			{
+				switch(current_key)
+				{
+					case KEY_C_LONG:
+					{
+						Menu_Parent();
+						buzzer_set_buzz(BUZZER_EFFECT_LONG_BEEP,BUZZER_ON,FROM_TASK);
+					}
+					break;
+
+					case KEY_A:
+					{
+						selectedMenuItem = (menuItem*)&m_s1i1;
+						dispMenu();
+						buzzer_set_buzz(BUZZER_EFFECT_1_BEEP,BUZZER_ON,FROM_TASK);
+					}
+					break;
+
+					case KEY_POINT_LONG://запомним значение
+					{
+						int16_t temp_val;
+						if(Menu_Input_Buf_To_Int(&input_buf,&temp_val,MENU_F06_MIN_VAL,MENU_F06_MAX_VAL)==INPUT_OK)
+						{
+							Backup_SRAM_Write_Reg(&drv.bkp_reg->F_07_cal_stop_up,&temp_val,sizeof(uint16_t));
+							buzzer_set_buzz(BUZZER_EFFECT_2_BEEP,BUZZER_ON,FROM_TASK);
+						}
+						else
+						{
+							buzzer_set_buzz(BUZZER_EFFECT_3_BEEP,BUZZER_ON,FROM_TASK);
+							Indicator_Blink_Set(IND_2,0xFF,2);
+							//input error
+						}
+					}
+					break;
+
+					default:
+					{
+						Menu_Input_Field(current_key,INPUT_WITH_POINT,&input_buf,MENU_F07_MIN_VAL,MENU_F07_MAX_VAL);
+					}
+					break;
+				}
+			}
+			break;
+
 
 		}
 	}

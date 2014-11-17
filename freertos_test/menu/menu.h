@@ -18,7 +18,8 @@ enum {
     MENU_F_03,
     MENU_F_04,
     MENU_F_05,
-    MENU_F_06
+    MENU_F_06,
+    MENU_F_07,
 };
 
 enum

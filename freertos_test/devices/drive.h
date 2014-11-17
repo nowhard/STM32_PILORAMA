@@ -68,7 +68,9 @@ struct backup_registers
 	struct mm_imp F_03_cal_syncro;
 	uint16_t F_04_function_back;
 	uint16_t F_05_cal_speed_down;
-	uint16_t F_06_cal_stop;
+//	uint16_t F_06_cal_stop;
+	uint16_t F_06_cal_stop_down;
+	uint16_t F_07_cal_stop_up;
 	uint32_t backup_current_position;
 };
 
