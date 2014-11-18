@@ -136,7 +136,7 @@ void buzzer_set_buzz(uint8_t effect, uint8_t enable,uint8_t function_start_type)
 			}
 			 buz.buzzer_enable=BUZZER_ON;
 		}
-		task_watches[BUZZER_TASK].task_status=TASK_ACTIVE;
+		//task_watches[BUZZER_TASK].task_status=TASK_ACTIVE;
 	}
 	else
 	{

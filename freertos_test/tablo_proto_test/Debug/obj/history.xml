@@ -7,14 +7,14 @@
       <target file="syscalls.o" lastModified="1488d77c67c">
          <source file="..\..\..\syscalls\syscalls.c" lastModified="1476293bc68"/>
       </target>
-      <target file="menu.o" lastModified="149c2958d21">
-         <source file="..\..\..\menu\menu.c" lastModified="149c27a4379"/>
+      <target file="menu.o" lastModified="149c2ec2306">
+         <source file="..\..\..\menu\menu.c" lastModified="149c2ebb548"/>
       </target>
       <target file="misc.o" lastModified="1488d77cddf">
          <source file="..\..\..\cmsis_lib\source\misc.c" lastModified="14125d86b88"/>
       </target>
-      <target file="watchdog.o" lastModified="149c2a2d98c">
-         <source file="..\..\..\devices\watchdog.c" lastModified="149c2a2d093"/>
+      <target file="watchdog.o" lastModified="149c2ee21f2">
+         <source file="..\..\..\devices\watchdog.c" lastModified="149c2ee16d7"/>
       </target>
       <target file="queue.o" lastModified="1488d92d0d9">
          <source file="..\..\..\FreeRTOSV7.1.0\Source\queue.c" lastModified="13e3b1eb900"/>
@@ -64,8 +64,8 @@
       <target file="port.o" lastModified="1488d92d175">
          <source file="..\..\..\FreeRTOSV7.1.0\Source\portable\GCC\ARM_CM4F\port.c" lastModified="13e3b1eb900"/>
       </target>
-      <target file="buzzer.o" lastModified="149c29584d4">
-         <source file="..\..\..\devices\buzzer.c" lastModified="148f92c5c26"/>
+      <target file="buzzer.o" lastModified="149c2f06849">
+         <source file="..\..\..\devices\buzzer.c" lastModified="149c2f05e17"/>
       </target>
       <target file="startup_stm32f4xx.o" lastModified="1488d77b6ad">
          <source file="..\..\..\cmsis_boot\startup\startup_stm32f4xx.c" lastModified="13cedd0ed70"/>
@@ -94,8 +94,8 @@
       <target file="stm32f4xx_spi.o" lastModified="1488d77cac2">
          <source file="..\..\..\cmsis_lib\source\stm32f4xx_spi.c" lastModified="14125d81f8b"/>
       </target>
-      <target file="encoder.o" lastModified="149bd930947">
-         <source file="..\..\..\devices\encoder.c" lastModified="149bd70f893"/>
+      <target file="encoder.o" lastModified="149c2e61f3a">
+         <source file="..\..\..\devices\encoder.c" lastModified="149c2e61845"/>
       </target>
       <target file="main.o" lastModified="149c2a60a23">
          <source file="..\..\..\main.c" lastModified="149c2a6006f"/>

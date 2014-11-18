@@ -67,7 +67,7 @@
       </source>
       <source file="..\..\..\menu\menu.h" lastModified="149bd87262f">
       </source>
-      <source file="..\..\..\menu\menu.c" lastModified="149c27a4761">
+      <source file="..\..\..\menu\menu.c" lastModified="149c2ebb930">
          <include file="..\..\..\cmsis_boot\stm32f4xx.h"/>
          <include file="..\..\..\cmsis_lib\include\stm32f4xx_gpio.h"/>
          <include file="..\..\..\cmsis_lib\include\stm32f4xx_rcc.h"/>
@@ -167,7 +167,7 @@
          <include file="..\..\..\FreeRTOSV7.1.0\Source\include\FreeRTOS.h"/>
          <include file="..\..\..\FreeRTOSV7.1.0\Source\include\task.h"/>
       </source>
-      <source file="..\..\..\devices\watchdog.c" lastModified="149c2a2d093">
+      <source file="..\..\..\devices\watchdog.c" lastModified="149c2ee16d7">
          <include file="..\..\..\devices\watchdog.h"/>
          <include file="..\..\..\cmsis_lib\include\stm32f4xx_iwdg.h"/>
          <include file="..\..\..\FreeRTOSV7.1.0\Source\include\FreeRTOS.h"/>
@@ -313,7 +313,7 @@
          <include file="..\..\..\devices\buzzer.h"/>
          <include file="..\..\..\menu\menu.h"/>
       </source>
-      <source file="..\..\..\devices\encoder.c" lastModified="149bd70f893">
+      <source file="..\..\..\devices\encoder.c" lastModified="149c2e61845">
          <include file="..\..\..\devices\encoder.h"/>
          <include file="..\..\..\devices\drive.h"/>
          <include file="..\..\..\devices\buzzer.h"/>
@@ -366,6 +366,28 @@
       </source>
       <source file="..\..\..\FreeRTOSV7.1.0\Source\include\projdefs.h" lastModified="13e3b1eb8f0">
       </source>
+      <source file="..\..\..\main.c" lastModified="149c2a6006f">
+         <include file="..\..\..\cmsis_boot\stm32f4xx.h"/>
+         <include file="..\..\..\cmsis_lib\include\stm32f4xx_gpio.h"/>
+         <include file="..\..\..\cmsis_lib\include\stm32f4xx_rcc.h"/>
+         <include file="..\..\..\cmsis_lib\include\stm32f4xx_tim.h"/>
+         <include file="..\..\..\cmsis_lib\include\misc.h"/>
+         <include file="..\..\..\cmsis_boot\system_stm32f4xx.h"/>
+         <include file="..\..\..\FreeRTOSV7.1.0\Source\include\FreeRTOS.h"/>
+         <include file="..\..\..\FreeRTOSV7.1.0\Source\include\task.h"/>
+         <include file="..\..\..\FreeRTOSV7.1.0\Source\include\queue.h"/>
+         <include file="..\..\..\FreeRTOSV7.1.0\Source\include\semphr.h"/>
+         <include file="..\..\..\menu\menu.h"/>
+         <include file="..\..\..\devices\spi_bus.h"/>
+         <include file="..\..\..\devices\keyboard.h"/>
+         <include file="..\..\..\devices\buzzer.h"/>
+         <include file="..\..\..\devices\watchdog.h"/>
+         <include file="..\..\..\devices\power_detector.h"/>
+         <include file="..\..\..\devices\encoder.h"/>
+         <include file="..\..\..\devices\external_events.h"/>
+         <include file="..\..\..\devices\backup_sram.h"/>
+         <include file="..\..\..\devices\drive.h"/>
+      </source>
       <source file="..\..\..\protocols\tablo_parser.c" lastModified="149a882b165">
          <include file="..\..\..\protocols\tablo_parser.h"/>
          <include file="..\..\..\devices\tablo.h"/>
@@ -385,18 +407,6 @@
          <include file="..\..\..\cmsis_lib\include\stm32f4xx_tim.h"/>
          <include file="..\..\..\cmsis_lib\include\stm32f4xx_usart.h"/>
          <include file="..\..\..\cmsis_lib\include\misc.h"/>
-      </source>
-      <source file="..\..\..\devices\buzzer.c" lastModified="148f92c5c26">
-         <include file="..\..\..\devices\buzzer.h"/>
-         <include file="..\..\..\cmsis_boot\stm32f4xx.h"/>
-         <include file="..\..\..\cmsis_lib\include\stm32f4xx_gpio.h"/>
-         <include file="..\..\..\cmsis_lib\include\stm32f4xx_rcc.h"/>
-         <include file="..\..\..\cmsis_lib\include\misc.h"/>
-         <include file="..\..\..\FreeRTOSV7.1.0\Source\include\FreeRTOS.h"/>
-         <include file="..\..\..\FreeRTOSV7.1.0\Source\include\task.h"/>
-         <include file="..\..\..\FreeRTOSV7.1.0\Source\include\queue.h"/>
-         <include file="..\..\..\FreeRTOSV7.1.0\Source\include\semphr.h"/>
-         <include file="..\..\..\devices\watchdog.h"/>
       </source>
       <source file="..\..\..\cmsis_lib\include\stm32f4xx_iwdg.h" lastModified="1428e61eab6">
          <include file="..\..\..\cmsis_boot\stm32f4xx.h"/>

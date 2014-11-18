@@ -293,8 +293,8 @@ void Menu_Handle_Key(menuItem* currentMenuItem,uint8_t current_key)
 		return;
 	}
 
-		if(drv.error_flag==DRIVE_ERR)
-		{
+	if(drv.error_flag==DRIVE_ERR)
+	{
 			if(current_key==KEY_C_LONG) //очистим поле
 			{
 				Menu_Input_Field_Clear(&input_buf);
@@ -339,14 +339,17 @@ void Menu_Handle_Key(menuItem* currentMenuItem,uint8_t current_key)
 
 		if(drv.function_back_flag==DRIVE_BACK_POS_UP)
 		{
-			drv.function_back_flag=DRIVE_BACK_POS_DOWN;
-			if(Drive_Set_Position_Imp_Absolute(drv.function_back_temp_position)!=DRIVE_OK)
+			if(current_key==KEY_B) //очистим поле
 			{
-				buzzer_set_buzz(BUZZER_EFFECT_3_BEEP,BUZZER_ON,FROM_TASK);
-			}
-			else
-			{
-				buzzer_set_buzz(BUZZER_EFFECT_1_BEEP,BUZZER_ON,FROM_TASK);
+				drv.function_back_flag=DRIVE_BACK_POS_DOWN;
+				if(Drive_Set_Position_Imp_Absolute(drv.function_back_temp_position)!=DRIVE_OK)
+				{
+					buzzer_set_buzz(BUZZER_EFFECT_3_BEEP,BUZZER_ON,FROM_TASK);
+				}
+				else
+				{
+					buzzer_set_buzz(BUZZER_EFFECT_1_BEEP,BUZZER_ON,FROM_TASK);
+				}
 			}
 			return;
 		}

@@ -78,11 +78,11 @@ void Encoder_Init(void)//инициализация таймера дола
 		TIM_ICInitTypeDef TIM_ICInitStruct;
 
 		TIM_ICInitStruct.TIM_Channel=TIM_Channel_1;
-		TIM_ICInitStruct.TIM_ICFilter=0x7;
+		TIM_ICInitStruct.TIM_ICFilter=0xF;
 		TIM_ICInit(TIM1, &TIM_ICInitStruct);
 		TIM_ICInit(TIM3, &TIM_ICInitStruct);
 		TIM_ICInitStruct.TIM_Channel=TIM_Channel_2;
-		TIM_ICInitStruct.TIM_ICFilter=0x7;
+		TIM_ICInitStruct.TIM_ICFilter=0xF;
 		TIM_ICInit(TIM1, &TIM_ICInitStruct);
 
 	    //настройка пинов микроконтроллера
