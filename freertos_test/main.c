@@ -23,7 +23,7 @@
 //#include "power.h"
 #include "watchdog.h"
 //#include "relay.h"
-//#include "power_detector.h"
+#include "power_detector.h"
 #include "encoder.h"
 #include "external_events.h"
 #include "backup_sram.h"
@@ -33,6 +33,7 @@
 int main(void)
 {
 	SystemInit();
+	Power_Detector_Init();
 	Backup_SRAM_Init();
 	Drive_Init();
 	Encoder_Init();
