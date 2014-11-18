@@ -140,6 +140,8 @@ uint8_t Drive_Set_Position(uint8_t move_type,int16_t move_val)
 					return DRIVE_ERR;
 				}
 				//drv.dest_position=drv.current_position+Drive_MM_To_Impulse(move_val);
+				uint16_t tmp_val=move_val+Drive_Impulse_To_MM_Absolute(drv.current_position);
+
 				drv.dest_position=Drive_MM_To_Impulse_Absolute(move_val+Drive_Impulse_To_MM_Absolute(drv.current_position));
 				drv.stop_position=drv.dest_position-Drive_MM_To_Impulse(drv.bkp_reg->F_07_cal_stop_up);
 				drv.min_speed_position=drv.dest_position-Drive_MM_To_Impulse(drv.bkp_reg->F_05_cal_speed_down);
@@ -407,7 +409,7 @@ void Drive_Reset(void)
 
 uint32_t Drive_MM_To_Impulse(uint16_t val_mm)
 {
-	return (val_mm*(drv.bkp_reg->F_02_cal_up.imp-drv.bkp_reg->F_01_cal_down.imp))/(drv.bkp_reg->F_02_cal_up.mm-drv.bkp_reg->F_01_cal_down.mm);
+	return ((uint32_t)(val_mm*((uint64_t)drv.bkp_reg->F_02_cal_up.imp-(uint64_t)drv.bkp_reg->F_01_cal_down.imp))/(drv.bkp_reg->F_02_cal_up.mm-drv.bkp_reg->F_01_cal_down.mm))+1;
 }
 
 uint16_t Drive_Impulse_To_MM(uint32_t val_impulse)
