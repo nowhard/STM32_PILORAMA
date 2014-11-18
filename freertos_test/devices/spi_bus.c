@@ -36,7 +36,7 @@ uint8_t spi_buses_init(void)//
 	spi2_config();
 	xTaskCreate(spi_task,(signed char*)"SPI_TASK",128,NULL, tskIDLE_PRIORITY + 1, NULL);
 
-	task_watches[SPI_TASK_1].task_status=TASK_ACTIVE;
+	task_watches[SPI_TASK_1].task_status=TASK_IDLE;
 	xSPI_Buf_Mutex=xSemaphoreCreateMutex();
 
 	return 0;
@@ -145,9 +145,7 @@ void	spi2_config(void)//
 static void spi_task(void *pvParameters)//
 {
 	uint8_t i=0;
-	//Indicator_Blink_Set(IND_1,0xFF,5);
-	//Indicator_Blink_Set(IND_2,0xFF,2);
-	//buzzer_set_buzz(BUZZER_EFFECT_3_BEEP,BUZZER_ON);
+	task_watches[SPI_TASK_1].task_status=TASK_ACTIVE;
 	while(1)
 	{
 		Indicator_Blink_Handler();

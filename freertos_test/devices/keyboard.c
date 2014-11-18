@@ -13,8 +13,10 @@
 #include "semphr.h"
 
 #include "buzzer.h"
+#include "watchdog.h"
 
 xQueueHandle xKeyQueue;//очередь клавиатуры
+extern struct task_watch task_watches[];
 
 static void vKeyboardTask(void *pvParameters);
 
@@ -47,6 +49,7 @@ void Keyboard_Init(void)
 	KEYB_PORT_OUT->BSRRL=(KO_0 | KO_1 | KO_2 | KO_3);
 
 //	vSemaphoreCreateBinary( xKeySemaphore );
+	task_watches[KEYBOARD_TASK].task_status=TASK_IDLE;
 	xKeyQueue = xQueueCreate( 2, sizeof( uint8_t ) );
 	xTaskCreate(vKeyboardTask,(signed char*)"Keyboard",64,NULL, tskIDLE_PRIORITY + 1, NULL);
 }
@@ -72,6 +75,7 @@ static void vKeyboardTask(void *pvParameters)
 	uint16_t key_mask=0;
 
 	key_mask=KI_0 | KI_1 | KI_2 | KI_3;
+	task_watches[KEYBOARD_TASK].task_status=TASK_ACTIVE;
     while(1)
     {
 
@@ -134,6 +138,7 @@ static void vKeyboardTask(void *pvParameters)
     		last_key=0xFF;
     		tick_counter=0;
     	}
+    task_watches[KEYBOARD_TASK].counter++;
 	vTaskDelay(50);
     }
 }
