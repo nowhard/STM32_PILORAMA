@@ -351,6 +351,15 @@ void Menu_Handle_Key(menuItem* currentMenuItem,uint8_t current_key)
 					buzzer_set_buzz(BUZZER_EFFECT_1_BEEP,BUZZER_ON,FROM_TASK);
 				}
 			}
+
+			if(current_key==KEY_C_LONG) //очистим поле
+			{
+				Menu_Input_Field_Clear(&input_buf);
+				drv.error_flag=DRIVE_OK;
+				drv.function_back_flag=DRIVE_BACK_POS_DOWN;
+				buzzer_set_buzz(BUZZER_EFFECT_2_BEEP,BUZZER_ON,FROM_TASK);
+			}
+
 			return;
 		}
 

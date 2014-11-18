@@ -7,8 +7,8 @@
       <target file="syscalls.o" lastModified="1488d77c67c">
          <source file="..\..\..\syscalls\syscalls.c" lastModified="1476293bc68"/>
       </target>
-      <target file="menu.o" lastModified="149c2ec2306">
-         <source file="..\..\..\menu\menu.c" lastModified="149c2ebb548"/>
+      <target file="menu.o" lastModified="149c2f58212">
+         <source file="..\..\..\menu\menu.c" lastModified="149c2f573ba"/>
       </target>
       <target file="misc.o" lastModified="1488d77cddf">
          <source file="..\..\..\cmsis_lib\source\misc.c" lastModified="14125d86b88"/>
