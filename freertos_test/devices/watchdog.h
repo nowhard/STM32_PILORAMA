@@ -2,14 +2,15 @@
 #define WATCHDOG_H
 #include "stm32f4xx.h"
 
-#define TASK_NUM	4//количество задач, кроме задачи ватчдога , в системе
+#define TASK_NUM	5//количество задач, кроме задачи ватчдога , в системе
 
 enum
 {
 	SPI_TASK_1		=0,
 	MENU_TASK		=1,
 	KEYBOARD_TASK	=2,
-	BUZZER_TASK		=3
+	BUZZER_TASK		=3,
+	EXT_EVENTS_TASK =4,
 };
 
 enum

@@ -35,7 +35,7 @@ void buzzer_init(void)
     BUZZER_PORT->BSRRH=BUZZER_PIN;
 
     vSemaphoreCreateBinary( xBuzzerSemaphore );
-    xTaskCreate(buzzer_task,(signed char*)"BUZZER",64,NULL, tskIDLE_PRIORITY + 1, &xBuzzer_Handle);
+    xTaskCreate(buzzer_task,(signed char*)"BUZZER",128,NULL, tskIDLE_PRIORITY + 1, &xBuzzer_Handle);
    // vTaskSuspend (xBuzzer_Handle);
 
 
@@ -140,6 +140,7 @@ void buzzer_set_buzz(uint8_t effect, uint8_t enable,uint8_t function_start_type)
 				  if( xHigherPriorityTaskWoken == pdTRUE )
 				  {
 					  portEND_SWITCHING_ISR( xHigherPriorityTaskWoken );
+					  //taskYIELD();
 				  }
 			}
 			 buz.buzzer_enable=BUZZER_ON;

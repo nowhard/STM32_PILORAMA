@@ -18,6 +18,9 @@
 
 #include "drive.h"
 
+#include "watchdog.h"
+extern struct task_watch task_watches[];
+
 void ExtEventsHandler( void *pvParameters );
 extern struct drive drv;
 
@@ -26,6 +29,8 @@ void External_Events_Init(void)
 {
 	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOA, ENABLE);//тактируем портј
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_SYSCFG, ENABLE);
+
+
 
 	GPIO_InitTypeDef  GPIO_InitStructure;
 
@@ -57,6 +62,8 @@ void External_Events_Init(void)
 	EXTI_InitStructure.EXTI_LineCmd = ENABLE;
 	EXTI_Init(&EXTI_InitStructure);
 
+	NVIC_PriorityGroupConfig( NVIC_PriorityGroup_4 );
+
 	NVIC_InitTypeDef NVIC_InitStructure;
 
 //	NVIC_InitStructure.NVIC_IRQChannel = EXTI0_IRQn;
@@ -66,16 +73,19 @@ void External_Events_Init(void)
 //	NVIC_Init(&NVIC_InitStructure);
 
 	NVIC_InitStructure.NVIC_IRQChannel = EXTI9_5_IRQn;
-	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0x01;
-	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0x01;
+	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 14;
+	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0x0;
 	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
 	NVIC_Init(&NVIC_InitStructure);
 
-	 xTaskCreate(ExtEventsHandler,(signed char*)"Ext_Events",64,NULL, tskIDLE_PRIORITY + 1, NULL);
+	//NVIC_EnableIRQ(EXTI9_5_IRQn);
+
+	 xTaskCreate(ExtEventsHandler,(signed char*)"Ext_Events",128,NULL, tskIDLE_PRIORITY + 1, NULL);
 }
 
 void ExtEventsHandler( void *pvParameters )
 {
+	task_watches[EXT_EVENTS_TASK].task_status=TASK_ACTIVE;
 	while(1)
 	{
 		if(GPIO_ReadInputDataBit(DRIVE_EXT_EVENTS_PORT,DRIVE_ERROR)==Bit_RESET)
@@ -103,7 +113,7 @@ void ExtEventsHandler( void *pvParameters )
 				EXTI->IMR |= (EXTI_Line6|EXTI_Line7);
 			}
 		}
-
+		task_watches[EXT_EVENTS_TASK].counter++;
 		vTaskDelay(100);
 	}
 }
@@ -123,14 +133,14 @@ void EXTI9_5_IRQHandler(void)
     if(EXTI_GetITStatus(EXTI_Line6) != RESET)
     {
         EXTI_ClearITPendingBit(EXTI_Line6);
-        Drive_Stop(STOP_HI_SENSOR,FROM_ISR);
         EXTI->IMR &= ~EXTI_Line6;
+        Drive_Stop(STOP_HI_SENSOR,FROM_ISR);
     }
 
     if(EXTI_GetITStatus(EXTI_Line7) != RESET)
     {
         EXTI_ClearITPendingBit(EXTI_Line7);
-        Drive_Stop(STOP_LO_SENSOR,FROM_ISR);
         EXTI->IMR &= ~EXTI_Line7;
+        Drive_Stop(STOP_LO_SENSOR,FROM_ISR);
     }
 }

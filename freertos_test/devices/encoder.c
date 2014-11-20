@@ -73,8 +73,8 @@ void Encoder_Init(void)//инициализация таймера дола
 	    NVIC_InitTypeDef NVIC_InitStructure;
 	    NVIC_PriorityGroupConfig( NVIC_PriorityGroup_4 );
 	    NVIC_InitStructure.NVIC_IRQChannel = TIM3_IRQn;
-	    NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 15;
-	    NVIC_InitStructure.NVIC_IRQChannelSubPriority = 14;
+	    NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 13;
+	    NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;
 	    NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
 	    NVIC_Init(&NVIC_InitStructure);
 

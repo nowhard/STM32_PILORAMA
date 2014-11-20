@@ -55,10 +55,11 @@ static void Watchdog_Task(void *pvParameters)
 {
 	while(1)
 	{
-		if(((task_watches[SPI_TASK_1].counter>0)	||(task_watches[SPI_TASK_1].task_status==TASK_IDLE))&&
-		   ((task_watches[MENU_TASK].counter>0)		||(task_watches[MENU_TASK].task_status==TASK_IDLE))&&
-		   ((task_watches[KEYBOARD_TASK].counter>0)	||(task_watches[KEYBOARD_TASK].task_status==TASK_IDLE))&&
-		   ((task_watches[BUZZER_TASK].counter>0)	||(task_watches[BUZZER_TASK].task_status==TASK_IDLE)))
+		if(((task_watches[SPI_TASK_1].counter>0)		||(task_watches[SPI_TASK_1].task_status==TASK_IDLE))&&
+		   ((task_watches[MENU_TASK].counter>0)			||(task_watches[MENU_TASK].task_status==TASK_IDLE))&&
+		   ((task_watches[KEYBOARD_TASK].counter>0)		||(task_watches[KEYBOARD_TASK].task_status==TASK_IDLE))&&
+		   ((task_watches[BUZZER_TASK].counter>0)		||(task_watches[BUZZER_TASK].task_status==TASK_IDLE))&&
+		   ((task_watches[EXT_EVENTS_TASK].counter>0)	||(task_watches[EXT_EVENTS_TASK].task_status==TASK_IDLE)))
 		{//проверка счетчиков
 			IWDG_ReloadCounter();
 		}
@@ -66,6 +67,7 @@ static void Watchdog_Task(void *pvParameters)
 		task_watches[MENU_TASK].counter=0;
 		task_watches[KEYBOARD_TASK].counter=0;
 		task_watches[BUZZER_TASK].counter=0;
+		task_watches[EXT_EVENTS_TASK].counter=0;
 		vTaskDelay(500);
 	}
 }
