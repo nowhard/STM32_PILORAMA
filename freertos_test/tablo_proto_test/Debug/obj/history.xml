@@ -28,11 +28,11 @@
       <target file="indicator.o" lastModified="148ac3afe84">
          <source file="..\..\..\devices\indicator.c" lastModified="148ac3ada14"/>
       </target>
-      <target file="external_events.o" lastModified="149cc2cdafd">
-         <source file="..\..\..\devices\external_events.c" lastModified="14965e3e448"/>
-      </target>
       <target file="stm32f4xx_iwdg.o" lastModified="1488d77b769">
          <source file="..\..\..\cmsis_lib\source\stm32f4xx_iwdg.c" lastModified="1428e61eab6"/>
+      </target>
+      <target file="external_events.o" lastModified="149cc2cdafd">
+         <source file="..\..\..\devices\external_events.c" lastModified="14965e3e448"/>
       </target>
       <target file="tasks.o" lastModified="1488d92cbd8">
          <source file="..\..\..\FreeRTOSV7.1.0\Source\tasks.c" lastModified="13e3b1eb910"/>
@@ -64,8 +64,8 @@
       <target file="port.o" lastModified="1488d92d175">
          <source file="..\..\..\FreeRTOSV7.1.0\Source\portable\GCC\ARM_CM4F\port.c" lastModified="13e3b1eb900"/>
       </target>
-      <target file="buzzer.o" lastModified="149c2f06849">
-         <source file="..\..\..\devices\buzzer.c" lastModified="149c2f05e17"/>
+      <target file="buzzer.o" lastModified="149cc5a1a4d">
+         <source file="..\..\..\devices\buzzer.c" lastModified="149cc5a13e5"/>
       </target>
       <target file="startup_stm32f4xx.o" lastModified="1488d77b6ad">
          <source file="..\..\..\cmsis_boot\startup\startup_stm32f4xx.c" lastModified="13cedd0ed70"/>

@@ -16,6 +16,7 @@
 struct buzzer buz;
 extern struct task_watch task_watches[];
 xTaskHandle xBuzzer_Handle;
+xSemaphoreHandle xBuzzerSemaphore;
 
 void buzzer_init(void)
 {
@@ -31,19 +32,22 @@ void buzzer_init(void)
     GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;
     GPIO_Init(BUZZER_PORT, &GPIO_InitStructure);
 
-
-    //GPIO_WriteBit(BUZZER_PORT, BUZZER_PIN,0);
     BUZZER_PORT->BSRRH=BUZZER_PIN;
 
+    vSemaphoreCreateBinary( xBuzzerSemaphore );
     xTaskCreate(buzzer_task,(signed char*)"BUZZER",64,NULL, tskIDLE_PRIORITY + 1, &xBuzzer_Handle);
-    vTaskSuspend (xBuzzer_Handle);
+   // vTaskSuspend (xBuzzer_Handle);
+
 
     task_watches[BUZZER_TASK].task_status=TASK_IDLE;
 }
+
 void buzzer_task(void *pvParameters )
 {
 	while(1)
 	{
+		xSemaphoreTake( xBuzzerSemaphore, portMAX_DELAY );
+
 		if( buz.buzzer_enable==BUZZER_ON)
 		{
 			switch( buz.buzzer_effect)
@@ -53,8 +57,7 @@ void buzzer_task(void *pvParameters )
 					BUZZER_PORT->BSRRL=BUZZER_PIN;
 					vTaskDelay(200);
 					BUZZER_PORT->BSRRH=BUZZER_PIN;
-					//vTaskDelay(200);
-					 buz.buzzer_enable=BUZZER_OFF;
+					buz.buzzer_enable=BUZZER_OFF;
 				}
 				break;
 
@@ -67,8 +70,7 @@ void buzzer_task(void *pvParameters )
 					BUZZER_PORT->BSRRL=BUZZER_PIN;
 					vTaskDelay(100);
 					BUZZER_PORT->BSRRH=BUZZER_PIN;
-					//vTaskDelay(200);
-					 buz.buzzer_enable=BUZZER_OFF;
+					buz.buzzer_enable=BUZZER_OFF;
 				}
 				break;
 
@@ -85,8 +87,7 @@ void buzzer_task(void *pvParameters )
 					BUZZER_PORT->BSRRL=BUZZER_PIN;
 					vTaskDelay(50);
 					BUZZER_PORT->BSRRH=BUZZER_PIN;
-					//vTaskDelay(200);
-					 buz.buzzer_enable=BUZZER_OFF;
+					buz.buzzer_enable=BUZZER_OFF;
 				}
 				break;
 
@@ -101,8 +102,7 @@ void buzzer_task(void *pvParameters )
 					BUZZER_PORT->BSRRL=BUZZER_PIN;
 					vTaskDelay(1000);
 					BUZZER_PORT->BSRRH=BUZZER_PIN;
-					//vTaskDelay(200);
-					 buz.buzzer_enable=BUZZER_OFF;
+					buz.buzzer_enable=BUZZER_OFF;
 				}
 				break;
 
@@ -113,7 +113,7 @@ void buzzer_task(void *pvParameters )
 			}
 		}
 		task_watches[BUZZER_TASK].counter++;
-		vTaskSuspend (xBuzzer_Handle);
+		//vTaskSuspend (xBuzzer_Handle);
 		task_watches[BUZZER_TASK].task_status=TASK_IDLE;
 	}
 }
@@ -128,11 +128,19 @@ void buzzer_set_buzz(uint8_t effect, uint8_t enable,uint8_t function_start_type)
 		{
 			if(function_start_type==FROM_TASK)
 			{
-				vTaskResume(xBuzzer_Handle);
+				//vTaskResume(xBuzzer_Handle);
+				xSemaphoreGive(xBuzzerSemaphore);
 			}
 			else
 			{
-				xTaskResumeFromISR(xBuzzer_Handle);
+				//xTaskResumeFromISR(xBuzzer_Handle);
+				  static portBASE_TYPE xHigherPriorityTaskWoken;
+				  xHigherPriorityTaskWoken = pdFALSE;
+				  xSemaphoreGiveFromISR( xBuzzerSemaphore, &xHigherPriorityTaskWoken );
+				  if( xHigherPriorityTaskWoken == pdTRUE )
+				  {
+					  portEND_SWITCHING_ISR( xHigherPriorityTaskWoken );
+				  }
 			}
 			 buz.buzzer_enable=BUZZER_ON;
 		}
@@ -142,11 +150,10 @@ void buzzer_set_buzz(uint8_t effect, uint8_t enable,uint8_t function_start_type)
 	{
 		if( buz.buzzer_enable==BUZZER_ON)
 		{
-			 vTaskSuspend (xBuzzer_Handle);
+			// vTaskSuspend (xBuzzer_Handle);
 			 buz.buzzer_enable=BUZZER_OFF;
 		}
 		task_watches[BUZZER_TASK].task_status=TASK_IDLE;
-		//GPIO_WriteBit(BUZZER_PORT, BUZZER_PIN,0);
 		BUZZER_PORT->BSRRH=BUZZER_PIN;
 	}
 	 buz.buzzer_effect=effect&0x7;
