@@ -83,7 +83,7 @@ struct drive
 	uint32_t	stop_position;
 
 	uint8_t		function_back_flag;
-	uint32_t	function_back_temp_position;
+	uint16_t	function_back_temp_position;
 
 	uint8_t 	move_type_flag;
 	uint8_t 	error_flag;
