@@ -67,7 +67,7 @@
       </source>
       <source file="..\..\..\menu\menu.h" lastModified="149bd87262f">
       </source>
-      <source file="..\..\..\menu\menu.c" lastModified="149cc2cd31e">
+      <source file="..\..\..\menu\menu.c" lastModified="14d90061177">
          <include file="..\..\..\cmsis_boot\stm32f4xx.h"/>
          <include file="..\..\..\cmsis_lib\include\stm32f4xx_gpio.h"/>
          <include file="..\..\..\cmsis_lib\include\stm32f4xx_rcc.h"/>
@@ -220,6 +220,23 @@
       </source>
       <source file="..\..\..\FreeRTOSV7.1.0\Source\include\StackMacros.h" lastModified="13e3b1eb900">
       </source>
+      <source file="..\..\..\devices\external_events.c" lastModified="149cd29a0a5">
+         <include file="..\..\..\devices\external_events.h"/>
+         <include file="..\..\..\cmsis_boot\stm32f4xx.h"/>
+         <include file="..\..\..\cmsis_lib\include\stm32f4xx_gpio.h"/>
+         <include file="..\..\..\cmsis_lib\include\stm32f4xx_rcc.h"/>
+         <include file="..\..\..\cmsis_lib\include\stm32f4xx_exti.h"/>
+         <include file="..\..\..\cmsis_lib\include\stm32f4xx_syscfg.h"/>
+         <include file="..\..\..\cmsis_lib\include\misc.h"/>
+         <include file="..\..\..\protocols\tablo_parser.h"/>
+         <include file="..\..\..\devices\buzzer.h"/>
+         <include file="..\..\..\FreeRTOSV7.1.0\Source\include\FreeRTOS.h"/>
+         <include file="..\..\..\FreeRTOSV7.1.0\Source\include\task.h"/>
+         <include file="..\..\..\FreeRTOSV7.1.0\Source\include\queue.h"/>
+         <include file="..\..\..\FreeRTOSV7.1.0\Source\include\semphr.h"/>
+         <include file="..\..\..\devices\drive.h"/>
+         <include file="..\..\..\devices\watchdog.h"/>
+      </source>
       <source file="..\..\..\cmsis\core_cmFunc.h" lastModified="14125d7ed9e">
       </source>
       <source file="..\..\..\FreeRTOSV7.1.0\Source\list.c" lastModified="13e3b1ebce8">
@@ -249,7 +266,7 @@
       <source file="..\..\..\cmsis_lib\source\stm32f4xx_rcc.c" lastModified="14125d7fd5d">
          <include file="..\..\..\cmsis_lib\include\stm32f4xx_rcc.h"/>
       </source>
-      <source file="..\..\..\devices\drive.h" lastModified="149cc2ac174">
+      <source file="..\..\..\devices\drive.h" lastModified="14d8fe9f377">
          <include file="..\..\..\cmsis_boot\stm32f4xx.h"/>
       </source>
       <source file="..\..\..\devices\encoder.h" lastModified="146fb1186b8">
@@ -278,20 +295,6 @@
          <include file="..\..\..\FreeRTOSV7.1.0\Source\include\task.h"/>
          <include file="..\..\..\FreeRTOSV7.1.0\Source\include\timers.h"/>
          <include file="..\..\..\FreeRTOSV7.1.0\Source\include\StackMacros.h"/>
-      </source>
-      <source file="..\..\..\devices\drive.c" lastModified="149cc7a5caa">
-         <include file="..\..\..\devices\drive.h"/>
-         <include file="..\..\..\cmsis_boot\stm32f4xx.h"/>
-         <include file="..\..\..\cmsis_lib\include\stm32f4xx_gpio.h"/>
-         <include file="..\..\..\cmsis_lib\include\stm32f4xx_rcc.h"/>
-         <include file="..\..\..\cmsis_lib\include\stm32f4xx_pwr.h"/>
-         <include file="..\..\..\FreeRTOSV7.1.0\Source\include\FreeRTOS.h"/>
-         <include file="..\..\..\FreeRTOSV7.1.0\Source\include\task.h"/>
-         <include file="..\..\..\FreeRTOSV7.1.0\Source\include\queue.h"/>
-         <include file="..\..\..\FreeRTOSV7.1.0\Source\include\semphr.h"/>
-         <include file="..\..\..\devices\backup_sram.h"/>
-         <include file="..\..\..\devices\buzzer.h"/>
-         <include file="..\..\..\menu\menu.h"/>
       </source>
       <source file="..\..\..\devices\encoder.c" lastModified="149ccebf403">
          <include file="..\..\..\devices\encoder.h"/>

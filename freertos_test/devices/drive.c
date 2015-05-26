@@ -323,6 +323,15 @@ uint8_t Drive_Stop(uint8_t stop_type,uint8_t function_start_type)
 			DRIVE_CONTROL_PORT->BSRRH=(DRIVE_FORWARD | DRIVE_BACKWARD);
 			buzzer_set_buzz(BUZZER_EFFECT_3_BEEP,BUZZER_ON,function_start_type);
 			drv.error_flag=DRIVE_OK;
+
+			if(drv.function_back_flag==DRIVE_BACK_GET_UP)
+			{
+				drv.function_back_flag=DRIVE_BACK_POS_UP;
+			}
+			else if(drv.function_back_flag==DRIVE_BACK_GET_DOWN)
+			{
+				drv.function_back_flag=DRIVE_BACK_POS_DOWN;
+			}
 		}
 		break;
 
@@ -331,6 +340,7 @@ uint8_t Drive_Stop(uint8_t stop_type,uint8_t function_start_type)
 			DRIVE_CONTROL_PORT->BSRRH=(DRIVE_FORWARD | DRIVE_BACKWARD | DRIVE_SPEED);
 			buzzer_set_buzz(BUZZER_EFFECT_LONG_BEEP,BUZZER_ON,function_start_type);
 			drv.error_flag=DRIVE_ERR;
+			drv.function_back_flag=DRIVE_BACK_POS_DOWN;
 		}
 		break;
 
@@ -339,6 +349,7 @@ uint8_t Drive_Stop(uint8_t stop_type,uint8_t function_start_type)
 			DRIVE_CONTROL_PORT->BSRRH=(DRIVE_FORWARD | DRIVE_BACKWARD | DRIVE_SPEED);
 			buzzer_set_buzz(BUZZER_EFFECT_LONG_BEEP,BUZZER_ON,function_start_type);
 			drv.error_flag=DRIVE_ERR;
+			drv.function_back_flag=DRIVE_BACK_POS_DOWN;
 		}
 		break;
 
@@ -348,6 +359,7 @@ uint8_t Drive_Stop(uint8_t stop_type,uint8_t function_start_type)
 			DRIVE_CONTROL_PORT->BSRRH=(DRIVE_FORWARD | DRIVE_BACKWARD | DRIVE_SPEED);
 			buzzer_set_buzz(BUZZER_EFFECT_LONG_BEEP,BUZZER_ON,function_start_type);
 			drv.error_flag=DRIVE_ERR;
+			drv.function_back_flag=DRIVE_BACK_POS_DOWN;
 		}
 		break;
 
@@ -356,6 +368,7 @@ uint8_t Drive_Stop(uint8_t stop_type,uint8_t function_start_type)
 			DRIVE_CONTROL_PORT->BSRRH=(DRIVE_FORWARD | DRIVE_BACKWARD | DRIVE_SPEED);
 			buzzer_set_buzz(BUZZER_EFFECT_LONG_BEEP,BUZZER_ON,function_start_type);
 			drv.error_flag=DRIVE_ERR;
+			drv.function_back_flag=DRIVE_BACK_POS_DOWN;
 		}
 		break;
 
@@ -364,6 +377,7 @@ uint8_t Drive_Stop(uint8_t stop_type,uint8_t function_start_type)
 			DRIVE_CONTROL_PORT->BSRRH=(DRIVE_FORWARD | DRIVE_BACKWARD | DRIVE_SPEED);
 			buzzer_set_buzz(BUZZER_EFFECT_LONG_BEEP,BUZZER_ON,function_start_type);
 			drv.error_flag=DRIVE_ERR;
+			drv.function_back_flag=DRIVE_BACK_POS_DOWN;
 		}
 		break;
 
@@ -371,6 +385,7 @@ uint8_t Drive_Stop(uint8_t stop_type,uint8_t function_start_type)
 		{
 			DRIVE_CONTROL_PORT->BSRRH=(DRIVE_FORWARD | DRIVE_BACKWARD | DRIVE_SPEED);
 			drv.error_flag=DRIVE_OK;
+			drv.function_back_flag=DRIVE_BACK_POS_DOWN;
 		}
 		break;
 
@@ -378,6 +393,7 @@ uint8_t Drive_Stop(uint8_t stop_type,uint8_t function_start_type)
 		{
 			DRIVE_CONTROL_PORT->BSRRH=(DRIVE_FORWARD | DRIVE_BACKWARD | DRIVE_SPEED);
 			drv.error_flag=DRIVE_ERR;
+			drv.function_back_flag=DRIVE_BACK_POS_DOWN;
 		}
 		break;
 	}

@@ -53,6 +53,8 @@ enum
 {
 	DRIVE_BACK_POS_DOWN=0,
 	DRIVE_BACK_POS_UP,
+	DRIVE_BACK_GET_DOWN,
+	DRIVE_BACK_GET_UP,
 };
 
 struct mm_imp

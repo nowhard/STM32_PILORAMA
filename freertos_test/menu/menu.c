@@ -337,11 +337,11 @@ void Menu_Handle_Key(menuItem* currentMenuItem,uint8_t current_key)
 			return;
 		}
 
-		if(drv.function_back_flag==DRIVE_BACK_POS_UP)
+		if((drv.function_back_flag==DRIVE_BACK_POS_UP)||(drv.function_back_flag==DRIVE_BACK_GET_UP)||(drv.function_back_flag==DRIVE_BACK_GET_DOWN))
 		{
 			if(current_key==KEY_B) //очистим поле
 			{
-				drv.function_back_flag=DRIVE_BACK_POS_DOWN;
+				drv.function_back_flag=DRIVE_BACK_GET_DOWN;
 				if(Drive_Set_Position(MOVE_TYPE_ABSOLUTE,drv.function_back_temp_position)!=DRIVE_OK)
 				{
 					buzzer_set_buzz(BUZZER_EFFECT_3_BEEP,BUZZER_ON,FROM_TASK);
@@ -565,7 +565,7 @@ void Menu_Handle_Key(menuItem* currentMenuItem,uint8_t current_key)
 								}
 								else
 								{
-									drv.function_back_flag=DRIVE_BACK_POS_UP;
+									drv.function_back_flag=DRIVE_BACK_GET_UP;
 									drv.function_back_temp_position=Drive_Impulse_To_MM_Absolute(drv.current_position);
 									//go to UP  position
 									if(Drive_Set_Position_Imp_Absolute(temp_imp_pos)!=DRIVE_OK)
@@ -597,7 +597,7 @@ void Menu_Handle_Key(menuItem* currentMenuItem,uint8_t current_key)
 
 							default:
 							{
-								drv.function_back_flag=DRIVE_BACK_POS_DOWN;
+								//drv.function_back_flag=DRIVE_BACK_POS_DOWN;
 							}
 							break;
 						}
@@ -1044,30 +1044,33 @@ void MenuHandler( void *pvParameters )
 
 					case MOVE_TYPE_ABSOLUTE:
 					{
-						if(drv.dest_position>=drv.current_position)
-						{
-							if(Menu_Input_Int_To_Buf(Drive_Impulse_To_MM(drv.dest_position-drv.current_position),&abs_buf, MENU_ABS_MIN_VAL,MENU_ABS_MAX_VAL)!=INPUT_ERR)
+							if(drv.dest_position>=drv.current_position)
 							{
-								//Menu_Input_Buf_To_Indicator(&abs_buf,IND_2);
+								if(Menu_Input_Int_To_Buf(Drive_Impulse_To_MM(drv.dest_position-drv.current_position),&abs_buf, MENU_ABS_MIN_VAL,MENU_ABS_MAX_VAL)!=INPUT_ERR)
+								{
+									//Menu_Input_Buf_To_Indicator(&abs_buf,IND_2);
+								}
+								Menu_Input_Buf_To_Indicator(&abs_buf,IND_2);
 							}
-							Menu_Input_Buf_To_Indicator(&abs_buf,IND_2);
-						}
-						else
-						{
-							if(Menu_Input_Int_To_Buf(Drive_Impulse_To_MM(drv.current_position-drv.dest_position),&abs_buf, MENU_ABS_MIN_VAL,MENU_ABS_MAX_VAL)!=INPUT_ERR)
+							else
 							{
-//								abs_buf.sign='-';
-//								Menu_Input_Buf_To_Indicator(&abs_buf,IND_2);
+								if(Menu_Input_Int_To_Buf(Drive_Impulse_To_MM(drv.current_position-drv.dest_position),&abs_buf, MENU_ABS_MIN_VAL,MENU_ABS_MAX_VAL)!=INPUT_ERR)
+								{
+	//								abs_buf.sign='-';
+	//								Menu_Input_Buf_To_Indicator(&abs_buf,IND_2);
+								}
+								abs_buf.sign='-';
+								Menu_Input_Buf_To_Indicator(&abs_buf,IND_2);
 							}
-							abs_buf.sign='-';
-							Menu_Input_Buf_To_Indicator(&abs_buf,IND_2);
-						}
 					}
 					break;
 
 					default:
 					{
-
+						if(drv.function_back_flag==DRIVE_BACK_POS_UP)
+						{
+							str_to_ind(IND_2,"--b--");
+						}
 					}
 				}
 			}
