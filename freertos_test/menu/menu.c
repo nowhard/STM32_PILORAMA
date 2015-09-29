@@ -630,6 +630,9 @@ void Menu_Handle_Key(menuItem* currentMenuItem,uint8_t current_key)
 					case KEY_STAR_LONG_RELEASE://стоп движение вниз
 					{
 						Drive_Stop(STOP_MANUAL_CONTROL,FROM_TASK);
+			    		uint32_t temp_position=drv.current_position;
+			    		Backup_SRAM_Write_Reg(&drv.bkp_reg->backup_current_position,&temp_position,sizeof(uint32_t));
+			    		vTaskDelay(500);
 						buzzer_set_buzz(BUZZER_EFFECT_2_BEEP,BUZZER_ON,FROM_TASK);
 					}
 					break;
@@ -637,6 +640,9 @@ void Menu_Handle_Key(menuItem* currentMenuItem,uint8_t current_key)
 					case KEY_SHARP_LONG_RELEASE://стоп движение вверх
 					{
 						Drive_Stop(STOP_MANUAL_CONTROL,FROM_TASK);
+			    		uint32_t temp_position=drv.current_position;
+			    		Backup_SRAM_Write_Reg(&drv.bkp_reg->backup_current_position,&temp_position,sizeof(uint32_t));
+			    		vTaskDelay(500);
 						buzzer_set_buzz(BUZZER_EFFECT_2_BEEP,BUZZER_ON,FROM_TASK);
 					}
 					break;

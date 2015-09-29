@@ -83,28 +83,30 @@ void External_Events_Init(void)
 	 xTaskCreate(ExtEventsHandler,(signed char*)"Ext_Events",128,NULL, tskIDLE_PRIORITY + 1, NULL);
 }
 
-#define DETECTION_ERROR_DELAY	50 //5 sec
+//#define DETECTION_ERROR_DELAY	50 //5 sec
+#define DETECTION_ERROR_DELAY	5000
 void ExtEventsHandler( void *pvParameters )
 {
 	uint16_t detection_error_delay_counter=0;
+	vTaskDelay(DETECTION_ERROR_DELAY);
 	task_watches[EXT_EVENTS_TASK].task_status=TASK_ACTIVE;
 	while(1)
 	{
-		if(detection_error_delay_counter<DETECTION_ERROR_DELAY)
+//		if(detection_error_delay_counter<DETECTION_ERROR_DELAY)
+//		{
+//			detection_error_delay_counter++;
+//		}
+//		else
+//		{
+		if(GPIO_ReadInputDataBit(DRIVE_EXT_EVENTS_PORT,DRIVE_ERROR)==Bit_RESET)
 		{
-			detection_error_delay_counter++;
+			Drive_Stop(STOP_INVERTOR_ERROR,FROM_TASK);
 		}
 		else
 		{
-			if(GPIO_ReadInputDataBit(DRIVE_EXT_EVENTS_PORT,DRIVE_ERROR)==Bit_RESET)
-			{
-				Drive_Stop(STOP_INVERTOR_ERROR,FROM_TASK);
-			}
-			else
-			{
-				EXTI->IMR |= EXTI_Line0;
-			}
+			EXTI->IMR |= EXTI_Line0;
 		}
+//		}
 
 		if(GPIO_ReadInputDataBit(DRIVE_EXT_EVENTS_PORT,DRIVE_LIMIT_UP)==Bit_RESET)
 		{
