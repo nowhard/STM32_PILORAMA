@@ -43,7 +43,7 @@ int main(void)
 	Keyboard_Init();
 	buzzer_init();
 	Menu_Init();
-	Watchdog_Init();
+	//Watchdog_Init();
 
 
     vTaskStartScheduler();

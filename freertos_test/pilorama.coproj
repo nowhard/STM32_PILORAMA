@@ -162,8 +162,8 @@
     <File name="FreeRTOSV7.1.0/Source/portable/MemMang" path="" type="2"/>
     <File name="cmsis_lib/include" path="" type="2"/>
     <File name="FreeRTOSV7.1.0/Source" path="" type="2"/>
+    <File name="FreeRTOSV7.1.0/FreeRTOSConfig.h" path="FreeRTOSConfig.h" type="1"/>
     <File name="FreeRTOSV7.1.0/Source/include/queue.h" path="FreeRTOSV7.1.0/Source/include/queue.h" type="1"/>
-    <File name="FreeRTOSConfig.h" path="FreeRTOSConfig.h" type="1"/>
     <File name="FreeRTOSV7.1.0/Source/portable/ARM_CM3/portmacro.h" path="FreeRTOSV7.1.0/Source/portable/GCC/ARM_CM3/portmacro.h" type="1"/>
     <File name="FreeRTOSV7.1.0/Source/include/StackMacros.h" path="FreeRTOSV7.1.0/Source/include/StackMacros.h" type="1"/>
     <File name="main.c" path="main.c" type="1"/>
