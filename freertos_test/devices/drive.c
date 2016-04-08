@@ -320,7 +320,7 @@ uint8_t Drive_Stop(uint8_t stop_type,uint8_t function_start_type)
 	{
 		case STOP_END_OF_OPERATION:
 		{
-			DRIVE_CONTROL_PORT->BSRRH=(DRIVE_FORWARD | DRIVE_BACKWARD);
+			DRIVE_CONTROL_PORT->BSRRH=(DRIVE_FORWARD | DRIVE_BACKWARD | DRIVE_SPEED);
 			buzzer_set_buzz(BUZZER_EFFECT_3_BEEP,BUZZER_ON,function_start_type);
 			drv.error_flag=DRIVE_OK;
 
