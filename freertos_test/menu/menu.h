@@ -20,6 +20,9 @@ enum {
     MENU_F_05,
     MENU_F_06,
     MENU_F_07,
+    MENU_F_08,
+    MENU_F_09,
+    MENU_F_10
 };
 
 enum

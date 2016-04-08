@@ -73,6 +73,9 @@ struct backup_registers
 //	uint16_t F_06_cal_stop;
 	uint16_t F_06_cal_stop_down;
 	uint16_t F_07_cal_stop_up;
+	int16_t F_08_const_tickness;
+	int16_t F_09_const_tickness;
+	int16_t F_10_const_tickness;
 	uint32_t backup_current_position;
 };
 
