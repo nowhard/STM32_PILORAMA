@@ -33,20 +33,20 @@ void Keyboard_Init(void)
 	RCC_AHB1PeriphClockCmd(INIT_KEYB_PORT_IN|INIT_KEYB_PORT_OUT, ENABLE);
 
 	GPIO_InitTypeDef init_pin;
-	init_pin.GPIO_Pin  = KO_0 | KO_1 | KO_2 | KO_3;
+	init_pin.GPIO_Pin  = KO_0 | KO_1 | KO_2 | KO_3 | KO_4;
 	init_pin.GPIO_Speed = GPIO_Speed_2MHz;
 	init_pin.GPIO_Mode  = GPIO_Mode_OUT;
 	init_pin.GPIO_OType = GPIO_OType_OD;
 	init_pin.GPIO_PuPd = GPIO_PuPd_NOPULL;
 	GPIO_Init (KEYB_PORT_OUT, &init_pin);
 
-	init_pin.GPIO_Pin  = KI_0 | KI_1 | KI_2 | KI_3;//подтягиваем вверх, для уменьшения помех
+	init_pin.GPIO_Pin  = KI_0 | KI_1 | KI_2 | KI_3 | KI_4;//подтягиваем вверх, для уменьшения помех
 	init_pin.GPIO_Speed = GPIO_Speed_2MHz;
 	init_pin.GPIO_Mode  = GPIO_Mode_IN;
 	init_pin.GPIO_PuPd = GPIO_PuPd_UP;
 	GPIO_Init (KEYB_PORT_IN, &init_pin);
 
-	KEYB_PORT_OUT->BSRRL=(KO_0 | KO_1 | KO_2 | KO_3);
+	KEYB_PORT_OUT->BSRRL=(KO_0 | KO_1 | KO_2 | KO_3 | KO_4);
 
 //	vSemaphoreCreateBinary( xKeySemaphore );
 	task_watches[KEYBOARD_TASK].task_status=TASK_IDLE;
@@ -60,6 +60,7 @@ enum
 	ROW_1,
 	ROW_2,
 	ROW_3,
+	ROW_4,
 };
 
 
@@ -74,7 +75,7 @@ static void vKeyboardTask(void *pvParameters)
 	uint8_t tick_counter=0;
 	uint16_t key_mask=0;
 
-	key_mask=KI_0 | KI_1 | KI_2 | KI_3;
+	key_mask=KI_0 | KI_1 | KI_2 | KI_3 | KI_4;
 	task_watches[KEYBOARD_TASK].task_status=TASK_ACTIVE;
     while(1)
     {
@@ -99,7 +100,7 @@ static void vKeyboardTask(void *pvParameters)
 					{
 						 tick_counter=LONG_PRESS_KEY+1;
 		    			//отправим в очередь код
-						 key+=16;//дополнение кода при нажатии LONG
+						 key+=KEY_LONG_BASE;//дополнение кода при нажатии LONG
 						// buzzer_set_buzz(BUZZER_EFFECT_LONG_BEEP,BUZZER_ON);//beep
 						 if( xKeyQueue != 0 )
 						 {
@@ -128,7 +129,7 @@ static void vKeyboardTask(void *pvParameters)
     		{
     			if(tick_counter==(LONG_PRESS_KEY+1))//отпускаем после длительного нажатия
     			{
-    				key_temp+=32;//дополнение кода при нажатии LONG_RELEASE
+    				key_temp+=KEY_LONG_RELEASE_BASE;//дополнение кода при нажатии LONG_RELEASE
 					 if( xKeyQueue != 0 )
 					 {
 						 xQueueSend( xKeyQueue,  &key_temp, ( portTickType ) 0 );
@@ -149,8 +150,8 @@ static uint8_t Keyboard_Scan_Matrix(void)
 	uint8_t key_counter=0;
 	uint16_t key_mask=0;
 
-	key_mask=KI_0 | KI_1 | KI_2 | KI_3;
-	KEYB_PORT_OUT->BSRRL=(KO_0 | KO_1 | KO_2 | KO_3);
+	key_mask=KI_0 | KI_1 | KI_2 | KI_3 | KI_4;
+	KEYB_PORT_OUT->BSRRL=(KO_0 | KO_1 | KO_2 | KO_3 | KO_4);
 
 	for(key_counter=0;key_counter<KEYB_ROW_NUM;key_counter++)
 	{
@@ -162,7 +163,7 @@ static uint8_t Keyboard_Scan_Matrix(void)
 					KEYB_PORT_OUT->BSRRH=KO_0;
 					delay(10);
 					key_port=KEYB_PORT_IN->IDR;//GPIO_ReadInputData(KEYB_PORT_IN);
-					KEYB_PORT_OUT->BSRRL=(KO_0 | KO_1 | KO_2 | KO_3);
+					KEYB_PORT_OUT->BSRRL=(KO_0 | KO_1 | KO_2 | KO_3 | KO_4);
 
 					switch((~key_port)&key_mask)
 					{
@@ -189,6 +190,12 @@ static uint8_t Keyboard_Scan_Matrix(void)
 							return KEY_A;
 						}
 						break;
+
+						case KI_4:
+						{
+
+						}
+						break;
 					}
 				}
 				break;
@@ -198,7 +205,7 @@ static uint8_t Keyboard_Scan_Matrix(void)
 					KEYB_PORT_OUT->BSRRH=KO_1;
 					delay(10);
 					key_port=KEYB_PORT_IN->IDR;//GPIO_ReadInputData(KEYB_PORT_IN);
-					KEYB_PORT_OUT->BSRRL=(KO_0 | KO_1 | KO_2 | KO_3);
+					KEYB_PORT_OUT->BSRRL=(KO_0 | KO_1 | KO_2 | KO_3 | KO_4);
 
 					switch((~key_port)&key_mask)
 					{
@@ -225,6 +232,12 @@ static uint8_t Keyboard_Scan_Matrix(void)
 							return KEY_B;
 						}
 						break;
+
+						case KI_4:
+						{
+
+						}
+						break;
 					}
 				}
 				break;
@@ -234,7 +247,7 @@ static uint8_t Keyboard_Scan_Matrix(void)
 					KEYB_PORT_OUT->BSRRH=KO_2;
 					delay(10);
 					key_port=KEYB_PORT_IN->IDR;//GPIO_ReadInputData(KEYB_PORT_IN);
-					KEYB_PORT_OUT->BSRRL=(KO_0 | KO_1 | KO_2 | KO_3);
+					KEYB_PORT_OUT->BSRRL=(KO_0 | KO_1 | KO_2 | KO_3 | KO_4);
 
 					switch((~key_port)&key_mask)
 					{
@@ -261,6 +274,12 @@ static uint8_t Keyboard_Scan_Matrix(void)
 							return KEY_C;
 						}
 						break;
+
+						case KI_4:
+						{
+
+						}
+						break;
 					}
 				}
 				break;
@@ -270,7 +289,7 @@ static uint8_t Keyboard_Scan_Matrix(void)
 					KEYB_PORT_OUT->BSRRH=KO_3;
 					delay(10);
 					key_port=KEYB_PORT_IN->IDR;//GPIO_ReadInputData(KEYB_PORT_IN);
-					KEYB_PORT_OUT->BSRRL=(KO_0 | KO_1 | KO_2 | KO_3);
+					KEYB_PORT_OUT->BSRRL=(KO_0 | KO_1 | KO_2 | KO_3 | KO_4);
 
 					switch((~key_port)&key_mask)
 					{
@@ -295,6 +314,54 @@ static uint8_t Keyboard_Scan_Matrix(void)
 						case KI_3:
 						{
 							return KEY_POINT;
+						}
+						break;
+
+						case KI_4:
+						{
+
+						}
+						break;
+					}
+				}
+				break;
+
+				case ROW_4:
+				{
+					KEYB_PORT_OUT->BSRRH=KO_4;
+					delay(10);
+					key_port=KEYB_PORT_IN->IDR;//GPIO_ReadInputData(KEYB_PORT_IN);
+					KEYB_PORT_OUT->BSRRL=(KO_0 | KO_1 | KO_2 | KO_3 | KO_4);
+
+					switch((~key_port)&key_mask)
+					{
+						case KI_0:
+						{
+							return KEY_STOP;
+						}
+						break;
+
+						case KI_1:
+						{
+							return KEY_START;
+						}
+						break;
+
+						case KI_2:
+						{
+							return KEY_ROLLBACK;
+						}
+						break;
+
+						case KI_3:
+						{
+							return KEY_STEP;
+						}
+						break;
+
+						case KI_4:
+						{
+
 						}
 						break;
 					}

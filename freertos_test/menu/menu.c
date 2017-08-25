@@ -351,7 +351,7 @@ void Menu_Handle_Key(menuItem* currentMenuItem,uint8_t current_key)
 
 	if(drv.move_type_flag!=MOVE_TYPE_NONE)//аварийная остановка привода при движении
 	{
-		if((current_key==KEY_C)||(current_key==KEY_C_LONG))
+		if((current_key==KEY_STOP)||(current_key==KEY_STOP_LONG))
 		{
 			Drive_Stop(STOP_USER,FROM_TASK);
 			buzzer_set_buzz(BUZZER_EFFECT_LONG_BEEP,BUZZER_ON,FROM_TASK);
@@ -435,7 +435,7 @@ void Menu_Handle_Key(menuItem* currentMenuItem,uint8_t current_key)
 			{
 				switch(current_key)
 				{
-					case KEY_A://перебор предустановленных толщин
+					case KEY_STEP://перебор предустановленных толщин
 					{
 						if(const_tickness_counter>2)
 						{
@@ -536,7 +536,7 @@ void Menu_Handle_Key(menuItem* currentMenuItem,uint8_t current_key)
 					}
 					break;
 
-					case KEY_POINT_LONG://ввод значения
+					case KEY_START://ввод значения
 					{
 						int16_t move_val=0;
 						const_tickness_counter=0;
@@ -670,7 +670,7 @@ void Menu_Handle_Key(menuItem* currentMenuItem,uint8_t current_key)
 					}
 					break;
 
-					case KEY_B://функция BACK
+					case KEY_ROLLBACK://функция BACK
 					{
 						switch(drv.function_back_flag)
 						{
@@ -762,6 +762,12 @@ void Menu_Handle_Key(menuItem* currentMenuItem,uint8_t current_key)
 			    		Backup_SRAM_Write_Reg(&drv.bkp_reg->backup_current_position,&temp_position,sizeof(uint32_t));
 			    		vTaskDelay(500);
 						buzzer_set_buzz(BUZZER_EFFECT_2_BEEP,BUZZER_ON,FROM_TASK);
+					}
+					break;
+
+					case KEY_B://функция back на введенное значение
+					{
+
 					}
 					break;
 

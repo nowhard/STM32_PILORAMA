@@ -1,40 +1,40 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <history>
-   <processor signature="4.7.2 -mcpu=cortex-m3 -mthumb -g -nostartfiles -Map=tablo_proto_test.map -O0 --gc-sections -LC:\CooCox\CoIDE\configuration\ProgramData\pilorama -TC:\CooCox\CoIDE\configuration\ProgramData\pilorama/arm-gcc-link.ld -g">
-      <target file="tablo_proto_test.elf" lastModified="153f5733114">
-         <source file="..\obj\stm32f4xx_syscfg.o" lastModified="15018396d8a"/>
-         <source file="..\obj\tablo_parser.o" lastModified="15018c15df4"/>
-         <source file="..\obj\core_cm3.o" lastModified="15018397039"/>
-         <source file="..\obj\buzzer.o" lastModified="15018c15f9a"/>
-         <source file="..\obj\external_events.o" lastModified="153f541e62f"/>
-         <source file="..\obj\stm32f4xx_pwr.o" lastModified="150183973d3"/>
-         <source file="..\obj\drive.o" lastModified="153f5732ea3"/>
-         <source file="..\obj\startup_stm32f4xx.o" lastModified="1501839776d"/>
-         <source file="..\obj\backup_sram.o" lastModified="15018397838"/>
-         <source file="..\obj\stm32f4xx_iwdg.o" lastModified="15018397903"/>
-         <source file="..\obj\indicator.o" lastModified="150183979cf"/>
-         <source file="..\obj\main.o" lastModified="153f541ea55"/>
-         <source file="..\obj\stm32f4xx_rcc.o" lastModified="15018397c6e"/>
-         <source file="..\obj\timers.o" lastModified="15018c16518"/>
-         <source file="..\obj\tablo.o" lastModified="15018397dc6"/>
-         <source file="..\obj\encoder.o" lastModified="153f541eb30"/>
-         <source file="..\obj\watchdog.o" lastModified="15018c16680"/>
-         <source file="..\obj\tasks.o" lastModified="15018c167e7"/>
-         <source file="..\obj\keyboard.o" lastModified="15018c1692f"/>
-         <source file="..\obj\menu.o" lastModified="153f541f0ce"/>
-         <source file="..\obj\stm32f4xx_gpio.o" lastModified="150183989cc"/>
-         <source file="..\obj\list.o" lastModified="15018c16fb7"/>
-         <source file="..\obj\system_stm32f4xx.o" lastModified="15018398b82"/>
-         <source file="..\obj\port.o" lastModified="15018c17053"/>
-         <source file="..\obj\queue.o" lastModified="15018c1717c"/>
-         <source file="..\obj\croutine.o" lastModified="15018c17218"/>
-         <source file="..\obj\stm32f4xx_spi.o" lastModified="15018398f3b"/>
-         <source file="..\obj\stm32f4xx_exti.o" lastModified="15018399025"/>
-         <source file="..\obj\spi_bus.o" lastModified="15018c172f3"/>
-         <source file="..\obj\misc.o" lastModified="150183991bc"/>
-         <source file="..\obj\heap_1.o" lastModified="15018c1738f"/>
-         <source file="..\obj\stm32f4xx_tim.o" lastModified="1501839945b"/>
-         <source file="..\obj\power_detector.o" lastModified="15018399507"/>
+   <processor signature="arm-none-eabi-gcc -mcpu=cortex-m3 -mthumb -g -nostartfiles -Map=tablo_proto_test.map -O0 --gc-sections -LC:\CooCox\CoIDE\configuration\ProgramData\pilorama -TC:\CooCox\CoIDE\configuration\ProgramData\pilorama/arm-gcc-link.ld -g">
+      <target file="tablo_proto_test.elf" lastModified="15e1980d14f">
+         <source file="..\obj\stm32f4xx_syscfg.o" lastModified="15e19653619"/>
+         <source file="..\obj\tablo_parser.o" lastModified="15e1965376c"/>
+         <source file="..\obj\core_cm3.o" lastModified="15e196537ab"/>
+         <source file="..\obj\buzzer.o" lastModified="15e196537f4"/>
+         <source file="..\obj\external_events.o" lastModified="15e19653842"/>
+         <source file="..\obj\stm32f4xx_pwr.o" lastModified="15e1965388c"/>
+         <source file="..\obj\drive.o" lastModified="15e19653a2c"/>
+         <source file="..\obj\startup_stm32f4xx.o" lastModified="15e19653a6f"/>
+         <source file="..\obj\backup_sram.o" lastModified="15e19653ab2"/>
+         <source file="..\obj\stm32f4xx_iwdg.o" lastModified="15e19653aee"/>
+         <source file="..\obj\indicator.o" lastModified="15e19653b2b"/>
+         <source file="..\obj\main.o" lastModified="15e19659aaa"/>
+         <source file="..\obj\stm32f4xx_rcc.o" lastModified="15e19653c4d"/>
+         <source file="..\obj\timers.o" lastModified="15e19653c7e"/>
+         <source file="..\obj\tablo.o" lastModified="15e19653cba"/>
+         <source file="..\obj\encoder.o" lastModified="15e19653cff"/>
+         <source file="..\obj\watchdog.o" lastModified="15e19653d3e"/>
+         <source file="..\obj\tasks.o" lastModified="15e19653dfb"/>
+         <source file="..\obj\keyboard.o" lastModified="15e19659b15"/>
+         <source file="..\obj\menu.o" lastModified="15e1980cf3f"/>
+         <source file="..\obj\stm32f4xx_gpio.o" lastModified="15e1965434b"/>
+         <source file="..\obj\list.o" lastModified="15e1965439b"/>
+         <source file="..\obj\system_stm32f4xx.o" lastModified="15e196543f0"/>
+         <source file="..\obj\port.o" lastModified="15e19654426"/>
+         <source file="..\obj\queue.o" lastModified="15e19654480"/>
+         <source file="..\obj\croutine.o" lastModified="15e196544bf"/>
+         <source file="..\obj\stm32f4xx_spi.o" lastModified="15e19654516"/>
+         <source file="..\obj\stm32f4xx_exti.o" lastModified="15e1965455a"/>
+         <source file="..\obj\spi_bus.o" lastModified="15e196545a8"/>
+         <source file="..\obj\misc.o" lastModified="15e196545ea"/>
+         <source file="..\obj\heap_1.o" lastModified="15e19654625"/>
+         <source file="..\obj\stm32f4xx_tim.o" lastModified="15e196546bc"/>
+         <source file="..\obj\power_detector.o" lastModified="15e196546ff"/>
       </target>
    </processor>
 </history>
