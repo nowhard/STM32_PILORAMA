@@ -45,6 +45,9 @@ void Menu_Handle_Key(menuItem* currentMenuItem,uint8_t current_key);
 #define MENU_ROOT_MAX_VAL	 6000
 #define MENU_ROOT_MIN_VAL	-6000
 
+#define MENU_ROOT_ABS_MAX_VAL	 6000
+#define MENU_ROOT_ABS_MIN_VAL		1
+
 #define MENU_F01_MAX_VAL	 6000
 #define MENU_F01_MIN_VAL	-6000
 
@@ -405,7 +408,7 @@ void Menu_Handle_Key(menuItem* currentMenuItem,uint8_t current_key)
 
 		if((drv.function_back_flag==DRIVE_BACK_POS_UP)||(drv.function_back_flag==DRIVE_BACK_GET_UP)||(drv.function_back_flag==DRIVE_BACK_GET_DOWN))
 		{
-			if(current_key==KEY_B) //очистим поле
+			if(current_key==KEY_ROLLBACK) //очистим поле
 			{
 				drv.function_back_flag=DRIVE_BACK_GET_DOWN;
 				if(Drive_Set_Position(MOVE_TYPE_ABSOLUTE,drv.function_back_temp_position)!=DRIVE_OK)
@@ -621,38 +624,39 @@ void Menu_Handle_Key(menuItem* currentMenuItem,uint8_t current_key)
 
 							case ' ':
 							{
-								if(Menu_Input_Buf_To_Int(&input_buf,&move_val,MENU_ROOT_MIN_VAL,MENU_ROOT_MAX_VAL)==INPUT_OK)
+								if(Menu_Input_Buf_To_Int(&input_buf,&move_val,MENU_ROOT_ABS_MIN_VAL,MENU_ROOT_ABS_MAX_VAL)==INPUT_OK)
 								{
-									int16_t temp=move_val-Drive_Impulse_To_MM_Absolute(drv.current_position);
 
-									if(temp>=0)
-									{
-										if(drv.bkp_reg->F_07_cal_stop_up>=temp)
-										{
-											buzzer_set_buzz(BUZZER_EFFECT_3_BEEP,BUZZER_ON,FROM_TASK);
-											Indicator_Blink_Set(IND_2,0xFF,2);
-											break;
-										}
-									}
-									else
-									{
-										if(drv.bkp_reg->F_06_cal_stop_down>=(-temp))
-										{
-											buzzer_set_buzz(BUZZER_EFFECT_3_BEEP,BUZZER_ON,FROM_TASK);
-											Indicator_Blink_Set(IND_2,0xFF,2);
-											break;
-										}
-									}
+											int16_t temp=move_val-Drive_Impulse_To_MM_Absolute(drv.current_position);
+
+											if(temp>=0)
+											{
+												if(drv.bkp_reg->F_07_cal_stop_up>=temp)
+												{
+													buzzer_set_buzz(BUZZER_EFFECT_3_BEEP,BUZZER_ON,FROM_TASK);
+													Indicator_Blink_Set(IND_2,0xFF,2);
+													break;
+												}
+											}
+											else
+											{
+												if(drv.bkp_reg->F_06_cal_stop_down>=(-temp))
+												{
+													buzzer_set_buzz(BUZZER_EFFECT_3_BEEP,BUZZER_ON,FROM_TASK);
+													Indicator_Blink_Set(IND_2,0xFF,2);
+													break;
+												}
+											}
 
 
-									if(Drive_Set_Position(MOVE_TYPE_ABSOLUTE, move_val)!=DRIVE_OK)
-									{
-										Drive_Stop(STOP_CONTROLLER_FAULT,FROM_TASK);
-									}
-									else
-									{
-										buzzer_set_buzz(BUZZER_EFFECT_1_BEEP,BUZZER_ON,FROM_TASK);
-									}
+											if(Drive_Set_Position(MOVE_TYPE_ABSOLUTE, move_val)!=DRIVE_OK)
+											{
+												Drive_Stop(STOP_CONTROLLER_FAULT,FROM_TASK);
+											}
+											else
+											{
+												buzzer_set_buzz(BUZZER_EFFECT_1_BEEP,BUZZER_ON,FROM_TASK);
+											}
 								}
 								else
 								{
@@ -767,6 +771,18 @@ void Menu_Handle_Key(menuItem* currentMenuItem,uint8_t current_key)
 
 					case KEY_B://функция back на введенное значение
 					{
+						uint16_t temp_back=0x0;
+						if(Menu_Input_Buf_To_Int(&input_buf,&temp_back,MENU_F04_MIN_VAL,MENU_F04_MAX_VAL)==INPUT_OK)
+						{
+							Backup_SRAM_Write_Reg(&drv.bkp_reg->F_04_function_back,&temp_back,sizeof(uint16_t));
+							buzzer_set_buzz(BUZZER_EFFECT_2_BEEP,BUZZER_ON,FROM_TASK);
+						}
+						else
+						{
+							buzzer_set_buzz(BUZZER_EFFECT_3_BEEP,BUZZER_ON,FROM_TASK);
+							Indicator_Blink_Set(IND_2,0xFF,2);
+							//input error
+						}
 
 					}
 					break;
