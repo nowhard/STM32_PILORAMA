@@ -33,7 +33,7 @@
 int main(void)
 {
 	SystemInit();
-	Power_Detector_Init();
+//	Power_Detector_Init();
 	Backup_SRAM_Init();
 	Drive_Init();
 	Encoder_Init();
@@ -43,7 +43,7 @@ int main(void)
 	Keyboard_Init();
 	buzzer_init();
 	Menu_Init();
-	Watchdog_Init();
+//	Watchdog_Init();
 
 
     vTaskStartScheduler();

@@ -54,7 +54,7 @@ void Encoder_Init(void)//инициализация таймера дола
 	 	//настройка таймера дола
 		TIM_TimeBaseInitTypeDef timer_base;
 	    TIM_TimeBaseStructInit(&timer_base);
-	    timer_base.TIM_Period = 1;//65535;
+	    timer_base.TIM_Period =65535;// 1;//65535;
 	    timer_base.TIM_Prescaler=0;
 	    timer_base.TIM_ClockDivision=0;
 	    timer_base.TIM_CounterMode = TIM_CounterMode_Down | TIM_CounterMode_Up;
@@ -72,23 +72,21 @@ void Encoder_Init(void)//инициализация таймера дола
 	    //настройка прерывания дола
 	    NVIC_InitTypeDef NVIC_InitStructure;
 	    NVIC_PriorityGroupConfig( NVIC_PriorityGroup_4 );
-	    NVIC_InitStructure.NVIC_IRQChannel = TIM3_IRQn;
+	    NVIC_InitStructure.NVIC_IRQChannel = TIM1_UP_TIM10_IRQn;
 	    NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 13;
 	    NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;
 	    NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
 	    NVIC_Init(&NVIC_InitStructure);
 
-	    NVIC_InitStructure.NVIC_IRQChannel = TIM1_UP_TIM10_IRQn;
 	    NVIC_Init(&NVIC_InitStructure);
 
 		TIM_ICInitTypeDef TIM_ICInitStruct;
 
 		TIM_ICInitStruct.TIM_Channel=TIM_Channel_1;
-		TIM_ICInitStruct.TIM_ICFilter=0xF;
+		TIM_ICInitStruct.TIM_ICFilter=0x7;
 		TIM_ICInit(TIM1, &TIM_ICInitStruct);
-		TIM_ICInit(TIM3, &TIM_ICInitStruct);
 		TIM_ICInitStruct.TIM_Channel=TIM_Channel_2;
-		TIM_ICInitStruct.TIM_ICFilter=0xF;
+		TIM_ICInitStruct.TIM_ICFilter=0x7;
 		TIM_ICInit(TIM1, &TIM_ICInitStruct);
 
 	    //настройка пинов микроконтроллера
@@ -96,7 +94,7 @@ void Encoder_Init(void)//инициализация таймера дола
 
 	    GPIO_InitStructure.GPIO_Pin = GPIO_Pin_8|GPIO_Pin_9;
 	    GPIO_InitStructure.GPIO_Mode  = GPIO_Mode_AF;;
-	    GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_UP;
+	    GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;
 	    GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
 	    GPIO_InitStructure.GPIO_Speed = GPIO_Speed_2MHz;
 	    GPIO_Init(GPIOA, &GPIO_InitStructure);
