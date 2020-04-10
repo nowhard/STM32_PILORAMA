@@ -31,6 +31,37 @@ void Drive_Init(void)
 	DRIVE_CONTROL_PORT->BSRRH=(DRIVE_FORWARD | DRIVE_BACKWARD | DRIVE_RESET | DRIVE_SPEED);
 
 	drv.bkp_reg=(struct dev_registers *) BKPSRAM_BASE;
+
+
+	if(drv.bkp_reg->backup_magic != BACKUP_MAGIC)//Батарейку сменили? Запишем что то по умолчанию
+	{
+		struct backup_registers default_reg;
+
+		default_reg.F_01_cal_down.imp = 1930660355;
+		default_reg.F_01_cal_down.mm = 470;
+
+		default_reg.F_02_cal_up.imp = 1930700172;
+		default_reg.F_02_cal_up.mm = 4070;
+
+		default_reg.F_03_cal_syncro.imp = 1930699398;
+		default_reg.F_03_cal_syncro.mm = 4070;
+
+
+		default_reg.F_04_function_back = 4000;
+		default_reg.F_05_cal_speed_down = 120;
+		default_reg.F_06_cal_stop_down = 1;
+		default_reg.F_07_cal_stop_up = 1;
+		default_reg.F_08_const_tickness = -280;
+		default_reg.F_09_const_tickness = -450;
+		default_reg.F_10_const_tickness = -530;
+
+		default_reg.backup_current_position = 1930658818;
+
+		default_reg.backup_magic = BACKUP_MAGIC;
+
+		Backup_SRAM_Write_Reg(drv.bkp_reg, &default_reg, sizeof(struct backup_registers));
+	}
+
 	drv.move_type_flag=MOVE_TYPE_NONE;
 	drv.stop_type=STOP_NONE;
 	drv.error_flag=DRIVE_OK;

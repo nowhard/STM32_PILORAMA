@@ -1,28 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <breakpoints>
 <breakpoint enabled="true" persistant="true" registered="true">
-<resource path="/pilorama/menu/menu.c" type="1"/>
-<marker lineNumber="613" type="org.eclipse.cdt.debug.core.cLineBreakpointMarker">
-<attrib name="message" value="Line breakpoint: menu.c [line: 613]"/>
-<attrib name="org.eclipse.cdt.debug.core.condition" value=""/>
-<attrib name="org.eclipse.debug.core.id" value="org.eclipse.cdt.debug.core"/>
-<attrib name="org.eclipse.cdt.debug.core.installCount" value="0"/>
-<attrib name="org.eclipse.cdt.debug.core.sourceHandle" value="D:\PROJECTS\GIT_REPOSITORY\STM32\STM32F2_PILORAMA\freertos_test\menu\menu.c"/>
-<attrib name="org.eclipse.cdt.debug.core.breakpointType" value="0"/>
-<attrib name="org.eclipse.cdt.debug.core.ignoreCount" value="0"/>
-<attrib name="org.eclipse.debug.core.enabled" value="true"/>
-<attrib name="workingset_name" value=""/>
-<attrib name="workingset_id" value="org.eclipse.debug.ui.breakpointWorkingSet"/>
-</marker>
-</breakpoint>
-<breakpoint enabled="true" persistant="true" registered="true">
 <resource path="/pilorama/devices/drive.c" type="1"/>
-<marker lineNumber="276" type="org.eclipse.cdt.debug.core.cLineBreakpointMarker">
-<attrib name="message" value="Line breakpoint: drive.c [line: 276]"/>
+<marker lineNumber="33" type="org.eclipse.cdt.debug.core.cLineBreakpointMarker">
+<attrib name="message" value="Line breakpoint: drive.c [line: 33]"/>
 <attrib name="org.eclipse.cdt.debug.core.condition" value=""/>
 <attrib name="org.eclipse.debug.core.id" value="org.eclipse.cdt.debug.core"/>
 <attrib name="org.eclipse.cdt.debug.core.installCount" value="0"/>
-<attrib name="org.eclipse.cdt.debug.core.sourceHandle" value="D:\PROJECTS\GIT_REPOSITORY\STM32\STM32F2_PILORAMA\freertos_test\devices\drive.c"/>
+<attrib name="org.eclipse.cdt.debug.core.sourceHandle" value="E:\PROJECTS\GIT_REPOSITORY\STM32\STM32F2_PILORAMA\freertos_test\devices\drive.c"/>
 <attrib name="org.eclipse.cdt.debug.core.breakpointType" value="0"/>
 <attrib name="org.eclipse.cdt.debug.core.ignoreCount" value="0"/>
 <attrib name="org.eclipse.debug.core.enabled" value="true"/>

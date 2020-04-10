@@ -63,6 +63,7 @@ struct mm_imp
 	uint32_t imp;
 };
 
+#define BACKUP_MAGIC	0x8051
 struct backup_registers
 {
 	struct mm_imp F_01_cal_down;
@@ -77,6 +78,7 @@ struct backup_registers
 	int16_t F_09_const_tickness;
 	int16_t F_10_const_tickness;
 	uint32_t backup_current_position;
+	uint16_t backup_magic;
 };
 
 struct drive
